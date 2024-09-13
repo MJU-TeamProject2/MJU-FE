@@ -5,7 +5,7 @@
 + Node.js v20.17.0 (LTS)
 + React+Vite
 + TypeScript+SWC
-+ ESLint+Pritter
++ lint on Airbnb
 + React Query
 + Dayjs
 + jest
