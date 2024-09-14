@@ -1,4 +1,4 @@
-import { LayoutRouteProps, Outlet } from "react-router-dom";
+import { LayoutRouteProps, Outlet } from 'react-router-dom';
 
 const MainLayout = ({ children }: LayoutRouteProps) => {
   return <>{children || <Outlet />}</>;
