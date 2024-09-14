@@ -1,8 +1,8 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MainLayout from '@/component/layout/MainLayout.tsx';
-import Home from '@/page/Home.tsx';
-import NotFound from '@/page/NotFount.tsx';
-import User from '@/page/user/User.tsx';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import MainLayout from '@/component/layout/MainLayout.tsx'
+import Home from '@/page/Home.tsx'
+import NotFound from '@/page/NotFount.tsx'
+import User from '@/page/user/User.tsx'
 
 const Router = () => {
   return (
@@ -15,7 +15,7 @@ const Router = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
-  );
-};
+  )
+}
 
-export default Router;
+export default Router

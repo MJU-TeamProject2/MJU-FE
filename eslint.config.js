@@ -1,12 +1,12 @@
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import tsParser from '@typescript-eslint/parser';
-import tsPlugin from '@typescript-eslint/eslint-plugin';
-import prettier from 'eslint-plugin-prettier';
-import eslintPluginImport from 'eslint-plugin-import';
-import eslintPluginReact from 'eslint-plugin-react';
-import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
+import globals from 'globals'
+import reactHooks from 'eslint-plugin-react-hooks'
+import reactRefresh from 'eslint-plugin-react-refresh'
+import tsParser from '@typescript-eslint/parser'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import prettier from 'eslint-plugin-prettier'
+import eslintPluginImport from 'eslint-plugin-import'
+import eslintPluginReact from 'eslint-plugin-react'
+import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default [
   {
@@ -61,7 +61,8 @@ export default [
       'prettier/prettier': 'error',
       'import/prefer-default-export': 'off',
       'react/react-in-jsx-scope': 'off',
-      quotes: ['error', 'single'], // quotes 규칙 추가
+      quotes: ['error', 'single'],
+      semi: 'off',
     },
   },
-];
+]

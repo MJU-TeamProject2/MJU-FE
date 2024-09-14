@@ -1,9 +1,11 @@
+import Router from '@/routes/Router'
+
 function App() {
   return (
-    <>
-      <div>123</div>
-    </>
-  );
+    <div className="App">
+      <Router />
+    </div>
+  )
 }
 
-export default App;
+export default App

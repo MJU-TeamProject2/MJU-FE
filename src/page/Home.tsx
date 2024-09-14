@@ -1,7 +1,5 @@
-import { LayoutRouteProps, Outlet } from 'react-router-dom';
+const Home = () => {
+  return <>Home</>
+}
 
-const MainLayout = ({ children }: LayoutRouteProps) => {
-  return <>{children || <Outlet />}</>;
-};
-
-export default MainLayout;
+export default Home
