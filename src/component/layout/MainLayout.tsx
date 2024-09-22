@@ -1,11 +1,11 @@
 import { LayoutRouteProps, Outlet } from 'react-router-dom'
-import MainHeader from './element/MainHeader'
 import { ContainerWrapper } from './Layout.styles.ts'
+import MainHeader from '@/component/layout/element/MainHeader.tsx'
 
 const MainLayout = ({ children }: LayoutRouteProps) => {
   return (
     <>
-      <MainHeader />
+      <MainHeader></MainHeader>
       <ContainerWrapper>{children || <Outlet />}</ContainerWrapper>
     </>
   )

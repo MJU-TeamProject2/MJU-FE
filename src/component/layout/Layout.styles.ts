@@ -14,5 +14,7 @@ export const HeaderWrapper = styled.div`
 export const ContainerWrapper = styled.div`
   display: flex;
   width: 100%;
-  padding-top: 74px;
+  height: 100%;
+  //padding-top: 74px;
+  flex-direction: column;
 `
