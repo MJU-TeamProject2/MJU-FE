@@ -1,14 +1,15 @@
+import React from 'react'
 import { LayoutRouteProps, Outlet } from 'react-router-dom'
-import MainHeader from './element/MainHeader'
+import AdminHeader from './element/AdminHeader'
 import { ContainerWrapper } from './Layout.styles.ts'
 
-const MainLayout = ({ children }: LayoutRouteProps) => {
+const AdminLayout = ({ children }: LayoutRouteProps) => {
   return (
     <>
-      <MainHeader />
+      <AdminHeader />
       <ContainerWrapper>{children || <Outlet />}</ContainerWrapper>
     </>
   )
 }
 
-export default MainLayout
+export default AdminLayout
