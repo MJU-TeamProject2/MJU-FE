@@ -1,10 +1,14 @@
 import Router from '@/routes/Router'
+import GlobalStyle from '@/component/common/styles/globalStyle'
 
 function App() {
   return (
-    <div className="App">
-      <Router />
-    </div>
+    <>
+      <GlobalStyle />
+      <div className="App">
+        <Router />
+      </div>
+    </>
   )
 }
 
