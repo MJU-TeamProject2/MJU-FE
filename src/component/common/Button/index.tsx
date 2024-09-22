@@ -8,15 +8,13 @@ const defaultProps: Pick<Required<ButtonProps>, 'variant' | 'as'> = {
   as: 'button',
 }
 
-const Button = ({ disabled, isLoading, ...props }: ButtonProps) => {
+export const Button = ({ disabled, isLoading, ...props }: ButtonProps) => {
   return (
     <StyledButton disabled={disabled || isLoading} {...props}>
       {isLoading ? <img src={iconSpinner} alt="spinner" /> : props.children}
     </StyledButton>
   )
 }
-
-export default Button
 
 const StyledButton = styled.button<ButtonProps>`
   ${(props) =>
