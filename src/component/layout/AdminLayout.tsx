@@ -1,4 +1,3 @@
-import React from 'react'
 import { LayoutRouteProps, Outlet } from 'react-router-dom'
 import AdminHeader from './element/AdminHeader'
 import { ContainerWrapper } from './Layout.styles.ts'
