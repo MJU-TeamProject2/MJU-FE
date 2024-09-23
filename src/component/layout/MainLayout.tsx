@@ -1,6 +1,6 @@
 import { LayoutRouteProps, Outlet } from 'react-router-dom'
-import { ContainerWrapper } from './Layout.styles.ts'
-import MainHeader from '@/component/layout/element/MainHeader.tsx'
+import { ContainerWrapper } from './layout.styles'
+import MainHeader from '@/component/layout/element/MainHeader'
 
 const MainLayout = ({ children }: LayoutRouteProps) => {
   return (

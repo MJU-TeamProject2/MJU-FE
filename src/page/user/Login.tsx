@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/user/LoginStyles'
+import { Card, Title, Input, Button } from '@/component/user/loginStyles.ts'
 import { LoginContainer } from '@/component/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 
@@ -11,19 +11,19 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null)
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault() // 기본 폼 제출 방지
+    e.preventDefault()
 
-    const result = await loginUser(email, password) // Promise 반환
+    const result = await loginUser(email, password)
 
     if (result instanceof Error) {
-      setError(result.message) // 에러 처리
+      console.error(result.message)
+      setError('로그인에 실패했습니다.')
     } else {
-      console.log('로그인 성공:', result)
-      navigate('/home') // 로그인 후 홈으로 이동
+      console.log('로그인 성공')
+      navigate('/home')
     }
   }
 
-  // 모든 필드가 유효한지 체크
   const isFormValid = () => {
     return email.trim() !== '' && password.trim() !== ''
   }

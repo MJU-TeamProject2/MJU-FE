@@ -6,7 +6,7 @@ import {
   HomeContainer,
   OutfitImage,
   Title,
-} from '@/component/home/HomeStyle'
+} from '@/component/home/homeStyle.ts'
 
 const Home = () => {
   const outfits = [
