@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/user/LoginStyles'
+import { Card, Title, Input, Button } from '@/component/user/loginStyles.ts'
 import { LoginContainer } from '@/component/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 

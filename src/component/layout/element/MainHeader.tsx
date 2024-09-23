@@ -1,4 +1,4 @@
-import { HeaderWrapper } from '../Layout.styles'
+import { HeaderWrapper } from '../layout.styles.ts'
 
 const MainHeader = () => {
   return <HeaderWrapper></HeaderWrapper>
