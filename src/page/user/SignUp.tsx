@@ -33,29 +33,30 @@ const SignUp = () => {
 
     // 전화번호 형식 검증
     if (name === 'phoneNumber') {
-      const phoneRegex = /^\d{3}-\d{4}-\d{4}$/ // xxx-xxxx-xxxx 형식
+      const phoneRegex = /^\d{3}-\d{4}-\d{4}$/
       if (!phoneRegex.test(value)) {
         setPhoneError('전화번호는 xxx-xxxx-xxxx 형식이어야 합니다.')
       } else {
-        setPhoneError(null) // 형식이 맞으면 에러 제거
+        setPhoneError(null)
       }
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault() // 기본 폼 제출 방지
+    e.preventDefault()
     if (phoneError) {
-      setError('전화번호 형식이 올바르지 않습니다.') // 제출 시 전화번호 형식 오류 처리
+      setError('전화번호 형식이 올바르지 않습니다.')
       return
     }
 
-    const result = await registerUser(formData) // Promise 반환
+    const result = await registerUser(formData)
 
     if (result instanceof Error) {
-      setError(result.message) // 에러 처리
+      console.error(result.message)
+      setError('회원가입에 실패했습니다.')
     } else {
-      console.log('회원가입 성공:', result)
-      navigate('/') // 회원가입 후 로그인 페이지로 이동
+      console.log('회원가입 성공')
+      navigate('/')
     }
   }
 
@@ -63,7 +64,7 @@ const SignUp = () => {
   const isFormValid = () => {
     const { name, age, gender, email, password, phoneNumber } = formData
     return (
-      name && age && gender && email && password && phoneNumber && !phoneError // 전화번호 오류가 없을 때만 유효한 것으로 간주
+      name && age && gender && email && password && phoneNumber && !phoneError
     )
   }
 

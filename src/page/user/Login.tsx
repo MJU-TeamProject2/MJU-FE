@@ -16,9 +16,10 @@ const Login = () => {
     const result = await loginUser(email, password)
 
     if (result instanceof Error) {
-      setError(result.message)
+      console.error(result.message)
+      setError('로그인에 실패했습니다.')
     } else {
-      console.log('로그인 성공:', result)
+      console.log('로그인 성공')
       navigate('/home')
     }
   }
