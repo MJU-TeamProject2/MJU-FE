@@ -1,7 +1,8 @@
 {
   "files": [],
+  "extends": ["airbnb", "airbnb-typescript"],
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ],
+  ]
 }

@@ -1,14 +1,18 @@
-import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer'
 import {
-  Banner,
   GridContainer,
   GridItem,
   HomeContainer,
   OutfitImage,
   Title,
-} from '@/component/home/homeStyle.ts'
+} from '@/component/home/homeStyle'
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
+  const navigate = useNavigate()
+  const handleItemClick = (id: number | string) => {
+    navigate(`/product/${id}`)
+  }
+
   const outfits = [
     // 더미데이터
     {
@@ -40,15 +44,9 @@ const Home = () => {
   return (
     <HomeContainer>
       <Title>추천 의상</Title>
-      <Banner>
-        <ThreeJsModelViewer
-          objUrl={'http://localhost:80/artist.obj'}
-          mtlUrl={'http://localhost:80/artist.mtl'}
-        />
-      </Banner>
       <GridContainer>
         {outfits.map((outfit) => (
-          <GridItem key={outfit.id}>
+          <GridItem key={outfit.id} onClick={() => handleItemClick(outfit.id)}>
             <OutfitImage src={outfit.imageUrl} alt={outfit.name} />
             <h3>{outfit.name}</h3>
             <p>{outfit.price}</p>

@@ -6,7 +6,7 @@ import {
   Button,
   GenderContainer,
   GenderLabel,
-} from '@/component/user/loginStyles.ts'
+} from '@/component/user/loginStyles'
 import { LoginContainer } from '@/component/user/LoginContainer'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '@/api/userApi'
