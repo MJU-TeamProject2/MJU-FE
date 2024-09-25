@@ -6,8 +6,7 @@ export const HomeContainer = styled.div`
 `
 
 export const Banner = styled.div`
-  width: 80%;
-  height: 400px;
+  width: 100%;
   overflow: hidden;
   margin: 20px auto;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);

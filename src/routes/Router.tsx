@@ -4,7 +4,7 @@ import Home from '@/page/Home'
 import NotFound from '@/page/NotFount'
 import User from '@/page/user/User'
 import Login from '@/page/user/Login'
-import SignUp from '@/page/user/SignUp'
+import Register from '@/page/user/Register.tsx'
 
 const Router = () => {
   return (
@@ -12,7 +12,7 @@ const Router = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Login />} />
-          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/user/:id" element={<User />} />
         </Route>
