@@ -56,7 +56,7 @@ const Login = () => {
             로그인
           </Button>
         </form>
-        <Link to="/sign-up">
+        <Link to="/register">
           <Button>회원가입</Button>
         </Link>
       </Card>
