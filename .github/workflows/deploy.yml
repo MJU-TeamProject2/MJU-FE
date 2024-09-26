@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies  # 프로젝트 의존성 설치
         run: npm ci
 
-      - name: Run tests  # 테스트 실행
+      - name: Run tests  # 테스트 실행 코드
         run: npm test
 
       - name: Build  # 프로젝트 빌드
