@@ -1,6 +1,15 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/user/loginStyles.ts'
+import { useNavigate } from 'react-router-dom'
+import {
+  Card,
+  Title,
+  Input,
+  Button,
+  Footer,
+  ForgotLink,
+  SignupText,
+  SignupLink, ErrorMessage,
+} from '@/component/user/loginStyles.ts'
 import { LoginContainer } from '@/component/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 
@@ -31,34 +40,38 @@ const Login = () => {
   return (
     <LoginContainer>
       <Card>
-        <Title>로그인</Title>
+        <Title>LOGIN</Title>
         <form onSubmit={handleLogin}>
           <Input
             type="text"
-            placeholder="이메일"
+            placeholder="아이디를 입력하세요"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input
             type="password"
-            placeholder="비밀번호"
+            placeholder="비밀번호를 입력하세요"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <div style={{ color: 'red' }}>{error}</div>}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
+          <ForgotLink to="/src/page/user/find-id">
+            아이디 찾기/비밀번호 찾기
+          </ForgotLink>
           <Button
             type="submit"
             disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
+            style={{ backgroundColor: isFormValid() ? '#22B2E4' : '#ccc' }}
           >
-            로그인
+            로그인 하기
           </Button>
         </form>
-        <Link to="/sign-up">
-          <Button>회원가입</Button>
-        </Link>
+        <Footer>
+          <SignupText>회원이 아니신가요? </SignupText>
+          <SignupLink to="/sign-up">회원가입하기</SignupLink>
+        </Footer>
       </Card>
     </LoginContainer>
   )

@@ -1,12 +1,5 @@
 import React, { useState } from 'react'
-import {
-  Card,
-  Title,
-  Input,
-  Button,
-  GenderContainer,
-  GenderLabel,
-} from '@/component/user/loginStyles.ts'
+import { Card, Title, Input, Button } from '@/component/user/loginStyles.ts'
 import { LoginContainer } from '@/component/user/LoginContainer'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '@/api/userApi'
@@ -90,28 +83,7 @@ const SignUp = () => {
             required
             min="0" // 나이 입력 필드에 최소값 설정
           />
-          <GenderContainer>
-            <GenderLabel>
-              <input
-                type="radio"
-                name="gender"
-                value="M"
-                checked={formData.gender === 'M'}
-                onChange={handleChange}
-              />
-              남자
-            </GenderLabel>
-            <GenderLabel>
-              <input
-                type="radio"
-                name="gender"
-                value="F"
-                checked={formData.gender === 'F'}
-                onChange={handleChange}
-              />
-              여자
-            </GenderLabel>
-          </GenderContainer>
+
           <Input
             type="email"
             name="email"
@@ -141,7 +113,7 @@ const SignUp = () => {
           <Button
             type="submit"
             disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
+            style={{ backgroundColor: isFormValid() ? '#22B2E4' : '#ccc' }}
           >
             회원가입
           </Button>
