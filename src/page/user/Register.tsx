@@ -4,7 +4,7 @@ import { LoginContainer } from '@/component/user/LoginContainer'
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '@/api/userApi'
 
-const SignUp = () => {
+const Register = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: '',
@@ -123,4 +123,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default Register
