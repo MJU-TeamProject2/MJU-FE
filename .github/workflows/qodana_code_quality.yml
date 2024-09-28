@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Fetch all history for all branches and tags
+          fetch-depth: 0
 
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2024.1
@@ -28,3 +28,10 @@ jobs:
           pr-mode: true
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_489541164 }}
+          QODANA_DEBUG: 1  # Enable debug mode
+
+      - name: 'Display Qodana logs'
+        if: failure()
+        run: |
+          echo "Qodana logs:"
+          cat /home/runner/work/_temp/qodana/results/qodana.sarif.json
