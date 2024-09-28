@@ -33,7 +33,7 @@ const Home: React.FC = () => {
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
-      setError('Failed to fetch clothes. Please try again.')
+      setError('Failed to fetch products. Please try again.')
       console.error(err)
     } finally {
       setIsLoading(false)
@@ -41,7 +41,8 @@ const Home: React.FC = () => {
   }
 
   const handleItemClick = (id: number) => {
-    navigate(`/product/${id}`)
+    console.log(id)
+    navigate(`/products/${id}`)
   }
 
   const handlePageChange = (newPage: number) => {
