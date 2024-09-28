@@ -10,7 +10,7 @@ import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y'
 
 export default [
   {
-    files: ['**/*.{ts,tsx}'],
+    files: ['**/*.{js,jsx,ts,tsx}'],
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 2020,
@@ -36,33 +36,16 @@ export default [
       'prettier/prettier': 'error',
       'import/prefer-default-export': 'off',
       'react/react-in-jsx-scope': 'off',
-      quotes: ['error', 'single'], // quotes 규칙 추가
-    },
-  },
-  {
-    files: ['**/*.{js,jsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      prettier,
-      import: eslintPluginImport,
-      react: eslintPluginReact,
-      'jsx-a11y': eslintPluginJsxA11y,
-    },
-    rules: {
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-      'prettier/prettier': ['error', { endOfLine: 'auto' }],
-      'import/prefer-default-export': 'off',
-      'react/react-in-jsx-scope': 'off',
       quotes: ['error', 'single'],
-      semi: 'off',
+      'import/extensions': [
+        'error',
+        'ignorePackages',
+        {
+          '': 'never',
+          ts: 'never',
+          tsx: 'never',
+        },
+      ],
     },
   },
 ]

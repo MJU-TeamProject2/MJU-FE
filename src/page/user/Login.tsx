@@ -1,16 +1,7 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import {
-  Card,
-  Title,
-  Input,
-  Button,
-  Footer,
-  ForgotLink,
-  SignupText,
-  SignupLink, ErrorMessage,
-} from '@/component/user/loginStyles.ts'
-import { LoginContainer } from '@/component/user/LoginContainer'
+import { Link, useNavigate } from 'react-router-dom'
+import { Card, Title, Input, Button } from '@/component/styles/user/loginStyles'
+import { LoginContainer } from '@/component/styles/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 
 const Login = () => {
@@ -40,38 +31,34 @@ const Login = () => {
   return (
     <LoginContainer>
       <Card>
-        <Title>LOGIN</Title>
+        <Title>로그인</Title>
         <form onSubmit={handleLogin}>
           <Input
             type="text"
-            placeholder="아이디를 입력하세요"
+            placeholder="이메일"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input
             type="password"
-            placeholder="비밀번호를 입력하세요"
+            placeholder="비밀번호"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <ErrorMessage>{error}</ErrorMessage>}
-          <ForgotLink to="/src/page/user/find-id">
-            아이디 찾기/비밀번호 찾기
-          </ForgotLink>
+          {error && <div style={{ color: 'red' }}>{error}</div>}
           <Button
             type="submit"
             disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#22B2E4' : '#ccc' }}
+            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
           >
-            로그인 하기
+            로그인
           </Button>
         </form>
-        <Footer>
-          <SignupText>회원이 아니신가요? </SignupText>
-          <SignupLink to="/sign-up">회원가입하기</SignupLink>
-        </Footer>
+        <Link to="/register">
+          <Button>회원가입</Button>
+        </Link>
       </Card>
     </LoginContainer>
   )

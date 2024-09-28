@@ -44,3 +44,30 @@ export const OutfitImage = styled.img`
   object-fit: cover;
   border-radius: 8px;
 `
+
+export const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0;
+  gap: 10px;
+`
+
+export const PaginationButton = styled.button`
+  background-color: #003780;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #002560;
+  }
+
+  &:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+`
