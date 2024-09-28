@@ -1,8 +1,18 @@
-import axios from 'axios'
+import axios, {
+  AxiosError,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+} from 'axios'
 
 export type ApiResponse<T> = {
   success: boolean
   data: T
+}
+
+export type ErrorResponse = {
+  status: number
+  code: string
+  message: string
 }
 
 const axiosInstance = axios.create({
@@ -13,25 +23,23 @@ const axiosInstance = axios.create({
   },
 })
 
-axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('accessToken')
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
-    }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
+axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  const token = localStorage.getItem('accessToken')
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
   }
-)
+  return config
+})
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response.data
-  },
-  (error) => {
-    return Promise.reject(error)
+  (response: AxiosResponse) => response.data,
+  (error: AxiosError<ErrorResponse>) => {
+    if (error.response?.data) {
+      return Promise.reject(
+        new Error(error.response.data.message || '요청에 실패했습니다.')
+      )
+    }
+    return Promise.reject(new Error('에러가 발생했습니다.'))
   }
 )
 
