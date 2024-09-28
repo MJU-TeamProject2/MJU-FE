@@ -8,7 +8,7 @@ import {
   Title,
   PaginationContainer,
   PaginationButton,
-} from '@/component/home/homeStyle'
+} from '@/component/styles/home/homeStyle'
 import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
 
 const Home: React.FC = () => {

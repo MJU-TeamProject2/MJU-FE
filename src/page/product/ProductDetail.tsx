@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom'
-import { Banner } from '@/component/home/homeStyle'
+import { Banner } from '@/component/styles/home/homeStyle.ts'
 import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer'
 
 const ProductDetail = () => {
