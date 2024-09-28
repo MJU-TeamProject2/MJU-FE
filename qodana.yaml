@@ -10,3 +10,7 @@ exclude:
       - node_modules
       - build
       - dist
+bootstrap: |
+  QodanaPluginConfigProvider.prototype.getEslintConfigFiles = function () {
+    return ["eslint.config.js"];
+  };
