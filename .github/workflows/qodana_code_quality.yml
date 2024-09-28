@@ -1,6 +1,5 @@
 name: Qodana
 on:
-  workflow_dispatch:
   pull_request:
   push:
     branches:
@@ -13,7 +12,7 @@ jobs:
   qodana:
     runs-on: ubuntu-22.04
     permissions:
-      contents: write
+      contents: read
       pull-requests: write
       checks: write
     steps:
@@ -25,6 +24,7 @@ jobs:
         uses: JetBrains/qodana-action@v2024.1
         with:
           args: --baseline,qodana.sarif.json
+          pr-number: ${{ github.event.number }}
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_489541164 }}
 

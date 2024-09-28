@@ -4,9 +4,4 @@ profile:
   name: qodana.recommended
 include:
   - name: CheckDependencyLicenses
-exclude:
-  - name: All
-    paths:
-      - node_modules
-      - build
-      - dist
+only-changed-files: true
