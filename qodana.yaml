@@ -1,5 +1,5 @@
 version: "1.0"
-linter: jetbrains/qodana-js:latest
+linter: jetbrains/qodana-js:2024.1
 profile:
   name: qodana.recommended
 include:
@@ -10,5 +10,3 @@ exclude:
       - node_modules
       - build
       - dist
-only-changed-files: true
-eslint-config-file: eslint.config.js

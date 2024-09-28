@@ -25,10 +25,8 @@ jobs:
         uses: JetBrains/qodana-action@v2024.1
         with:
           args: --baseline,qodana.sarif.json
-          pr-mode: true
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_489541164 }}
-          QODANA_DEBUG: 1  # Enable debug mode
 
       - name: 'Display Qodana logs'
         if: failure()
