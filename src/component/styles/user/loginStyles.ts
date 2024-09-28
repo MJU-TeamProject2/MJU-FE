@@ -1,13 +1,5 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
-
-// 색상 변수 정의
-const colors = {
-  primary: '#767676', // 입력칸 밑줄 색상
-  background: '#1e1e1e',
-  text: 'white',
-  buttonHover: '#555555',
-}
+import { colors } from '@/component/styles/globalStyle'
 
 export const Card = styled.div`
   background: ${colors.background};
@@ -89,14 +81,6 @@ export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
   display: none;
 `
 
-export const LoginContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #121212;
-`
-
 export const Footer = styled.div`
   display: flex;
   justify-content: center;
@@ -104,37 +88,6 @@ export const Footer = styled.div`
   margin-top: 10px;
   font-size: 12px;
   color: ${colors.primary};
-`
-
-export const ForgotLink = styled(Link)`
-  color: ${colors.primary};
-  text-decoration: none;
-  margin-top: 10px;
-  font-size: 10px;
-  display: block;
-  text-align: right;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-export const SignupLink = styled(Link)`
-  margin-top: 10px;
-  color: ${colors.text};
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`
-
-export const SignupText = styled.span`
-  color: ${colors.primary};
-  font-size: 10px;
-  margin-right: 8px;
-  margin-top: 10px;
-  text-decoration: none;
 `
 
 export const ErrorMessage = styled.div`
