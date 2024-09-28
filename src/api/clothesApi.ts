@@ -1,15 +1,19 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+
 // 개별 의류 아이템에 대한 타입
 export type ClothesItem = {
   id: number
+  category: string
   imageUrl: string
   name: string
   price: number
-  detail: string
-  quantity: number
+  genderCategory: string | null
+  productNumber: string | null
+  discount: number | null
+  detailUrl: string
+  clothesSizeList: any[]
 }
 
-// 페이지네이션 정보를 포함한 응답 타입
 export type PaginatedResponse<T> = {
   page: number
   size: number
@@ -17,18 +21,26 @@ export type PaginatedResponse<T> = {
   content: T[]
 }
 
-// 의류 목록에 대한 페이지네이션된 응답 타입
-export type ClothesResponse = PaginatedResponse<ClothesItem>
+export type ClothesListResponse = PaginatedResponse<ClothesItem>
 
 export const retriveAllClothes = async (
   page: number,
   size: number
-): Promise<ClothesResponse> => {
-  const response: ApiResponse<ClothesResponse> = await axiosInstance.get(
+): Promise<ClothesListResponse> => {
+  const response: ApiResponse<ClothesListResponse> = await axiosInstance.get(
     '/api/v1/clothes/all',
     {
       params: { page, size },
     }
+  )
+  return response.data
+}
+
+export const retriveClothesDetail = async (
+  id: string
+): Promise<ClothesItem> => {
+  const response: ApiResponse<ClothesItem> = await axiosInstance.get(
+    `/api/v1/clothes/${id}`
   )
   return response.data
 }
