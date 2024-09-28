@@ -61,14 +61,14 @@ export const ProductInfo = styled.div`
 export const ProductName = styled.h1`
   font-size: 24px;
   margin-bottom: 20px;
-  color: ${colors.text};
+  color: ${colors.white};
 `
 
 export const Price = styled.p`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: ${colors.text};
+  color: ${colors.white};
 `
 
 export const Select = styled.select`
@@ -78,7 +78,7 @@ export const Select = styled.select`
   border: 1px solid #ddd;
   border-radius: 4px;
   background-color: #333;
-  color: ${colors.text};
+  color: ${colors.white};
 `
 
 export const ButtonGroup = styled.div`
@@ -91,7 +91,7 @@ export const Button = styled.button`
   width: 100%;
   padding: 10px;
   background-color: transparent;
-  color: ${colors.text};
+  color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
   cursor: pointer;
@@ -111,7 +111,7 @@ export const Button = styled.button`
 
 export const BuyButton = styled(Button)`
   background-color: #5a5f7d;
-  color: ${colors.text};
+  color: ${colors.white};
   border: 1px solid #3d3f5f;
 
   &:hover {
@@ -121,7 +121,7 @@ export const BuyButton = styled(Button)`
 
 export const CartButton = styled(Button)`
   background-color: ${colors.primary};
-  color: ${colors.text};
+  color: ${colors.white};
 `
 
 export const FittingRoomSection = styled.div`
@@ -139,7 +139,7 @@ export const FittingRoomButton = styled(Button)`
   width: 80%;
   background-color: #5a5f7d;
   border: 1px solid #3d3f5f;
-  color: ${colors.text};
+  color: ${colors.white};
 
   &:hover {
     background-color: #347fc4;

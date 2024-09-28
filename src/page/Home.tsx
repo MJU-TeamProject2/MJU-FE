@@ -8,6 +8,8 @@ import {
   Title,
   PaginationContainer,
   PaginationButton,
+  ProductName,
+  ProductPrice,
 } from '@/component/styles/home/homeStyle'
 import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
 
@@ -41,7 +43,6 @@ const Home: React.FC = () => {
   }
 
   const handleItemClick = (id: number) => {
-    console.log(id)
     navigate(`/products/${id}`)
   }
 
@@ -49,8 +50,8 @@ const Home: React.FC = () => {
     setCurrentPage(newPage)
   }
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>{error}</div>
+  if (isLoading) return <HomeContainer>Loading...</HomeContainer>
+  if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
     <HomeContainer>
@@ -59,8 +60,8 @@ const Home: React.FC = () => {
         {clothes.map((item) => (
           <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
             <OutfitImage src={item.imageUrl} alt={item.name} />
-            <h3>{item.name}</h3>
-            <p>{item.price.toLocaleString()}원</p>
+            <ProductName>{item.name}</ProductName>
+            <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
           </GridItem>
         ))}
       </GridContainer>

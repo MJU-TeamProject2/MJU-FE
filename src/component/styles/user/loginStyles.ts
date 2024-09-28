@@ -12,7 +12,7 @@ export const Card = styled.div`
 export const Title = styled.h2`
   text-align: center;
   margin-bottom: 30px;
-  color: ${colors.text};
+  color: ${colors.white};
   font-size: 16px;
 `
 
@@ -23,7 +23,7 @@ export const Input = styled.input`
   border: none;
   border-bottom: 1px solid ${colors.primary};
   background-color: transparent;
-  color: ${colors.text};
+  color: ${colors.white};
   outline: none;
   &::placeholder {
     color: ${colors.primary};
@@ -34,7 +34,7 @@ export const Button = styled.button`
   width: 100%;
   padding: 10px;
   background-color: transparent;
-  color: ${colors.text};
+  color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
   cursor: pointer;
