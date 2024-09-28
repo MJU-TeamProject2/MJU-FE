@@ -81,15 +81,6 @@ export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
   display: none;
 `
 
-export const Footer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-  font-size: 12px;
-  color: ${colors.primary};
-`
-
 export const ErrorMessage = styled.div`
   color: #ff6b6b;
   font-size: 12px;

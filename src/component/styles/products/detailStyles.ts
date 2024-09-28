@@ -19,6 +19,7 @@ export const ProductInfoSection = styled.div`
 export const ProductContentWrapper = styled.div`
   display: flex;
   flex: 1;
+  overflow: hidden;
 `
 
 export const ImageContainer = styled.div`
@@ -27,12 +28,14 @@ export const ImageContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-right: 20px;
+  overflow: hidden;
 `
 
 export const ProductImage = styled.img`
-  max-width: 100%;
-  max-height: 100%;
+  max-height: 90%;
+  max-width: 90%;
   object-fit: contain;
+  object-position: center;
   border-radius: 8px;
 `
 
@@ -85,27 +88,40 @@ export const ButtonGroup = styled.div`
 `
 
 export const Button = styled.button`
-  flex: 1;
-  padding: 15px;
-  border: none;
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  color: ${colors.text};
+  border: 1px solid ${colors.primary};
   border-radius: 4px;
-  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
 
   &:hover {
-    opacity: 0.9;
+    background-color: ${colors.buttonHover};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 `
 
 export const BuyButton = styled(Button)`
-  background-color: #4a90e2;
+  background-color: #5a5f7d;
   color: ${colors.text};
+  border: 1px solid #3d3f5f;
+
+  &:hover {
+    background-color: #347fc4;
+  }
 `
 
 export const CartButton = styled(Button)`
-  background-color: #f0f0f0;
-  color: #000;
+  background-color: ${colors.primary};
+  color: ${colors.text};
 `
 
 export const FittingRoomSection = styled.div`
@@ -121,6 +137,11 @@ export const FittingRoomButton = styled(Button)`
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  background-color: #4a90e2;
+  background-color: #5a5f7d;
+  border: 1px solid #3d3f5f;
   color: ${colors.text};
+
+  &:hover {
+    background-color: #347fc4;
+  }
 `
