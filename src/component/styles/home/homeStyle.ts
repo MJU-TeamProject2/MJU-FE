@@ -1,33 +1,30 @@
 import styled from 'styled-components'
+import { colors } from '@/component/styles/globalStyle'
 
 export const HomeContainer = styled.div`
-  text-align: center;
-  background-color: rgba(0, 55, 128, 0.1);
-`
-
-export const Banner = styled.div`
-  width: 100%;
-  overflow: hidden;
-  margin: 20px auto;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-  background-color: #f8f8f8;
+  background-color: ${colors.background};
+  color: ${colors.white};
+  min-height: 100vh;
+  padding: 20px;
 `
 
 export const Title = styled.h2`
   margin: 20px 0;
+  text-align: center;
+  color: ${colors.white};
 `
 
 export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 20px;
-  padding: 20px 10%;
+  padding: 20px 5%;
   margin: 0;
 `
 
 export const GridItem = styled.div`
-  background-color: rgba(255, 249, 214, 0.3);
-  border: 1px solid #ddd;
+  background-color: #333;
+  border: 1px solid #444;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
@@ -54,7 +51,7 @@ export const PaginationContainer = styled.div`
 `
 
 export const PaginationButton = styled.button`
-  background-color: #003780;
+  background-color: #4a90e2;
   color: white;
   border: none;
   border-radius: 4px;
@@ -63,11 +60,21 @@ export const PaginationButton = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #002560;
+    background-color: #357abd;
   }
 
   &:disabled {
-    background-color: #cccccc;
+    background-color: ${colors.buttonHover};
     cursor: not-allowed;
   }
+`
+
+export const ProductName = styled.h3`
+  color: ${colors.white};
+  margin: 10px 0;
+`
+
+export const ProductPrice = styled.p`
+  color: #4a90e2;
+  font-weight: bold;
 `

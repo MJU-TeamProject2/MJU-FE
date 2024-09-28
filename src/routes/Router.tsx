@@ -5,7 +5,7 @@ import NotFound from '@/page/NotFount'
 import User from '@/page/user/User'
 import Login from '@/page/user/Login'
 import Register from '@/page/user/Register'
-import ProductDetail from '@/page/product/ProductDetail'
+import ClothesDetail from '@/page/productDetail/ProductDetail'
 
 const Router = () => {
   return (
@@ -16,7 +16,7 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
           <Route path="/users/:id" element={<User />} />
-          <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/products/:id" element={<ClothesDetail />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

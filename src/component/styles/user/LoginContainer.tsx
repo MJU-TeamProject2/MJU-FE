@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { colors } from '@/component/styles/globalStyle'
+
 export const LoginContainer = styled.div`
     display: flex;
     width: 100%;
@@ -13,4 +15,12 @@ export const LoginContainer = styled.div`
     * {
         width: 100%;
     }
+`
+export const Footer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: ${colors.primary};
 `
