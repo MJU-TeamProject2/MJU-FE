@@ -4,12 +4,3 @@ profile:
   name: qodana.recommended
 include:
   - name: CheckDependencyLicenses
-exclude:
-  - name: All
-    paths:
-      - node_modules
-      - build
-      - dist
-eslint:
-  enabled: true
-  config-file: eslintrc.config.js
