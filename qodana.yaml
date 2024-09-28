@@ -14,3 +14,5 @@ bootstrap: |
   QodanaPluginConfigProvider.prototype.getEslintConfigFiles = function () {
     return ["eslint.config.js"];
   };
+  
+  only-changed-files: true
