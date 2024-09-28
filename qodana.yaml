@@ -10,6 +10,3 @@ exclude:
       - node_modules
       - build
       - dist
-eslint:
-  enabled: true
-  config-file: eslintrc.config.js
