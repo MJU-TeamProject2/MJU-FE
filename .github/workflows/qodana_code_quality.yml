@@ -24,7 +24,7 @@ jobs:
         uses: JetBrains/qodana-action@v2024.1
         with:
           args: --baseline,qodana.sarif.json
-          pr-number: ${{ github.event.number }}
+          pr-mode: true
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_489541164 }}
 
