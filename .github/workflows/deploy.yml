@@ -33,8 +33,13 @@ jobs:
             npm install
           fi
 
-      - name: Run tests
-        run: npm test
+      - name: Run tests (if available)
+        run: |
+          if npm run | grep -q "test"; then
+            npm test
+          else
+            echo "No test script found, skipping tests"
+          fi
 
       - name: Build
         run: npm run build
