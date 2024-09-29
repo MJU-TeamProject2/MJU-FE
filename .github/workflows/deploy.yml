@@ -1,57 +1,58 @@
-name: Deploy to EC2
+name: Deploy React App to Amazon EC2
 
 on:
   push:
-    branches: [ main ]  # main 브랜치에 push가 발생하면 워크플로우 실행
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code  # 코드 체크아웃
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js  # Node.js 설정
-        uses: actions/setup-node@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'  # 프로젝트에 맞는 Node.js 버전 선택
+          node-version: '14'
 
-      - name: Cache dependencies  # 의존성 캐싱으로 빌드 속도 향상
-        uses: actions/cache@v2
+      - name: Cache dependencies
+        uses: actions/cache@v3
         with:
           path: ~/.npm
           key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.OS }}-node-
 
-      - name: Install dependencies  # 프로젝트 의존성 설치
-        run: npm install
+      - name: Install dependencies
+        run: npm ci
 
-      - name: Run tests  # 테스트 실행
+      - name: Run tests
         run: npm test
 
-      - name: Build  # 프로젝트 빌드
+      - name: Build
         run: npm run build
 
-      - name: Deploy to EC2  # EC2에 배포
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
-          HOST: ${{ secrets.EC2_HOST }}
-          USER: ${{ secrets.EC2_USER }}
+          HOST_DNS: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          # SSH 키 설정
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          
-          # 빌드 파일을 EC2로 전송
-          scp -i private_key -o StrictHostKeyChecking=no -r ./build/* ${USER}@${HOST}:/home/${USER}/app
-          
-          # EC2에 SSH 접속하여 애플리케이션 재시작
-          ssh -i private_key -o StrictHostKeyChecking=no ${USER}@${HOST} '
-            cd /home/${USER}/app &&
-            npm install --production &&
-            pm2 restart ecosystem.config.js --env production || pm2 start ecosystem.config.js --env production
+          scp -i private_key -o StrictHostKeyChecking=no -r build/* ${EC2_USER}@${HOST_DNS}:/var/www/html/
+          ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
+            sudo systemctl restart nginx
           '
 
-      - name: Clean up  # 임시 파일 정리
+      - name: Clean up
+        if: always()
         run: rm -f private_key
