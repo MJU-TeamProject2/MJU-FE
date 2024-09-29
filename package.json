@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint './src/**/*.{ts,tsx,js,jsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx,js,jsx}'",
-    "preview": "vite preview",
-    "test": "react-scripts test --passWithNoTests"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@effect-ts/core": "^0.60.5",
