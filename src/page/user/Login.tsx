@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/user/loginStyles.ts'
-import { LoginContainer } from '@/component/user/LoginContainer'
+import { Card, Title, Input, Button } from '@/component/styles/user/loginStyles'
+import { LoginContainer } from '@/component/styles/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 
 const Login = () => {

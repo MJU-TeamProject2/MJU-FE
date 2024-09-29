@@ -1,60 +1,87 @@
-import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import {
-  Banner,
   GridContainer,
   GridItem,
   HomeContainer,
   OutfitImage,
   Title,
-} from '@/component/home/homeStyle.ts'
+  PaginationContainer,
+  PaginationButton,
+  ProductName,
+  ProductPrice,
+} from '@/component/styles/home/homeStyle'
+import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
 
-const Home = () => {
-  const outfits = [
-    // 더미데이터
-    {
-      id: 1,
-      name: '여름 원피스',
-      price: '29,000원',
-      imageUrl: '/images/outfit1.png',
-    },
-    {
-      id: 2,
-      name: '가을 자켓',
-      price: '49,000원',
-      imageUrl: '/images/outfit2.png',
-    },
-    {
-      id: 3,
-      name: '겨울 코트',
-      price: '89,000원',
-      imageUrl: '/images/outfit3.png',
-    },
-    {
-      id: 4,
-      name: '스포츠웨어',
-      price: '39,000원',
-      imageUrl: '/images/outfit4.png',
-    },
-  ]
+const Home: React.FC = () => {
+  const navigate = useNavigate()
+  const [clothes, setClothes] = useState<ClothesItem[]>([])
+  const [currentPage, setCurrentPage] = useState(0)
+  const [totalPages, setTotalPages] = useState(0)
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const pageSize = 10 // 한 페이지에 표시할 아이템 수
+
+  useEffect(() => {
+    fetchClothes()
+  }, [currentPage])
+
+  const fetchClothes = async () => {
+    setIsLoading(true)
+    setError(null)
+    try {
+      const response = await retriveAllClothes(currentPage, pageSize)
+      setClothes(response.content)
+      setTotalPages(Math.ceil(response.total / pageSize))
+    } catch (err) {
+      setError('Failed to fetch products. Please try again.')
+      console.error(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleItemClick = (id: number) => {
+    navigate(`/products/${id}`)
+  }
+
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage)
+  }
+
+  if (isLoading) return <HomeContainer>Loading...</HomeContainer>
+  if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
     <HomeContainer>
       <Title>추천 의상</Title>
-      <Banner>
-        <ThreeJsModelViewer
-          objUrl={'http://localhost:80/artist.obj'}
-          mtlUrl={'http://localhost:80/artist.mtl'}
-        />
-      </Banner>
       <GridContainer>
-        {outfits.map((outfit) => (
-          <GridItem key={outfit.id}>
-            <OutfitImage src={outfit.imageUrl} alt={outfit.name} />
-            <h3>{outfit.name}</h3>
-            <p>{outfit.price}</p>
+        {clothes.map((item) => (
+          <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
+            <OutfitImage src={item.imageUrl} alt={item.name} />
+            <ProductName>{item.name}</ProductName>
+            <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
           </GridItem>
         ))}
       </GridContainer>
+      <PaginationContainer>
+        <PaginationButton
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 0}
+        >
+          이전
+        </PaginationButton>
+        <span>
+          {currentPage + 1} / {totalPages}
+        </span>
+        <PaginationButton
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages - 1}
+        >
+          다음
+        </PaginationButton>
+      </PaginationContainer>
     </HomeContainer>
   )
 }

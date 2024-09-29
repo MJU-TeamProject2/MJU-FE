@@ -10,6 +10,7 @@
 + Three.js
 + Jest
 + Cypress
++ Qodana
 
 ### 개발환경 추가 설명
 아래는 간략하게 정리한 개발 환경 설명입니다.
