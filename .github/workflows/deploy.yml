@@ -17,32 +17,19 @@ jobs:
         with:
           node-version: '16'
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node-
-
       - name: Install dependencies
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-
-      - name: Run tests (if available)
-        run: |
-          if npm run | grep -q "test"; then
-            npm test
-          else
-            echo "No test script found, skipping tests"
-          fi
+        run: npm ci
 
       - name: Build
         run: npm run build
+
+      - name: Check build output
+        run: |
+          if [ ! -d "build" ]; then
+            echo "Build directory not found!"
+            exit 1
+          fi
+          ls -la build
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -58,10 +45,19 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
+            echo "Build directory is missing or empty!"
+            exit 1
+          fi
           scp -i private_key -o StrictHostKeyChecking=no -r build/* ${EC2_USER}@${HOST_DNS}:/var/www/html/
-          ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
-            sudo systemctl restart nginx
-          '
+          if [ $? -ne 0 ]; then
+            echo "SCP failed. Checking SSH connection..."
+            ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} 'echo "SSH connection successful"'
+          else
+            ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
+              sudo systemctl restart nginx
+            '
+          fi
 
       - name: Clean up
         if: always()
