@@ -20,20 +20,43 @@ jobs:
       - name: Install dependencies
         run: |
           if [ -f package-lock.json ]; then
-          npm ci
+            npm ci
           else
-          npm install
+            npm install
           fi
 
+      - name: Show project structure before build
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Directory contents:"
+          ls -la
+          echo "Package.json contents:"
+          cat package.json
+
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          echo "Build script exit code: $?"
+
+      - name: Show project structure after build
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Directory contents:"
+          ls -la
+          echo "Build directory contents (if exists):"
+          ls -la build || echo "Build directory does not exist"
 
       - name: Check build output
         run: |
           if [ ! -d "build" ]; then
             echo "Build directory not found!"
+            echo "Checking for other potential build directories:"
+            find . -type d -name "*build*"
             exit 1
           fi
+          echo "Build directory contents:"
           ls -la build
 
       - name: Configure AWS credentials
@@ -50,19 +73,16 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          if [ ! -d "build" ] || [ -z "$(ls -A build)" ]; then
-            echo "Build directory is missing or empty!"
+          BUILD_DIR=$(find . -type d -name "*build*" | head -n 1)
+          if [ -z "$BUILD_DIR" ]; then
+            echo "No build directory found!"
             exit 1
           fi
-          scp -i private_key -o StrictHostKeyChecking=no -r build/* ${EC2_USER}@${HOST_DNS}:/var/www/html/
-          if [ $? -ne 0 ]; then
-            echo "SCP failed. Checking SSH connection..."
-            ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} 'echo "SSH connection successful"'
-          else
-            ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
-              sudo systemctl restart nginx
-            '
-          fi
+          echo "Using build directory: $BUILD_DIR"
+          scp -i private_key -o StrictHostKeyChecking=no -r $BUILD_DIR/* ${EC2_USER}@${HOST_DNS}:/var/www/html/
+          ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
+            sudo systemctl restart nginx
+          '
 
       - name: Clean up
         if: always()
