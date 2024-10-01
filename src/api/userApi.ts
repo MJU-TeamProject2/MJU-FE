@@ -4,7 +4,7 @@ export const registerUser = async (
   userData: User
 ): Promise<User & { id: string }> => {
   const response: ApiResponse<User & { id: string }> = await axiosInstance.post(
-    '/api/customer/register',
+    '/api/v1/customer/register',
     userData
   )
   return response.data
@@ -15,7 +15,7 @@ export const loginUser = async (
   password: string
 ): Promise<LoginResponse> => {
   const response: ApiResponse<LoginResponse> = await axiosInstance.post(
-    '/api/customer/login',
+    '/api/v1/customer/login',
     {
       email,
       password,
