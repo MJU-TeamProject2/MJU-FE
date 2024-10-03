@@ -1,4 +1,5 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+import Login from "@/page/user/Login.tsx";
 
 export const registerUser = async (
   userData: User
@@ -28,6 +29,23 @@ export const loginUser = async (
     localStorage.setItem('refreshToken', refreshToken)
   }
 
+  return response.data
+}
+
+// 회원 정보를 불러오는 함수
+export const inquiryUser = async (
+  email:string,
+  password: string
+): Promise<LoginResponse> => {
+  const response: ApiResponse<LoginResponse> = await axiosInstance.post(
+      '/api/v1/customer/',
+      {
+        
+      }
+  )
+  if( response.success ){
+
+  }
   return response.data
 }
 

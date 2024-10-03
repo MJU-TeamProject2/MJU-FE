@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Card, Title, Input, Button } from "@/component/styles/user/loginStyles.ts";
 import { UserModifyContainer } from "@/component/styles/user/UserModifyContainer.tsx";
-import { loginUser } from '@/api/userApi'
+import { inquiryUser } from '@/api/userApi'
 
 
 const User = () => {
@@ -21,7 +21,7 @@ const User = () => {
   const handleUserModify = async ( e: React.FormEvent ) => {
     e.preventDefault()
 
-    const result = await loginUser( email, password );
+    const result = await inquiryUser( email, password );
 
     if( result instanceof Error ) {
       console.error( result.message )
