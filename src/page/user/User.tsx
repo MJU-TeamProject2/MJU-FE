@@ -25,13 +25,16 @@ const User = () => {
 
     if( result instanceof Error ) {
       console.error( result.message )
-      setError( "" )
+      setError( "정보 조회에 실패했습니다." )
     }
     else {
       console.log( "" )
-      navigate( "/" )
     }
   }
+  // 1. 페이지에 접근할 때 정보를 가지고 와야함
+  // 2. 가져온 정보로 페이지에 값을 채워 넣어야 함
+  // 3. 수정 버튼을 누르기 전까지는 실제 값이 변경되지 말아야 함
+  // 4. 수정 버튼을 누르면 입력된 값으로 실제 값을 변경해야 됨
 
   const isFormValid = () => {
     return email.trim() !== '' && password.trim() !== ''
