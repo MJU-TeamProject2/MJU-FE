@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   GridContainer,
@@ -11,20 +11,30 @@ import {
   ProductName,
   ProductPrice,
 } from '@/component/styles/home/homeStyle'
-import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
+// import { retriveAllClothes, ClothesItem } from '@/api/clothesApi' // API 관련 부분 주석 처리
+
+// 더미 데이터 생성
+const dummyClothes = [
+  { id: 1, name: 'Cool Jacket', imageUrl: '/images/jacket.png', price: 89000 },
+  { id: 2, name: 'Stylish Jeans', imageUrl: '/images/jeans.png', price: 55000 },
+  {
+    id: 3,
+    name: 'Comfy Sweater',
+    imageUrl: '/images/sweater.png',
+    price: 65000,
+  },
+  // 필요한 더미 데이터 추가 가능
+]
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const [clothes, setClothes] = useState<ClothesItem[]>([])
+  const [clothes] = useState(dummyClothes) // 더미 데이터를 초기값으로 설정
   const [currentPage, setCurrentPage] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const totalPages = 1 // 더미 데이터에 맞게 총 페이지 수를 설정
 
-  const pageSize = 10 // 한 페이지에 표시할 아이템 수
-
+  /*
   useEffect(() => {
-    fetchClothes()
+    fetchClothes()  // API 호출을 위한 useEffect 주석 처리
   }, [currentPage])
 
   const fetchClothes = async () => {
@@ -41,6 +51,7 @@ const Home: React.FC = () => {
       setIsLoading(false)
     }
   }
+  */
 
   const handleItemClick = (id: number) => {
     navigate(`/products/${id}`)
@@ -49,9 +60,6 @@ const Home: React.FC = () => {
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage)
   }
-
-  if (isLoading) return <HomeContainer>Loading...</HomeContainer>
-  if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
     <HomeContainer>
