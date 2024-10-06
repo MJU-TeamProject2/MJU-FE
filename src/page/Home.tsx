@@ -50,6 +50,10 @@ const Home: React.FC = () => {
     setCurrentPage(newPage)
   }
 
+  const handleMyPageClick = () => {
+    navigate( `/users`)
+  }
+
   if (isLoading) return <HomeContainer>Loading...</HomeContainer>
   if (error) return <HomeContainer>{error}</HomeContainer>
 
@@ -82,6 +86,11 @@ const Home: React.FC = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
+      <button
+        onClick={ () => handleMyPageClick() }
+      >
+        마이페이지
+      </button>
     </HomeContainer>
   )
 }
