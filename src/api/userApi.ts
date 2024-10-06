@@ -1,5 +1,6 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
 import Login from "@/page/user/Login.tsx";
+import {string} from "@effect-ts/core/Show";
 
 export const registerUser = async (
   userData: User
@@ -46,9 +47,26 @@ export const inquiryUser = async (): Promise<User> => {
         }
       }
   );
-  if (response.success) {
-    const { name, gender, nickname, age, email, password } = response.data
-  }
+  return response.data
+}
+
+export const modifyUserInfo = async (
+    name: string,
+    nickName: string,
+    age: number,
+    email: string,
+    phoneNumber: string,
+): Promise<ModifyUserResponse> => {
+  const response: ApiResponse<ModifyUserResponse> = await axiosInstance.patch(
+      '/api/v1/customer/profile',
+      {
+        name,
+        nickName,
+        age,
+        email,
+        phoneNumber
+      }
+  )
   return response.data
 }
 
@@ -60,6 +78,16 @@ export type User = {
   nickName: string
   password: string
   phoneNumber: string
+}
+
+export type ModifyUserResponse = {
+  name: string
+  nickName: string
+  gender: string
+  age: number
+  password: string
+  phoneNumber: string
+  email: string
 }
 
 export type LoginResponse = {

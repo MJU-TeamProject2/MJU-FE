@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserModifyContainer } from "@/component/styles/user/UserModifyContainer.tsx";
-import { inquiryUser } from '@/api/userApi'
+import {inquiryUser, modifyUserInfo} from '@/api/userApi'
 import {
   Tag,
   Card,
@@ -21,8 +21,6 @@ const User = () => {
   const [ gender, setGender ] = useState('')
   const [ email, setEmail ] = useState('')
   const [ phoneNumber, setPhoneNumber ] = useState('')
-  const [ password, setPassword ] = useState('')
-  const [ repassword, setRePassword ] = useState('');
 
   // 최초에만 데이터베이스에 정보를 불러오게 설정
   const isMounted = useRef( false );
@@ -33,7 +31,6 @@ const User = () => {
     }
   }, [] );
 
-  const navigate = useNavigate()
   const [ error, setError ] = useState<string | null>( null )
 
   const getUser = async () => {
@@ -44,53 +41,36 @@ const User = () => {
       setError( '정보 조회에 실패했습니다.' )
     } else {
       console.log( '정보 조회 성공' )
-      console.log( result )
       setName( result.name )
       setAge( result.age )
       setEmail( result.email )
-      setNickname( result.nickName );
+      setGender( result.gender )
+      setNickname( result.nickName )
       setPhoneNumber( result.phoneNumber )
-      if( result.gender == 'M' ){
-        setGender( 'M' )
-      }
-      else if ( result.gender == 'F' ){
-        setGender( 'F' )
-      }
-      else {
-        console.log( "조회 데이터에 문제가 있습니다.")
-      }
     }
   }
 
   const modifyUser = async (e: React.FormEvent)  => {
     e.preventDefault();
+
+    const result = await modifyUserInfo( name, nickname, age, email, phoneNumber )
+
+    if ( result instanceof Error ){
+      console.error( result.message )
+      setError( "정보 수정에 실패했습니다." )
+    } else {
+      alert( "회원 정보가 수정되었습니다.")
+    }
   }
 
   const isFormValid = () => {
     return (
         email.trim() !== ''
-        && password.trim() !== ''
         && name.trim() !== ''
         && nickname.trim() !== ''
         && age !== 0
-        && ( gender == 'M' || gender == 'F' )
         && phoneNumber.trim() !== ''
-        && password == repassword
     )
-  }
-
-  const passwordValidCheck = () => {
-    return password == repassword;
-  }
-  
-  const isCurrentGender = () => {
-    // 현재 성별에 따른 결과
-    return gender=='M';
-  }
-
-  const changeGender = ( gender ) => {
-    if( gender == 0 ) setGender('M');
-    else if ( gender == 1 ) setGender('F');
   }
 
   return (
@@ -110,24 +90,12 @@ const User = () => {
             </InputGroup>
             <InputGroup>
               <Tag> 성별 </Tag>
-              <GenderButtonGroup>
-                <GenderButton
-                    type="button"
-                    onClick={ (e) => setGender('M') }
-                    style={{ backgroundColor: isCurrentGender() ? '#007bff' : '#1e1e1e' }}
-                    disabled={ isCurrentGender() }
-                >
-                  남
-                </GenderButton>
-                <GenderButton
-                    type="button"
-                    onClick={ (e) => setGender('F') }
-                    style={{ backgroundColor: isCurrentGender() ? '#1e1e1e' : '#007bff' }}
-                    disabled={ !isCurrentGender() }
-                >
-                  여
-                </GenderButton>
-              </GenderButtonGroup>
+              <Input
+                type="text"
+                placeholder={gender}
+                value={gender}
+                disabled
+              />
             </InputGroup>
             <InputGroup>
               <Tag> 별명 </Tag>
@@ -167,29 +135,6 @@ const User = () => {
                   required
               />
             </InputGroup>
-            <InputGroup>
-              <Tag> 비밀번호 </Tag>
-              <Input
-                  type="password"
-                  placeholder={password}
-                  value={password}
-                  onChange={ (e) => setPassword( e.target.value ) }
-                  required
-              />
-            </InputGroup>
-            <InputGroup>
-              <Tag> 비밀번호 확인 </Tag>
-              <Input
-                  type="password"
-                  placeholder={repassword}
-                  value={repassword}
-                  onChange={ (e) => setRePassword( e.target.value ) }
-                  required
-              />
-            </InputGroup>
-            <ErrorDiv>
-              { error && <div style={{ color: 'red' }}> {error}</div> }
-            </ErrorDiv>
             <ButtonGroup>
               <Button
                   type="submit"
