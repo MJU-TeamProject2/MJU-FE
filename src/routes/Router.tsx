@@ -6,6 +6,7 @@ import User from '@/page/user/User'
 import Login from '@/page/user/Login'
 import Register from '@/page/user/Register'
 import ClothesDetail from '@/page/productDetail/ProductDetail'
+import Cart from '@/page/user/Cart'
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
           <Route path="/home" element={<Home />} />
           <Route path="/users/:id" element={<User />} />
           <Route path="/products/:id" element={<ClothesDetail />} />
+          <Route path="/cart" element={<Cart />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
