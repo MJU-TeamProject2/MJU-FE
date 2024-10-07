@@ -49,5 +49,10 @@
     "ts-jest": "^29.2.5",
     "typescript": "^5.6.2",
     "vite": "^5.4.1"
-  }
+  },
+  "description": "명지대 팀프로젝트 2 메타버스 플랫폼 쇼핑몰",
+  "main": "eslint.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

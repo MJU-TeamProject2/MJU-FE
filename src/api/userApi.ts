@@ -1,4 +1,6 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+import Login from "@/page/user/Login.tsx";
+import {string} from "@effect-ts/core/Show";
 
 export const registerUser = async (
   userData: User
@@ -31,13 +33,61 @@ export const loginUser = async (
   return response.data
 }
 
+// 회원 정보를 불러오는 함수
+
+export const inquiryUser = async (): Promise<User> => {
+  const token = localStorage.getItem( 'accessToken' );
+  if( !token ) console.log( "Invalid Access" );
+
+  const response: ApiResponse<User> = await axiosInstance.get(
+      '/api/v1/customer/profile',
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+  );
+  return response.data
+}
+
+export const modifyUserInfo = async (
+    name: string,
+    nickName: string,
+    age: number,
+    email: string,
+    phoneNumber: string,
+): Promise<ModifyUserResponse> => {
+  const response: ApiResponse<ModifyUserResponse> = await axiosInstance.patch(
+      '/api/v1/customer/profile',
+      {
+        name,
+        nickName,
+        age,
+        email,
+        phoneNumber
+      }
+  )
+  return response.data
+}
+
 export type User = {
   name: string
   age: number
   gender: string
   email: string
+  nickName: string
   password: string
   phoneNumber: string
+}
+
+export type ModifyUserResponse = {
+  name: string
+  nickName: string
+  gender: string
+  age: number
+  password: string
+  phoneNumber: string
+  email: string
 }
 
 export type LoginResponse = {
