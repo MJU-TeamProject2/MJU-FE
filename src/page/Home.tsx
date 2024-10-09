@@ -11,7 +11,7 @@ import {
   ProductName,
   ProductPrice,
 } from '@/component/styles/home/homeStyle'
-import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
+import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
 import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
 
 const Home: React.FC = () => {
@@ -32,7 +32,7 @@ const Home: React.FC = () => {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await retriveAllClothes(currentPage, pageSize)
+      const response = await retrieveAllClothes(currentPage, pageSize)
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
@@ -84,8 +84,8 @@ const Home: React.FC = () => {
         </PaginationButton>
       </PaginationContainer>
       <ThreeJsModelViewer
-        objUrl={"http://localhost:80/artist.obj"}
-        mtlUrl={"http://localhost:80/artist.mtl"}>
+        objId={"1"}
+        mtlId={"2"}>
       </ThreeJsModelViewer>
     </HomeContainer>
   )
