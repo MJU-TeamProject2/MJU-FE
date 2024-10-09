@@ -12,6 +12,7 @@ import {
   ProductPrice,
 } from '@/component/styles/home/homeStyle'
 import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
+import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
@@ -82,6 +83,10 @@ const Home: React.FC = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
+      <ThreeJsModelViewer
+        objUrl={"http://localhost:80/artist.obj"}
+        mtlUrl={"http://localhost:80/artist.mtl"}>
+      </ThreeJsModelViewer>
     </HomeContainer>
   )
 }

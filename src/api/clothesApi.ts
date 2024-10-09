@@ -23,7 +23,7 @@ export type PaginatedResponse<T> = {
 
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
 
-export const retriveAllClothes = async (
+export const retrieveAllClothes = async (
   page: number,
   size: number
 ): Promise<ClothesListResponse> => {
@@ -36,7 +36,7 @@ export const retriveAllClothes = async (
   return response.data
 }
 
-export const retriveClothesDetail = async (
+export const retrieveClothesDetail = async (
   id: string
 ): Promise<ClothesItem> => {
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
