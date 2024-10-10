@@ -31,6 +31,27 @@ export const loginUser = async (
   return response.data
 }
 
+export const loginAdmin = async (
+  code: string,
+  password: string
+): Promise<AdminLoginResponse> => {
+  const response: ApiResponse<AdminLoginResponse> = await axiosInstance.post(
+    '/api/v1/',
+    {
+      code,
+      password,
+    }
+  )
+
+  if (response.success) {
+    const { accessToken, refreshToken } = response.data
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+  }
+
+  return response.data
+}
+
 export type User = {
   name: string
   age: number
@@ -38,6 +59,11 @@ export type User = {
   email: string
   password: string
   phoneNumber: string
+}
+
+export type AdminLoginResponse = {
+  accessToken: string
+  refreshToken: string
 }
 
 export type LoginResponse = {
