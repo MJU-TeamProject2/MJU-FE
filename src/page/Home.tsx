@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   GridContainer,
@@ -13,7 +13,7 @@ import {
 } from '@/component/styles/home/homeStyle'
 import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
 
-const Home: React.FC = () => {
+const Home = () => {
   const navigate = useNavigate()
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
   }
 
   const handleMyPageClick = () => {
-    navigate( `/users`)
+    navigate('/users')
   }
 
   if (isLoading) return <HomeContainer>Loading...</HomeContainer>
@@ -86,11 +86,7 @@ const Home: React.FC = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
-      <button
-        onClick={ () => handleMyPageClick() }
-      >
-        마이페이지
-      </button>
+      <button onClick={() => handleMyPageClick()}>마이페이지</button>
     </HomeContainer>
   )
 }

@@ -19,7 +19,6 @@ const User = () => {
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
 
-  // 최초에만 데이터베이스에 정보를 불러오게 설정
   const isMounted = useRef(false)
   useEffect(() => {
     if (!isMounted.current) {
@@ -70,7 +69,6 @@ const User = () => {
     )
   }
 
-  // @ts-ignore
   return (
     <UserModifyContainer>
       <Card>
