@@ -5,7 +5,7 @@ import MainHeader from '@/component/layout/element/MainHeader'
 const MainLayout = ({ children }: LayoutRouteProps) => {
   return (
     <>
-      <MainHeader></MainHeader>
+      <MainHeader />
       <ContainerWrapper>{children || <Outlet />}</ContainerWrapper>
     </>
   )
