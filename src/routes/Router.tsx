@@ -10,15 +10,16 @@ import Register from '@/page/user/Register'
 import ClothesDetail from '@/page/productDetail/ProductDetail'
 import Cart from '@/page/user/Cart'
 import ProductSelection from '@/page/user/ProductSelection'
+import ClothesRegister from '@/page/productDetail/ProductRegister'
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/" element={<Login />} />
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/" element={<Home />} />
+          <Route path="adminHome" element={<AdminHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
@@ -28,6 +29,7 @@ const Router = () => {
           <Route path="/products/:id" element={<ClothesDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/productSelection" element={<ProductSelection />} />
+          <Route path="/registerCloth" element={ <ClothesRegister /> } />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
