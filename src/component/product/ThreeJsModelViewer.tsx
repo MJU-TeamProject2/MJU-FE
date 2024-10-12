@@ -1,17 +1,33 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { ClothesItem, retrieveClothesDetail } from '@/api/clothesApi.ts'
 
-const ThreeJsModelViewer: React.FC<{ objUrl: string; mtlUrl: string }> = ({
-  objUrl,
-  mtlUrl,
-}) => {
+const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
+                                                                          objId,
+                                                                          mtlId,
+                                                                        }) => {
+  const [objClothesItem, setObjClothesItem] = useState<ClothesItem | null>(null)
+  const [mtlClothesItem, setMtlClothesItem] = useState<ClothesItem | null>(null)
   const mountRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    const fetchClothesItems = async () => {
+      const [obj, mtl] = await Promise.all([
+        retrieveClothesDetail(objId),
+        retrieveClothesDetail(mtlId),
+      ])
+      setObjClothesItem(obj)
+      setMtlClothesItem(mtl)
+    }
+    fetchClothesItems()
+  }, [])
+
+  useEffect(() => {
     if (!mountRef.current) return
+    if (objClothesItem == null || mtlClothesItem == null) return
 
     // Scene setup
     const scene = new THREE.Scene()
@@ -19,7 +35,7 @@ const ThreeJsModelViewer: React.FC<{ objUrl: string; mtlUrl: string }> = ({
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      1000,
     )
     const renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -42,13 +58,13 @@ const ThreeJsModelViewer: React.FC<{ objUrl: string; mtlUrl: string }> = ({
 
     // Model loading
     const mtlLoader = new MTLLoader()
-    mtlLoader.load(mtlUrl, (materials) => {
+    mtlLoader.load(mtlClothesItem.imageUrl, (materials) => {
       materials.preload()
 
       const objLoader = new OBJLoader()
       objLoader.setMaterials(materials)
       objLoader.load(
-        objUrl,
+        objClothesItem.imageUrl,
         (object) => {
           object.traverse((child) => {
             if (child instanceof THREE.Mesh) {
@@ -76,7 +92,7 @@ const ThreeJsModelViewer: React.FC<{ objUrl: string; mtlUrl: string }> = ({
         },
         (error) => {
           console.log('An error happened', error)
-        }
+        },
       )
     })
 
@@ -102,7 +118,7 @@ const ThreeJsModelViewer: React.FC<{ objUrl: string; mtlUrl: string }> = ({
       mountRef.current?.removeChild(renderer.domElement)
       controls.dispose() // OrbitControls 정리
     }
-  }, [objUrl, mtlUrl])
+  }, [objClothesItem, mtlClothesItem])
 
   return <div ref={mountRef} style={{ width: '100%', height: '100%' }} />
 }

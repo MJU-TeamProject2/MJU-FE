@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import { retriveClothesDetail } from '@/api/clothesApi'
+import { retrieveClothesDetail } from '@/api/clothesApi'
 import * as S from '@/component/styles/products/detailStyles'
 
 const ProductDetail: React.FC = () => {
@@ -10,7 +10,7 @@ const ProductDetail: React.FC = () => {
 
   const loadProductDetails = async () => {
     if (id) {
-      const details = await retriveClothesDetail(id)
+      const details = await retrieveClothesDetail(id)
       setProduct(details)
     }
   }
