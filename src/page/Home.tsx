@@ -11,7 +11,9 @@ import {
   ProductName,
   ProductPrice,
 } from '@/component/styles/home/homeStyle'
-import { retriveAllClothes, ClothesItem } from '@/api/clothesApi'
+import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
+// import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
+import ThreeJsModelViewerLocalTest from '@/component/product/ThreeJsModelViewerLocalTest.tsx'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -31,7 +33,7 @@ const Home = () => {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await retriveAllClothes(currentPage, pageSize)
+      const response = await retrieveAllClothes(currentPage, pageSize)
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
@@ -86,6 +88,8 @@ const Home = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
+      <ThreeJsModelViewerLocalTest>
+      </ThreeJsModelViewerLocalTest>
       <button onClick={() => handleMyPageClick()}>마이페이지</button>
     </HomeContainer>
   )
