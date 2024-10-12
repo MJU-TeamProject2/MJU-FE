@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   GridContainer,
@@ -15,7 +15,7 @@ import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
 // import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
 import ThreeJsModelViewerLocalTest from '@/component/product/ThreeJsModelViewerLocalTest.tsx'
 
-const Home: React.FC = () => {
+const Home = () => {
   const navigate = useNavigate()
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
@@ -52,6 +52,10 @@ const Home: React.FC = () => {
     setCurrentPage(newPage)
   }
 
+  const handleMyPageClick = () => {
+    navigate('/users')
+  }
+
   if (isLoading) return <HomeContainer>Loading...</HomeContainer>
   if (error) return <HomeContainer>{error}</HomeContainer>
 
@@ -86,6 +90,7 @@ const Home: React.FC = () => {
       </PaginationContainer>
       <ThreeJsModelViewerLocalTest>
       </ThreeJsModelViewerLocalTest>
+      <button onClick={() => handleMyPageClick()}>마이페이지</button>
     </HomeContainer>
   )
 }
