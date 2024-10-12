@@ -7,13 +7,16 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 const ThreeJsModelViewer: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null)
   const [loadingStatus, setLoadingStatus] = useState<string>('Loading...')
+  const [heightScale, setHeightScale] = useState<number>(170) // Default height
+  const [weightScale, setWeightScale] = useState<number>(70) // Default weight
+  const [avatar, setAvatar] = useState<THREE.Object3D | null>(null) // Store the avatar object
 
   useEffect(() => {
     if (!mountRef.current) return
 
     // Scene setup
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color(0xf0f0f0) // Light gray background
+    scene.background = new THREE.Color(0x000000) // Background color set to black
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -39,13 +42,9 @@ const ThreeJsModelViewer: React.FC = () => {
     directionalLight.position.set(1, 1, 1).normalize()
     scene.add(directionalLight)
 
-    // Helper axes
-    const axesHelper = new THREE.AxesHelper(5)
-    scene.add(axesHelper)
-
     // Model loading
     const mtlLoader = new MTLLoader()
-    mtlLoader.load('/artist.mtl',
+    mtlLoader.load('/avatar.mtl',
       (materials) => {
         materials.preload()
         setLoadingStatus('MTL loaded, loading OBJ...')
@@ -53,20 +52,20 @@ const ThreeJsModelViewer: React.FC = () => {
         const objLoader = new OBJLoader()
         objLoader.setMaterials(materials)
         objLoader.load(
-          '/artist.obj',
+          '/avatar.obj',
           (object) => {
+            // Assign object to avatar
+            const avatarObj = object
+            setAvatar(avatarObj) // Store avatar in state
 
-            // Adjust model scale and position
-            const box = new THREE.Box3().setFromObject(object)
-            const size = box.getSize(new THREE.Vector3())
-            const maxDim = Math.max(size.x, size.y, size.z)
-            const scale = 5 / maxDim // Scale to fit within a 5 unit cube
-            object.scale.set(scale, scale, scale)
+            // Set initial avatar scale
+            avatarObj.scale.set((weightScale / 70) * 5, (heightScale / 170) * 5, (weightScale / 70) * 5)
 
-            const center = box.getCenter(new THREE.Vector3())
-            object.position.sub(center)
+            // Set avatar position
+            avatarObj.position.set(0, -4, 0)
 
-            scene.add(object)
+            // Add avatar to the scene
+            scene.add(avatarObj)
 
             // Adjust camera position
             camera.position.set(5, 5, 5)
@@ -98,6 +97,7 @@ const ThreeJsModelViewer: React.FC = () => {
     const animate = () => {
       requestAnimationFrame(animate)
       controls.update()
+      renderer.setSize(330, 400)
       renderer.render(scene, camera)
     }
     animate()
@@ -118,18 +118,72 @@ const ThreeJsModelViewer: React.FC = () => {
     }
   }, [])
 
+  // Effect to update avatar scale when heightScale or weightScale changes
+  useEffect(() => {
+    if (avatar) {
+      avatar.scale.set((weightScale / 70) * 5, (heightScale / 170) * 5, (weightScale / 70) * 5) // Adjust weight (X,Z axis) and height (Y axis)
+    }
+  }, [heightScale, weightScale, avatar])
+
   return (
-    <div>
-      <div ref={mountRef} style={{ width: '100%', height: '100vh' }} />
+    <div style={{ display: 'flex', width: '30%', flexDirection: 'column', height: '100vh' }}>
+      {/* 3D Model Section */}
+      <div
+        ref={mountRef}
+        style={{ width: '30%', flexGrow: 1 }} // FlexGrow 1 ensures this div takes up the majority of the screen
+      />
+
+      {/* Control Panel Section (Sliders) */}
       <div style={{
-        position: 'absolute',
-        top: '10px',
-        left: '10px',
-        color: 'white',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        padding: '5px'
+        width: '100%', // Ensure the slider section is the same width as the 3D render area
+        padding: '10px',
+        backgroundColor: 'rgba(100, 100, 150, 1)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'column'
       }}>
-        {loadingStatus}
+        {/* Height slider */}
+        <div style={{
+          width: '300px',
+          margin: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          padding: '10px',
+          borderRadius: '10px',
+          zIndex: 1
+        }}>
+          <label htmlFor="heightSlider">Adjust Height: {heightScale} cm</label>
+          <input
+            id="heightSlider"
+            type="range"
+            min="140"
+            max="200"
+            value={heightScale}
+            onChange={(e) => setHeightScale(Number(e.target.value))}
+            style={{ width: '100%' }}
+          />
+        </div>
+
+        {/* Weight slider */}
+        <div style={{
+          width: '300px',
+          margin: '10px',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
+          padding: '10px',
+          borderRadius: '10px',
+          zIndex: 1
+        }}>
+          <label htmlFor="weightSlider">Adjust Weight: {weightScale} kg</label>
+          <input
+            id="weightSlider"
+            type="range"
+            min="40"
+            max="100"
+            value={weightScale}
+            onChange={(e) => setWeightScale(Number(e.target.value))}
+            style={{ width: '100%' }}
+          />
+        </div>
       </div>
     </div>
   )
