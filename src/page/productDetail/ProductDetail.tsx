@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { retrieveClothesDetail } from '@/api/clothesApi'
 import * as S from '@/component/styles/products/detailStyles'
+import ThreeJsModelViewerLocalTest from '@/component/product/ThreeJsModelViewerLocalTest.tsx'
 
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -50,6 +51,7 @@ const ProductDetail: React.FC = () => {
         </S.ProductContentWrapper>
       </S.ProductInfoSection>
       <S.FittingRoomSection>
+        <ThreeJsModelViewerLocalTest></ThreeJsModelViewerLocalTest>
         <S.FittingRoomButton>피팅 하기</S.FittingRoomButton>
       </S.FittingRoomSection>
     </S.ProductDetailContainer>
