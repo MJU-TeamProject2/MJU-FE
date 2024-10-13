@@ -82,11 +82,6 @@ export const ButtonGroup = styled.div`
   display: flex;
 `
 
-export const GenderButtonGroup = styled.div`
-  display: flex;
-  flex: 7;
-`
-
 export const Card = styled.div`
   background: ${colors.background};
   padding: 30px;

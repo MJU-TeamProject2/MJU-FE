@@ -77,9 +77,9 @@ export const PaginationButton = styled.button`
 `
 
 export const RegisterButton = styled.button`
-  background-color: #A2A2A2;
+  background-color: #364DFF;
   color: white;
-  border: none;
+  border: solid 1px;
   border-radius: 4px;
   padding: 8px 16px;
   margin: 0px 100px;

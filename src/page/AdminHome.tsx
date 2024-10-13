@@ -54,7 +54,7 @@ const AdminHome: React.FC = () => {
   }
 
   const handleRegisterCloth = () => {
-    navigate( '' )
+    navigate( '/registerCloth' )
   }
 
   return (

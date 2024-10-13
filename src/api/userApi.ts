@@ -36,7 +36,7 @@ export const loginAdmin = async (
   password: string
 ): Promise<AdminLoginResponse> => {
   const response: ApiResponse<AdminLoginResponse> = await axiosInstance.post(
-    '/api/v1/',
+    '/api/v1/admin/login',
     {
       code,
       password,
