@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   CartContainer,
   CartHeader,
@@ -11,6 +11,13 @@ import {
   TotalSection,
   DeleteButton,
 } from '@/component/styles/user/cartStyles'
+import {
+  getCartItems,
+  deleteCartItem,
+  updateCartItemQuantity,
+  purchaseCartItems,
+} from '@/api/cartApi'
+import { useNavigate } from 'react-router-dom'
 
 interface Product {
   id: string
@@ -19,29 +26,31 @@ interface Product {
   price: number
   originalPrice: number
   imageUrl: string
+  quantity: number
 }
 
 const Cart: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>([
-    {
-      id: 'product1',
-      name: '데미지 워시드 데님 팬츠 - 미디엄 블루',
-      size: 'XS',
-      price: 29700,
-      originalPrice: 53000,
-      imageUrl: 'https://via.placeholder.com/100',
-    },
-    {
-      id: 'product2',
-      name: '블랙 진 - 슬림 핏',
-      size: 'M',
-      price: 35000,
-      originalPrice: 49000,
-      imageUrl: 'https://via.placeholder.com/100',
-    },
-  ])
-
+  const [products, setProducts] = useState<Product[]>([])
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
+  const navigate = useNavigate() // useNavigate 사용
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const cartItems = await getCartItems()
+      const formattedProducts = cartItems.map((item) => ({
+        id: item.clothesId.toString(),
+        name: item.name,
+        size: item.clothesSizeList[0]?.size || 'M',
+        price: item.price,
+        originalPrice: item.price + item.discount,
+        imageUrl: item.imageUrl,
+        quantity: item.clothesSizeList[0]?.quantity || 1,
+      }))
+      setProducts(formattedProducts)
+    }
+    fetchCartItems()
+  }, [])
+
   const handleProductSelection = (productId: string) => {
     if (selectedProducts.includes(productId)) {
       setSelectedProducts(selectedProducts.filter((id) => id !== productId))
@@ -50,20 +59,67 @@ const Cart: React.FC = () => {
     }
   }
 
-  // 개별 제품 삭제 로직 (엑스 버튼 눌렀을 때)
-  const handleDeleteProduct = (productId: string) => {
+  const handleSelectAll = () => {
+    if (selectedProducts.length === products.length && products.length > 0) {
+      setSelectedProducts([])
+    } else {
+      setSelectedProducts(products.map((product) => product.id))
+    }
+  }
+
+  const handleDeleteProduct = async (productId: string) => {
+    await deleteCartItem(Number(productId))
     setProducts(products.filter((product) => product.id !== productId))
     setSelectedProducts(selectedProducts.filter((id) => id !== productId))
   }
-  const handleDeleteSelected = () => {
+
+  const handleDeleteSelected = async () => {
+    await Promise.all(selectedProducts.map((id) => deleteCartItem(Number(id))))
     setProducts(
       products.filter((product) => !selectedProducts.includes(product.id))
     )
     setSelectedProducts([])
   }
-  const handlePurchase = () => {
-    alert('구매가 완료되었습니다!')
+
+  const handleQuantityUpdate = async (
+    productId: string,
+    newQuantity: number
+  ) => {
+    await updateCartItemQuantity(Number(productId), newQuantity)
+    const updatedProducts = products.map((product) =>
+      product.id === productId ? { ...product, quantity: newQuantity } : product
+    )
+    setProducts(updatedProducts)
   }
+
+  const handlePurchase = async () => {
+    if (selectedProducts.length === 0) {
+      alert('선택된 상품이 없습니다.')
+      return
+    }
+    await purchaseCartItems(selectedProducts)
+    alert('구매가 완료되었습니다!')
+    navigate('/')
+  }
+
+  const calculateTotalPrice = () => {
+    return products.reduce(
+      (acc, product) => acc + product.price * product.quantity,
+      0
+    )
+  }
+
+  const calculateTotalDiscount = () => {
+    return products.reduce(
+      (acc, product) =>
+        acc + (product.originalPrice - product.price) * product.quantity,
+      0
+    )
+  }
+
+  const totalPrice = calculateTotalPrice()
+  const totalDiscount = calculateTotalDiscount()
+  const finalPrice = totalPrice - totalDiscount
 
   return (
     <CartContainer>
@@ -71,18 +127,14 @@ const Cart: React.FC = () => {
         <div>
           <Checkbox
             type="checkbox"
-            checked={selectedProducts.length === products.length} // 전체 선택 여부 확인
-            onChange={() =>
-              setSelectedProducts(
-                selectedProducts.length === products.length
-                  ? []
-                  : products.map((p) => p.id)
-              )
+            checked={
+              selectedProducts.length === products.length && products.length > 0
             }
+            onChange={handleSelectAll}
           />
           전체 선택
         </div>
-        <DeleteButton onClick={handleDeleteSelected}>선택 삭제</DeleteButton>
+        <DeleteButton onClick={handleDeleteSelected}>전체 삭제</DeleteButton>
       </CartHeader>
 
       {products.map((product) => (
@@ -95,32 +147,56 @@ const Cart: React.FC = () => {
           <ProductImage src={product.imageUrl} alt="Product Image" />
           <ProductInfo>
             <p>{product.name}</p>
-            <p>{product.size} / 1개</p>
+            <p>
+              {product.size} / {product.quantity}개
+            </p>
             <p style={{ textDecoration: 'line-through', color: '#767676' }}>
               {product.originalPrice.toLocaleString()}원
             </p>
             <p style={{ fontWeight: 'bold', color: '#000' }}>
               {product.price.toLocaleString()}원
             </p>
+            <button
+              onClick={() =>
+                handleQuantityUpdate(product.id, product.quantity + 1)
+              }
+            >
+              수량 증가
+            </button>
+            <button
+              onClick={() =>
+                handleQuantityUpdate(product.id, product.quantity - 1)
+              }
+            >
+              수량 감소
+            </button>
           </ProductInfo>
           <PriceInfo>
-            {/* 제품 삭제 버튼 */}
             <button onClick={() => handleDeleteProduct(product.id)}>X</button>
           </PriceInfo>
         </ProductContainer>
       ))}
+
       <PurchaseButton onClick={handlePurchase}>구매하기</PurchaseButton>
 
       <TotalSection>
         <div>
-          <p>구매 금액</p>
-          <p>할인 금액</p>
-          <p>상품 금액</p>
+          <p style={{ color: '#000', fontWeight: 'bold', fontSize: '18px' }}>
+            구매 금액
+          </p>
+          <p style={{ color: '#767676', fontSize: '14px' }}>할인 금액</p>
+          <p style={{ color: '#767676', fontSize: '14px' }}>상품 금액</p>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <p>0원</p>
-          <p style={{ color: 'blue' }}>-0원</p>
-          <p style={{ fontWeight: 'bold', fontSize: '24px' }}>0원</p>
+          <p style={{ color: '#000', fontWeight: 'bold', fontSize: '18px' }}>
+            {totalPrice.toLocaleString()}원
+          </p>
+          <p style={{ color: 'blue', fontSize: '14px' }}>
+            -{totalDiscount.toLocaleString()}원
+          </p>
+          <p style={{ color: '#767676', fontSize: '14px' }}>
+            {finalPrice.toLocaleString()}원
+          </p>
         </div>
       </TotalSection>
     </CartContainer>
