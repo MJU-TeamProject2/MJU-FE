@@ -13,7 +13,6 @@ import {
   Tab,
   ProductInfo,
 } from '@/component/styles/home/homeStyle'
-import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
 import {
   retrieveAllClothes,
   ClothesItem,
