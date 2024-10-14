@@ -40,6 +40,19 @@ export const retrieveAllClothes = async (
   )
   return response.data
 }
+export const retrieveClothesByCategory = async (
+  page: number,
+  size: number,
+  activeTab: string
+): Promise<ClothesListResponse> => {
+  const response: ApiResponse<ClothesListResponse> = await axiosInstance.get(
+    `/api/v1/clothes/by/${activeTab}`,
+    {
+      params: { page, size },
+    }
+  )
+  return response.data
+}
 
 export const retrieveClothesDetail = async (
   id: string
