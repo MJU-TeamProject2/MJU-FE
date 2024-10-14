@@ -5,16 +5,19 @@ import {
   GridItem,
   HomeContainer,
   OutfitImage,
-  Title,
   PaginationContainer,
   PaginationButton,
   ProductName,
   ProductPrice,
+  TabContainer,
+  Tab,
+  ProductInfo,
 } from '@/component/styles/home/homeStyle'
 import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
 
 const Home = () => {
   const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState('상의')
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
@@ -54,14 +57,26 @@ const Home = () => {
   if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
-    <HomeContainer>
-      <Title>추천 의상</Title>
+    <div>
+      <TabContainer>
+        {['상의', '바지', '원피스', '아우터', '신발', '가방'].map((tab) => (
+          <Tab
+            key={tab}
+            active={activeTab === tab}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </Tab>
+        ))}
+      </TabContainer>
       <GridContainer>
         {clothes.map((item) => (
           <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
             <OutfitImage src={item.imageUrl} alt={item.name} />
-            <ProductName>{item.name}</ProductName>
-            <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
+            <ProductInfo>
+              <ProductName>{item.name}</ProductName>
+              <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
+            </ProductInfo>
           </GridItem>
         ))}
       </GridContainer>
@@ -82,7 +97,7 @@ const Home = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
-    </HomeContainer>
+    </div>
   )
 }
 
