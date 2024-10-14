@@ -51,27 +51,26 @@ export const retrieveClothesDetail = async (
 }
 
 export const registerCloth = async (
-    clothesItem: ClothesItem
+  clothesItem: ClothesItem
 ): Promise<RegisterResponse> => {
-  const data = new FormData();
+  const data = new FormData()
   Object.entries(clothesItem).forEach(([key, value]) => {
     if (value instanceof File) {
-      data.append(key, value, value.name);
+      data.append(key, value, value.name)
     } else {
-      data.append(key, value.toString());
+      data.append(key, value.toString())
     }
-  });
-
+  })
+  console.log(data)
   const response: ApiResponse<RegisterResponse> = await axiosInstance.post(
-      '/api/v1/clothes/product',
-      data,
-      {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("accessToken")}`,
-          'Content-Type': 'multipart/form-data',
-        }
-      }
-  );
-  return response.data;
-};
-
+    '/api/v1/clothes/product',
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  )
+  return response.data
+}

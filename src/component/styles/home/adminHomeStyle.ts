@@ -17,7 +17,7 @@ export const Title = styled.h1`
 export const Subtitle = styled.h3`
   margin: 20px 0;
   text-align: center;
-  color: ${colors.white}; 
+  color: ${colors.white};
 `
 
 export const GridContainer = styled.div`
@@ -38,7 +38,7 @@ export const GridItem = styled.div`
 
   &:hover {
     transform: scale(1.05);
-    cursor: pointer
+    cursor: pointer;
   }
 `
 
@@ -77,7 +77,7 @@ export const PaginationButton = styled.button`
 `
 
 export const RegisterButton = styled.button`
-  background-color: #364DFF;
+  background-color: #364dff;
   color: white;
   border: solid 1px;
   border-radius: 4px;
