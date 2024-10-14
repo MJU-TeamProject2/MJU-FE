@@ -36,3 +36,4 @@ public/images
 *.tsbuildinfo
 
 .env
+resources

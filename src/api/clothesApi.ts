@@ -21,6 +21,11 @@ export type PaginatedResponse<T> = {
   content: T[]
 }
 
+export type RegisterResponse = {
+  success: boolean
+  data: Object
+}
+
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
 
 export const retrieveAllClothes = async (
@@ -54,6 +59,31 @@ export const retrieveClothesDetail = async (
 ): Promise<ClothesItem> => {
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
+  )
+  return response.data
+}
+
+export const registerCloth = async (
+  clothesItem: ClothesItem
+): Promise<RegisterResponse> => {
+  const data = new FormData()
+  Object.entries(clothesItem).forEach(([key, value]) => {
+    if (value instanceof File) {
+      data.append(key, value, value.name)
+    } else {
+      data.append(key, value.toString())
+    }
+  })
+  console.log(data)
+  const response: ApiResponse<RegisterResponse> = await axiosInstance.post(
+    '/api/v1/clothes/product',
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    }
   )
   return response.data
 }
