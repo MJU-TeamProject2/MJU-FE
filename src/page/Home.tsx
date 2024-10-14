@@ -5,18 +5,23 @@ import {
   GridItem,
   HomeContainer,
   OutfitImage,
-  Title,
   PaginationContainer,
   PaginationButton,
   ProductName,
   ProductPrice,
+  TabContainer,
+  Tab,
+  ProductInfo,
 } from '@/component/styles/home/homeStyle'
-import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
-// import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
-import ThreeJsModelViewerLocalTest from '@/component/product/ThreeJsModelViewerLocalTest.tsx'
+import {
+  retrieveAllClothes,
+  ClothesItem,
+  retrieveClothesByCategory,
+} from '@/api/clothesApi'
 
 const Home = () => {
   const navigate = useNavigate()
+  const [activeTab, setActiveTab] = useState('ALL')
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
@@ -27,13 +32,18 @@ const Home = () => {
 
   useEffect(() => {
     fetchClothes()
-  }, [currentPage])
+  }, [currentPage, activeTab])
 
   const fetchClothes = async () => {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await retrieveAllClothes(currentPage, pageSize)
+      const response =
+        activeTab == 'ALL'
+          ? await retrieveAllClothes(currentPage, pageSize)
+          : await retrieveClothesByCategory(currentPage, pageSize, activeTab)
+
+      // const response = await retrieveAllClothes(currentPage, pageSize)
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
@@ -52,22 +62,32 @@ const Home = () => {
     setCurrentPage(newPage)
   }
 
-  const handleMyPageClick = () => {
-    navigate('/users')
-  }
-
   if (isLoading) return <HomeContainer>Loading...</HomeContainer>
   if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
-    <HomeContainer>
-      <Title>추천 의상</Title>
+    <div>
+      <TabContainer>
+        {['ALL', 'OUTERWEAR', 'TOPS', 'PANTS', 'DRESSES', 'SHOES'].map(
+          (tab) => (
+            <Tab
+              key={tab}
+              active={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </Tab>
+          )
+        )}
+      </TabContainer>
       <GridContainer>
         {clothes.map((item) => (
           <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
             <OutfitImage src={item.imageUrl} alt={item.name} />
-            <ProductName>{item.name}</ProductName>
-            <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
+            <ProductInfo>
+              <ProductName>{item.name}</ProductName>
+              <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
+            </ProductInfo>
           </GridItem>
         ))}
       </GridContainer>
@@ -88,10 +108,7 @@ const Home = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
-      <ThreeJsModelViewerLocalTest>
-      </ThreeJsModelViewerLocalTest>
-      <button onClick={() => handleMyPageClick()}>마이페이지</button>
-    </HomeContainer>
+    </div>
   )
 }
 

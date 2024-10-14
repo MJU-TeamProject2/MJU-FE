@@ -3,10 +3,20 @@ import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import {
+  ModelSection,
+  ControlPanel,
+  SliderContainer,
+  SliderInput,
+  SliderLabel,
+  FittingContainer,
+  ModelFrame,
+  ControlSection,
+} from '@/component/styles/products/modelStyles'
 
 const ThreeJsModelViewer: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null)
-  const [loadingStatus, setLoadingStatus] = useState<string>('Loading...')
+  const [, setLoadingStatus] = useState<string>('Loading...')
   const [heightScale, setHeightScale] = useState<number>(170) // Default height
   const [weightScale, setWeightScale] = useState<number>(70) // Default weight
   const [avatar, setAvatar] = useState<THREE.Object3D | null>(null) // Store the avatar object
@@ -21,7 +31,7 @@ const ThreeJsModelViewer: React.FC = () => {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000,
+      1000
     )
     const renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -44,7 +54,8 @@ const ThreeJsModelViewer: React.FC = () => {
 
     // Model loading
     const mtlLoader = new MTLLoader()
-    mtlLoader.load('/avatar.mtl',
+    mtlLoader.load(
+      '/avatar.mtl',
       (materials) => {
         materials.preload()
         setLoadingStatus('MTL loaded, loading OBJ...')
@@ -59,7 +70,11 @@ const ThreeJsModelViewer: React.FC = () => {
             setAvatar(avatarObj) // Store avatar in state
 
             // Set initial avatar scale
-            avatarObj.scale.set((weightScale / 70) * 5, (heightScale / 170) * 5, (weightScale / 70) * 5)
+            avatarObj.scale.set(
+              (weightScale / 70) * 5,
+              (heightScale / 170) * 5,
+              (weightScale / 70) * 5
+            )
 
             // Set avatar position
             avatarObj.position.set(0, -4, 0)
@@ -90,14 +105,14 @@ const ThreeJsModelViewer: React.FC = () => {
       (error) => {
         console.error('An error happened', error)
         setLoadingStatus('Error loading materials')
-      },
+      }
     )
 
     // Animation
     const animate = () => {
       requestAnimationFrame(animate)
       controls.update()
-      renderer.setSize(330, 400)
+      renderer.setSize(600, 600)
       renderer.render(scene, camera)
     }
     animate()
@@ -121,71 +136,52 @@ const ThreeJsModelViewer: React.FC = () => {
   // Effect to update avatar scale when heightScale or weightScale changes
   useEffect(() => {
     if (avatar) {
-      avatar.scale.set((weightScale / 70) * 5, (heightScale / 170) * 5, (weightScale / 70) * 5) // Adjust weight (X,Z axis) and height (Y axis)
+      avatar.scale.set(
+        (weightScale / 60) * 5,
+        (heightScale / 170) * 5,
+        (weightScale / 60) * 5
+      ) // Adjust weight (X,Z axis) and height (Y axis)
     }
   }, [heightScale, weightScale, avatar])
 
   return (
-    <div style={{ display: 'flex', width: '30%', flexDirection: 'column', height: '100vh' }}>
-      {/* 3D Model Section */}
-      <div
-        ref={mountRef}
-        style={{ width: '30%', flexGrow: 1 }} // FlexGrow 1 ensures this div takes up the majority of the screen
-      />
+    <FittingContainer>
+      <ModelSection>
+        <ModelFrame ref={mountRef} />
+      </ModelSection>
 
-      {/* Control Panel Section (Sliders) */}
-      <div style={{
-        width: '100%', // Ensure the slider section is the same width as the 3D render area
-        padding: '10px',
-        backgroundColor: 'rgba(100, 100, 150, 1)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'column'
-      }}>
-        {/* Height slider */}
-        <div style={{
-          width: '300px',
-          margin: '10px',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: '10px',
-          borderRadius: '10px',
-          zIndex: 1
-        }}>
-          <label htmlFor="heightSlider">Adjust Height: {heightScale} cm</label>
-          <input
-            id="heightSlider"
-            type="range"
-            min="140"
-            max="200"
-            value={heightScale}
-            onChange={(e) => setHeightScale(Number(e.target.value))}
-            style={{ width: '100%' }}
-          />
-        </div>
+      <ControlSection>
+        <ControlPanel>
+          <SliderContainer>
+            <SliderLabel htmlFor="heightSlider">
+              Height: {heightScale} cm
+            </SliderLabel>
+            <SliderInput
+              id="heightSlider"
+              type="range"
+              min="140"
+              max="200"
+              value={heightScale}
+              onChange={(e) => setHeightScale(Number(e.target.value))}
+            />
+          </SliderContainer>
 
-        {/* Weight slider */}
-        <div style={{
-          width: '300px',
-          margin: '10px',
-          backgroundColor: 'rgba(255, 255, 255, 0.8)',
-          padding: '10px',
-          borderRadius: '10px',
-          zIndex: 1
-        }}>
-          <label htmlFor="weightSlider">Adjust Weight: {weightScale} kg</label>
-          <input
-            id="weightSlider"
-            type="range"
-            min="40"
-            max="100"
-            value={weightScale}
-            onChange={(e) => setWeightScale(Number(e.target.value))}
-            style={{ width: '100%' }}
-          />
-        </div>
-      </div>
-    </div>
+          <SliderContainer>
+            <SliderLabel htmlFor="weightSlider">
+              Weight: {weightScale} kg
+            </SliderLabel>
+            <SliderInput
+              id="weightSlider"
+              type="range"
+              min="40"
+              max="100"
+              value={weightScale}
+              onChange={(e) => setWeightScale(Number(e.target.value))}
+            />
+          </SliderContainer>
+        </ControlPanel>
+      </ControlSection>
+    </FittingContainer>
   )
 }
 
