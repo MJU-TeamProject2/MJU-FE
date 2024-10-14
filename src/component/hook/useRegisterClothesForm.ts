@@ -89,5 +89,3 @@ export const useRegisterClothesForm = () => {
   }
   return { formData, errors, handleChange, handleNumberChange, isFormValid }
 }
-
-export default useRegisterClothesForm

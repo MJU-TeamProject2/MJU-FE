@@ -151,7 +151,12 @@ const ProductRegister: React.FC = () => {
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 상품 가격 </Tag>
-              <Input type="number" name="price" placeholder="0" onChange={}{(e) => handleNumberChange( 'price', e.target.value ) } />
+              <Input
+                type="number"
+                name="price"
+                placeholder="0"
+                onChange={(e) => handleNumberChange('price', e.target.value)}
+              />
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 상품 번호 </Tag>
@@ -159,17 +164,24 @@ const ProductRegister: React.FC = () => {
                 type="text"
                 name="productNumber"
                 placeholder="PRODUCT-001"
-                onChange={ (e) => handleChange( 'productNumber', e.target.value )}
+                onChange={(e) => handleChange('productNumber', e.target.value)}
               />
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 적용 할인율 </Tag>
-              <Input type="number" name="discount" placeholder="0"
-              onChange={ (e) => handleNumberChange( 'discount', e.target.value) }/>
+              <Input
+                type="number"
+                name="discount"
+                placeholder="0"
+                onChange={(e) => handleNumberChange('discount', e.target.value)}
+              />
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 사이즈 </Tag>
-              <Select name="size" onChange={ (e) => handleChange( 'size', e.target.value )}>
+              <Select
+                name="size"
+                onChange={(e) => handleChange('size', e.target.value)}
+              >
                 <Option value="XS"> XS </Option>
                 <Option value="S"> S </Option>
                 <Option value="M"> M </Option>
@@ -179,7 +191,12 @@ const ProductRegister: React.FC = () => {
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 현재 재고 </Tag>
-              <Input type="number" name="quantity" placeholder="0" onChange={(e) => handleNumberChange( 'quantity', e.target.value )} />
+              <Input
+                type="number"
+                name="quantity"
+                placeholder="0"
+                onChange={(e) => handleNumberChange('quantity', e.target.value)}
+              />
             </ProductInputContainer>
             <Button type="submit">등록</Button>
           </ProductInformationContainer>
