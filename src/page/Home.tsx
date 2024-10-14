@@ -12,10 +12,8 @@ import {
   ProductPrice,
 } from '@/component/styles/home/homeStyle'
 import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
-// import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
-import ThreeJsModelViewerLocalTest from '@/component/product/ThreeJsModelViewerLocalTest.tsx'
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
@@ -88,8 +86,6 @@ const Home = () => {
           다음
         </PaginationButton>
       </PaginationContainer>
-      <ThreeJsModelViewerLocalTest>
-      </ThreeJsModelViewerLocalTest>
       <button onClick={() => handleMyPageClick()}>마이페이지</button>
     </HomeContainer>
   )

@@ -3,4 +3,5 @@ export const colors = {
   background: '#1e1e1e',
   white: 'white',
   buttonHover: '#555555',
+  adminBackground: '#1E1F30'
 }

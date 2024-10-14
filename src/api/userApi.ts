@@ -31,6 +31,27 @@ export const loginUser = async (
   return response.data
 }
 
+export const loginAdmin = async (
+  code: string,
+  password: string
+): Promise<AdminLoginResponse> => {
+  const response: ApiResponse<AdminLoginResponse> = await axiosInstance.post(
+    '/api/v1/admin/login',
+    {
+      code,
+      password,
+    }
+  )
+
+  if (response.success) {
+    const { accessToken, refreshToken } = response.data
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+  }
+
+  return response.data
+}
+
 // 회원 정보를 불러오는 함수
 
 export const inquiryUser = async (): Promise<User> => {
@@ -86,6 +107,11 @@ export type ModifyUserResponse = {
   password: string
   phoneNumber: string
   email: string
+}
+
+export type AdminLoginResponse = {
+  accessToken: string
+  refreshToken: string
 }
 
 export type LoginResponse = {
