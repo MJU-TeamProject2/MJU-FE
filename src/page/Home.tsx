@@ -13,11 +13,15 @@ import {
   Tab,
   ProductInfo,
 } from '@/component/styles/home/homeStyle'
-import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
+import {
+  retrieveAllClothes,
+  ClothesItem,
+  retrieveClothesByCategory,
+} from '@/api/clothesApi'
 
 const Home = () => {
   const navigate = useNavigate()
-  const [activeTab, setActiveTab] = useState('상의')
+  const [activeTab, setActiveTab] = useState('ALL')
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
@@ -28,13 +32,18 @@ const Home = () => {
 
   useEffect(() => {
     fetchClothes()
-  }, [currentPage])
+  }, [currentPage, activeTab])
 
   const fetchClothes = async () => {
     setIsLoading(true)
     setError(null)
     try {
-      const response = await retrieveAllClothes(currentPage, pageSize)
+      const response =
+        activeTab == 'ALL'
+          ? await retrieveAllClothes(currentPage, pageSize)
+          : await retrieveClothesByCategory(currentPage, pageSize, activeTab)
+
+      // const response = await retrieveAllClothes(currentPage, pageSize)
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
@@ -59,15 +68,17 @@ const Home = () => {
   return (
     <div>
       <TabContainer>
-        {['상의', '바지', '원피스', '아우터', '신발', '가방'].map((tab) => (
-          <Tab
-            key={tab}
-            active={activeTab === tab}
-            onClick={() => setActiveTab(tab)}
-          >
-            {tab}
-          </Tab>
-        ))}
+        {['ALL', 'OUTERWEAR', 'TOPS', 'PANTS', 'DRESSES', 'SHOES'].map(
+          (tab) => (
+            <Tab
+              key={tab}
+              active={activeTab === tab}
+              onClick={() => setActiveTab(tab)}
+            >
+              {tab}
+            </Tab>
+          )
+        )}
       </TabContainer>
       <GridContainer>
         {clothes.map((item) => (

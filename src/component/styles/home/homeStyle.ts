@@ -5,7 +5,7 @@ export const HomeContainer = styled.div`
   background-color: ${colors.white};
   color: ${colors.darkGray};
   min-height: 100vh;
-  padding: 20px;
+  padding: 20px 5%;
 `
 
 export const TabContainer = styled.div`
@@ -13,7 +13,7 @@ export const TabContainer = styled.div`
   justify-content: flex-start;
   background-color: ${colors.lightGray};
   padding-top: 10px;
-  padding-left: 20px;
+  padding-left: 30px;
 `
 
 export const Tab = styled.div<{ active: boolean }>`
@@ -24,7 +24,7 @@ export const Tab = styled.div<{ active: boolean }>`
   border-radius: 5px 5px 0 0;
   cursor: pointer;
   font-family: 'Pretendard', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: ${(props) => (props.active ? 800 : 600)};
   box-shadow: ${(props) =>
     props.active ? '0 -2px 4px rgba(0,0,0,0.1)' : 'none'};
