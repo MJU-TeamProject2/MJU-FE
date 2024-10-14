@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import { colors } from '@/component/styles/globalStyle'
 
 export const HomeContainer = styled.div`
-  background-color: ${colors.background};
-  color: ${colors.white};
+  background-color: ${colors.white};
+  color: ${colors.darkGray};
   min-height: 100vh;
   padding: 20px;
 `
@@ -11,7 +11,7 @@ export const HomeContainer = styled.div`
 export const Title = styled.h2`
   margin: 20px 0;
   text-align: center;
-  color: ${colors.white};
+  color: ${colors.darkGray};
 `
 
 export const GridContainer = styled.div`
@@ -23,8 +23,8 @@ export const GridContainer = styled.div`
 `
 
 export const GridItem = styled.div`
-  background-color: #333;
-  border: 1px solid #444;
+  background-color: ${colors.white};
+  border: 1px solid ${colors.lightGray};
   border-radius: 8px;
   padding: 10px;
   text-align: center;
@@ -51,8 +51,8 @@ export const PaginationContainer = styled.div`
 `
 
 export const PaginationButton = styled.button`
-  background-color: #4a90e2;
-  color: white;
+  background-color: ${colors.lightGray};
+  color: ${colors.darkGray};
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
@@ -60,21 +60,51 @@ export const PaginationButton = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #357abd;
+    background-color: ${colors.gray};
   }
 
   &:disabled {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.lightGray};
+    color: ${colors.gray};
     cursor: not-allowed;
   }
 `
 
 export const ProductName = styled.h3`
-  color: ${colors.white};
+  color: ${colors.darkGray};
   margin: 10px 0;
+  font-size: 14px;
 `
 
 export const ProductPrice = styled.p`
-  color: #4a90e2;
+  color: ${colors.darkGray};
   font-weight: bold;
+  font-size: 16px;
+`
+
+export const TabContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 1px solid ${colors.lightGray};
+  margin-bottom: 20px;
+`
+
+export const Tab = styled.button<{ active: boolean }>`
+  background-color: ${(props) =>
+    props.active ? colors.lightGray : colors.white};
+  color: ${colors.darkGray};
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: ${colors.lightGray};
+  }
+
+  ${(props) =>
+    props.active &&
+    `
+    border-bottom: 2px solid ${colors.blue};
+  `}
 `
