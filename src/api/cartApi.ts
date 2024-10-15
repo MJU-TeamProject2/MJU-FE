@@ -18,11 +18,28 @@ export const getCartItems = async (): Promise<CartItem[]> => {
   if (response.success && Array.isArray(response.data)) {
     return response.data.map((item) => ({
       ...item,
-      quantity: item.clothesSizeList[0]?.quantity || 1, // 기본 수량 설정
+      quantity: 1,
     }))
   } else {
     console.log('장바구니에 상품이 없습니다.')
     return []
+  }
+}
+
+export const postCartItems = async (
+  clothesId: string,
+  customerId: string
+): Promise<void> => {
+  const response: ApiResponse<void | { code: string; message: string }> =
+    await axiosInstance.post('/api/v1/carts', { clothesId, customerId })
+  if (!response.success) {
+    if (response.data && response.data.code === 'CT001') {
+      console.error('해당 옷을 찾을 수 없습니다.')
+    } else {
+      console.error('업데이트에 실패했습니다.')
+    }
+  } else {
+    console.log('장바구니가 성공적으로 업데이트되었습니다.')
   }
 }
 

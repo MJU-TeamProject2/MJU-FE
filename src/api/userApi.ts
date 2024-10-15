@@ -23,7 +23,8 @@ export const loginUser = async (
   )
 
   if (response.success) {
-    const { accessToken, refreshToken } = response.data
+    const { customerId, accessToken, refreshToken } = response.data
+    localStorage.setItem('id', customerId)
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
   }
@@ -115,7 +116,7 @@ export type AdminLoginResponse = {
 }
 
 export type LoginResponse = {
-  customerId: number
+  customerId: string
   accessToken: string
   refreshToken: string
 }
