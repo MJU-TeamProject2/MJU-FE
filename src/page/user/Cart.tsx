@@ -40,11 +40,11 @@ const Cart: React.FC = () => {
       const formattedProducts = cartItems.map((item) => ({
         id: item.clothesId.toString(),
         name: item.name,
-        size: item.clothesSizeList[0]?.size || 'M',
+        size: 'M',
         price: item.price,
         originalPrice: item.price + item.discount,
         imageUrl: item.imageUrl,
-        quantity: item.clothesSizeList[0]?.quantity || 1,
+        quantity: 1,
       }))
       setProducts(formattedProducts)
     }

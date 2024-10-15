@@ -15,6 +15,7 @@ import {
   BuyButton,
   CartButton,
 } from '@/component/styles/products/detailStyles'
+import { postCartItems } from '@/api/cartApi'
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()
@@ -31,6 +32,11 @@ const ProductDetail = () => {
   const handleFittingClick = () => {
     navigate('/fitting')
   }
+  const handlePostCartItems = async () => {
+    const userId = localStorage.getItem('id')
+    if (id && userId) await postCartItems(id, userId)
+  }
+
   useEffect(() => {
     loadProductDetails()
   }, [id])
@@ -60,7 +66,7 @@ const ProductDetail = () => {
             </Select>
             <ButtonGroup>
               <BuyButton>구매하기</BuyButton>
-              <CartButton>장바구니</CartButton>
+              <CartButton onClick={handlePostCartItems}>장바구니</CartButton>
             </ButtonGroup>
             <BuyButton onClick={handleFittingClick}>피팅하기</BuyButton>
           </ProductInfo>
