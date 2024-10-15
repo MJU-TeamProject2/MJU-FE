@@ -9,7 +9,6 @@ import AdminLogin from '@/page/user/AdminLogin'
 import Register from '@/page/user/Register'
 import ProductDetail from '@/page/productDetail/ProductDetail'
 import Cart from '@/page/user/Cart'
-import ProductSelection from '@/page/user/ProductSelection'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFiiting from '@/page/productDetail/ModelFitting'
 
@@ -30,8 +29,7 @@ const Router = () => {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/fitting" element={<ModelFiiting />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/productSelection" element={<ProductSelection />} />
-          <Route path="/registerCloth" element={ <ClothesRegister /> } />
+          <Route path="/registerCloth" element={<ClothesRegister />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
