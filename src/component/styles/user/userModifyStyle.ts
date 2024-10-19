@@ -91,6 +91,6 @@ export const Card = styled.div`
 `
 
 export const ErrorDiv = styled.div`
-    width: 100%;
+  width: 100%;
   text-align: center;
 `
