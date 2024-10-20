@@ -11,10 +11,6 @@ export const LoginContainer = styled.div`
     align-items: center;
     height: 100vh;
     background-color: #1e1e1e;'
-    gap: 20px;
-    * {
-        width: 100%;
-    }
 `
 export const Footer = styled.div`
   display: flex;

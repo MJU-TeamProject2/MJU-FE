@@ -9,11 +9,7 @@ export const AdminLoginContainer = styled.div`
   justify-content: center;
   padding: 0 12px;
   align-items: center;
-  background-color: #1e1e1e;
-  gap: 20px;
-  * {
-    width: 100%;
-  }
+  background-color: ${colors.adminBackground};
 `
 
 export const Footer = styled.div`
