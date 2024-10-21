@@ -33,8 +33,7 @@ const ProductDetail = () => {
     navigate('/fitting')
   }
   const handlePostCartItems = async () => {
-    const userId = localStorage.getItem('id')
-    if (id && userId) await postCartItems(id, userId)
+    if (id) await postCartItems(id)
   }
 
   useEffect(() => {
