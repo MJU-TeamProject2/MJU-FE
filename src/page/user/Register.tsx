@@ -28,7 +28,7 @@ const Register = () => {
       console.error(result.message)
     } else {
       console.log('회원가입 성공')
-      navigate('/')
+      navigate('/login')
     }
   }
 

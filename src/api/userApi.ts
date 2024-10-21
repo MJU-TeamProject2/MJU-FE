@@ -23,15 +23,17 @@ export const loginUser = async (
   )
 
   if (response.success) {
-    const { customerId, accessToken, refreshToken } = response.data
-    localStorage.setItem('id', customerId)
+    const { accessToken, refreshToken } = response.data
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
   }
 
   return response.data
 }
-
+export const logout = () => {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+}
 export const loginAdmin = async (
   code: string,
   password: string
