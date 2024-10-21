@@ -26,12 +26,9 @@ export const getCartItems = async (): Promise<CartItem[]> => {
   }
 }
 
-export const postCartItems = async (
-  clothesId: string,
-  customerId: string
-): Promise<void> => {
+export const postCartItems = async (clothesId: string): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
-    await axiosInstance.post('/api/v1/carts', { clothesId, customerId })
+    await axiosInstance.post('/api/v1/carts', { clothesId })
   if (!response.success) {
     if (response.data && response.data.code === 'CT001') {
       console.error('해당 옷을 찾을 수 없습니다.')
