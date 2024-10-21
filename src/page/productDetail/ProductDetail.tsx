@@ -1,18 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import { retriveClothesDetail } from '@/api/clothesApi'
-import * as S from '@/component/styles/products/detailStyles'
+import { useState, useEffect } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { retrieveClothesDetail } from '@/api/clothesApi'
+import {
+  ProductDetailContainer,
+  ProductInfoSection,
+  ProductContentWrapper,
+  ImageContainer,
+  ProductImage,
+  ProductInfo,
+  ProductName,
+  Price,
+  Select,
+  ButtonGroup,
+  BuyButton,
+  CartButton,
+} from '@/component/styles/products/detailStyles'
+import { postCartItems } from '@/api/cartApi'
 
-const ProductDetail: React.FC = () => {
+const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
   const [selectedSize, setSelectedSize] = useState('')
+  const navigate = useNavigate()
 
   const loadProductDetails = async () => {
     if (id) {
-      const details = await retriveClothesDetail(id)
+      const details = await retrieveClothesDetail(id)
       setProduct(details)
     }
+  }
+  const handleFittingClick = () => {
+    navigate('/fitting')
+  }
+  const handlePostCartItems = async () => {
+    const userId = localStorage.getItem('id')
+    if (id && userId) await postCartItems(id, userId)
   }
 
   useEffect(() => {
@@ -22,16 +44,16 @@ const ProductDetail: React.FC = () => {
   if (!product) return <div>Loading...</div>
 
   return (
-    <S.ProductDetailContainer>
-      <S.ProductInfoSection>
-        <S.ProductContentWrapper>
-          <S.ImageContainer>
-            <S.ProductImage src={product.imageUrl} alt={product.name} />
-          </S.ImageContainer>
-          <S.ProductInfo>
-            <S.ProductName>{product.name}</S.ProductName>
-            <S.Price>{product.price.toLocaleString()} 원</S.Price>
-            <S.Select
+    <ProductDetailContainer>
+      <ProductInfoSection>
+        <ProductContentWrapper>
+          <ImageContainer>
+            <ProductImage src={product.imageUrl} alt={product.name} />
+          </ImageContainer>
+          <ProductInfo>
+            <ProductName>{product.name}</ProductName>
+            <Price>{product.price.toLocaleString()} 원</Price>
+            <Select
               value={selectedSize}
               onChange={(e) => setSelectedSize(e.target.value)}
             >
@@ -41,18 +63,16 @@ const ProductDetail: React.FC = () => {
                   {size}
                 </option>
               ))}
-            </S.Select>
-            <S.ButtonGroup>
-              <S.BuyButton>구매하기</S.BuyButton>
-              <S.CartButton>장바구니</S.CartButton>
-            </S.ButtonGroup>
-          </S.ProductInfo>
-        </S.ProductContentWrapper>
-      </S.ProductInfoSection>
-      <S.FittingRoomSection>
-        <S.FittingRoomButton>피팅 하기</S.FittingRoomButton>
-      </S.FittingRoomSection>
-    </S.ProductDetailContainer>
+            </Select>
+            <ButtonGroup>
+              <BuyButton>구매하기</BuyButton>
+              <CartButton onClick={handlePostCartItems}>장바구니</CartButton>
+            </ButtonGroup>
+            <BuyButton onClick={handleFittingClick}>피팅하기</BuyButton>
+          </ProductInfo>
+        </ProductContentWrapper>
+      </ProductInfoSection>
+    </ProductDetailContainer>
   )
 }
 

@@ -123,25 +123,3 @@ export const CartButton = styled(Button)`
   background-color: ${colors.primary};
   color: ${colors.white};
 `
-
-export const FittingRoomSection = styled.div`
-  width: 25%;
-  height: 100%;
-  position: relative;
-  background-color: #333;
-`
-
-export const FittingRoomButton = styled(Button)`
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  background-color: #5a5f7d;
-  border: 1px solid #3d3f5f;
-  color: ${colors.white};
-
-  &:hover {
-    background-color: #347fc4;
-  }
-`

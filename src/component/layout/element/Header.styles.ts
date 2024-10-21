@@ -1,26 +1,37 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { colors } from '@/component/styles/globalStyle'
 
-export const HeaderContainer = styled.div.attrs({
-  as: 'header',
-})`
+export const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 10px 20px;
+  background: ${colors.background};
+  color: ${colors.white};
 `
 
-export const HeaderItem = styled.div`
-  display: inline-flex;
-  justify-content: center;
+export const LeftSection = styled.div`
+  display: flex;
   align-items: center;
 `
 
-export const LogoLink = styled(Link)`
-  display: inline-flex;
+export const RightSection = styled.div`
+  display: flex;
   align-items: center;
 `
 
-export const LogoLinkText = styled.span`
-  font-size: 18px;
-  font-weight: 600;
+export const NavLink = styled(Link)`
+  color: ${colors.white};
+  text-decoration: none;
+  margin: 0 10px;
+  display: flex;
+  align-items: center;
+`
+export const UserIconWrapper = styled.div`
+  cursor: pointer;
+`
+export const IconWrapper = styled.div`
+  cursor: pointer;
+  margin: 0 10px;
 `

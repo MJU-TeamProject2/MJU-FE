@@ -1,4 +1,5 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+import {int} from "three/src/nodes/tsl/TSLCore";
 
 // 개별 의류 아이템에 대한 타입
 export type ClothesItem = {
@@ -21,9 +22,27 @@ export type PaginatedResponse<T> = {
   content: T[]
 }
 
+export type RegisterCloth = {
+  name: string
+  category: string
+  mainImage: File
+  detailImage: File
+  objectFile: File
+  price: number
+  genderCategory: string
+  productNumber: string
+  quantity: number
+  discount: number
+  size: string
+}
+
+export type SuccessResponse = {
+  success: boolean
+}
+
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
 
-export const retriveAllClothes = async (
+export const retrieveAllClothes = async (
   page: number,
   size: number
 ): Promise<ClothesListResponse> => {
@@ -35,12 +54,71 @@ export const retriveAllClothes = async (
   )
   return response.data
 }
+export const retrieveClothesByCategory = async (
+  page: number,
+  size: number,
+  activeTab: string
+): Promise<ClothesListResponse> => {
+  const response: ApiResponse<ClothesListResponse> = await axiosInstance.get(
+    `/api/v1/clothes/by/${activeTab}`,
+    {
+      params: { page, size },
+    }
+  )
+  return response.data
+}
 
-export const retriveClothesDetail = async (
+export const retrieveClothesDetail = async (
   id: string
 ): Promise<ClothesItem> => {
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
+  console.log( response.data )
   return response.data
+}
+
+export const registerCloth = async (
+  clothesItem: RegisterCloth
+): Promise<RegisterCloth> => {
+  console.log( clothesItem )
+  const formData = new FormData();
+  Object.entries(clothesItem).forEach(([key, value]) => {
+    if( value instanceof File ) {
+      formData.append( key, value, value.name );
+    }
+    else if ( typeof value === "string" ){
+      formData.append( key, value )
+    }
+    else {
+      formData.append( key, value.toString() )
+    }
+  });
+  const response: ApiResponse<RegisterCloth> = await axiosInstance.post(
+      '/api/v1/clothes/product',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'accept': '*/*'
+        }
+      }
+  )
+  return response.data
+}
+
+export const deleteCloth = async (
+    clothID: string
+): Promise<string> => {
+  console.log( clothID )
+  const response: ApiResponse<string> = await axiosInstance.delete(
+      `/api/v1/clothes/${clothID}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+  );
+  return response.data;
 }

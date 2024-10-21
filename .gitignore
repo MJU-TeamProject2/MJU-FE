@@ -16,7 +16,10 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+package-lock.json
+pnpm-lock.yaml
 *.local
+public/images
 
 # Editor directories and files
 .vscode/*
@@ -33,3 +36,4 @@ dist-ssr
 *.tsbuildinfo
 
 .env
+resources
