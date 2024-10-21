@@ -23,15 +23,17 @@ export const loginUser = async (
   )
 
   if (response.success) {
-    const { customerId, accessToken, refreshToken } = response.data
-    localStorage.setItem('id', customerId)
+    const { accessToken, refreshToken } = response.data
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
   }
 
   return response.data
 }
-
+export const logout = () => {
+  localStorage.removeItem('accessToken')
+  localStorage.removeItem('refreshToken')
+}
 export const loginAdmin = async (
   code: string,
   password: string
@@ -73,7 +75,7 @@ export const inquiryUser = async (): Promise<User> => {
 export const modifyUserInfo = async (
   name: string,
   nickName: string,
-  age: number,
+  age: string,
   email: string,
   phoneNumber: string
 ): Promise<ModifyUserResponse> => {
@@ -92,7 +94,7 @@ export const modifyUserInfo = async (
 
 export type User = {
   name: string
-  age: number
+  age: string
   gender: string
   email: string
   nickName: string

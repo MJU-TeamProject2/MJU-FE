@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { UserModifyContainer } from '@/component/styles/user/UserModifyContainer'
-import { inquiryUser, modifyUserInfo } from '@/api/userApi'
+import { inquiryUser, logout, modifyUserInfo } from '@/api/userApi'
 import {
   Tag,
   Card,
@@ -10,11 +10,14 @@ import {
   InputGroup,
   ButtonGroup,
 } from '@/component/styles/user/userModifyStyle'
+import { useNavigate } from 'react-router-dom'
 
 const User = () => {
+  const navigate = useNavigate()
+
   const [name, setName] = useState('')
   const [nickname, setNickname] = useState('')
-  const [age, setAge] = useState(0)
+  const [age, setAge] = useState('')
   const [gender, setGender] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -27,7 +30,7 @@ const User = () => {
     }
   }, [])
 
-  const [error, setError] = useState<string | null>(null)
+  const [, setError] = useState<string | null>(null)
 
   const getUser = async () => {
     const result = await inquiryUser()
@@ -64,9 +67,14 @@ const User = () => {
       email.trim() !== '' &&
       name.trim() !== '' &&
       nickname.trim() !== '' &&
-      age !== 0 &&
+      age !== '' &&
       phoneNumber.trim() !== ''
     )
+  }
+
+  const handleLogout = () => {
+    logout()
+    navigate('/')
   }
 
   return (
@@ -135,6 +143,13 @@ const User = () => {
               수정
             </Button>
             <Button>닫기</Button>
+            <Button
+              onClick={() => {
+                handleLogout()
+              }}
+            >
+              로그아웃
+            </Button>
           </ButtonGroup>
         </form>
       </Card>

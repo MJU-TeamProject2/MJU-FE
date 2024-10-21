@@ -3,8 +3,8 @@ import { useState } from 'react'
 const validateProductName = (productName: string): string | null => {
   const productNameRegex = /^Product-\d+$/
   return productNameRegex.test(productName)
-      ? null
-      : '상품 이름의 형식을 지켜주세요.'
+    ? null
+    : '상품 이름의 형식을 지켜주세요.'
 }
 
 interface FormData {
@@ -36,21 +36,21 @@ export const useRegisterClothesForm = () => {
     discount: 0,
     size: 'M',
     quantity: 0,
-    mainImage: new File([], ""),
-    detailImage: new File([], ""),
-    objectFile: new File([], "")
+    mainImage: new File([], ''),
+    detailImage: new File([], ''),
+    objectFile: new File([], ''),
   })
 
-  const [mainImage, setMainImage] = useState<File | null>(null)
-  const [detailImage, setDetailImage ] = useState<File | null >(null)
-  const [objectFile, setObjectFile] = useState<File | null>(null)
+  const [, setMainImage] = useState<File | null>(null)
+  const [, setDetailImage] = useState<File | null>(null)
+  const [, setObjectFile] = useState<File | null>(null)
 
   const [errors, setErrors] = useState<FormErrors>({
     productNumber: null,
     number: null,
   })
 
-  const handleNumberChange = (name: string, value: number) => {
+  const handleNumberChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
@@ -64,18 +64,18 @@ export const useRegisterClothesForm = () => {
       }))
     }
   }
-  const handleFileChange = (field: string, file: File, fileName: string ) => {
-    setFormData( (prev) => ( { ...prev, [field]: file } ) )
-    switch( field ){
-      case "mainImage":
-        setMainImage( file );
-        break;
-      case "detailImage":
-        setDetailImage( file );
-        break;
-      case "objectFile":
-        setObjectFile( file );
-        break;
+  const handleFileChange = (field: string, file: File) => {
+    setFormData((prev) => ({ ...prev, [field]: file }))
+    switch (field) {
+      case 'mainImage':
+        setMainImage(file)
+        break
+      case 'detailImage':
+        setDetailImage(file)
+        break
+      case 'objectFile':
+        setObjectFile(file)
+        break
     }
   }
   const isFormValid = () => {
@@ -106,5 +106,12 @@ export const useRegisterClothesForm = () => {
       objectFile
     )
   }
-  return { formData, errors, handleChange, handleNumberChange, handleFileChange, isFormValid }
+  return {
+    formData,
+    errors,
+    handleChange,
+    handleNumberChange,
+    handleFileChange,
+    isFormValid,
+  }
 }

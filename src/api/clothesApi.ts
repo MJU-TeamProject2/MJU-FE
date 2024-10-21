@@ -1,5 +1,4 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
-import {int} from "three/src/nodes/tsl/TSLCore";
 
 // 개별 의류 아이템에 대한 타입
 export type ClothesItem = {
@@ -74,51 +73,49 @@ export const retrieveClothesDetail = async (
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
-  console.log( response.data )
+  console.log(response.data)
   return response.data
 }
 
 export const registerCloth = async (
   clothesItem: RegisterCloth
 ): Promise<RegisterCloth> => {
-  console.log( clothesItem )
-  const formData = new FormData();
+  console.log(clothesItem)
+  const formData = new FormData()
   Object.entries(clothesItem).forEach(([key, value]) => {
-    if( value instanceof File ) {
-      formData.append( key, value, value.name );
+    if (value instanceof File) {
+      formData.append(key, value, value.name)
+    } else if (typeof value === 'string') {
+      formData.append(key, value)
+    } else {
+      formData.append(key, value.toString())
     }
-    else if ( typeof value === "string" ){
-      formData.append( key, value )
-    }
-    else {
-      formData.append( key, value.toString() )
-    }
-  });
+  })
   const response: ApiResponse<RegisterCloth> = await axiosInstance.post(
-      '/api/v1/clothes/product',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-          'accept': '*/*'
-        }
-      }
+    '/api/v1/clothes/product',
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        accept: '*/*',
+      },
+    }
   )
   return response.data
 }
 
 export const deleteCloth = async (
-    clothID: string
+  clothID: string | undefined
 ): Promise<string> => {
-  console.log( clothID )
+  console.log(clothID)
   const response: ApiResponse<string> = await axiosInstance.delete(
-      `/api/v1/clothes/${clothID}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        }
-      }
-  );
-  return response.data;
+    `/api/v1/clothes/${clothID}`,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  )
+  return response.data
 }

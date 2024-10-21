@@ -14,11 +14,12 @@ const validatePhoneNumber = (phoneNumber: string): string | null => {
 
 interface FormData {
   name: string
-  age: number
+  age: string
   gender: 'M' | 'F'
   email: string
   password: string
   phoneNumber: string
+  nickName: string
 }
 
 interface FormErrors {
@@ -29,11 +30,12 @@ interface FormErrors {
 export const useRegisterForm = () => {
   const [formData, setFormData] = useState<FormData>({
     name: '',
-    age: 18,
+    age: '18',
     gender: 'M',
     email: '',
     password: '',
     phoneNumber: '',
+    nickName: '',
   })
 
   const [errors, setErrors] = useState<FormErrors>({
