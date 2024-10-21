@@ -51,7 +51,7 @@ const AdminHome: React.FC = () => {
   }
 
   const handleItemClick = (id: number) => {
-    navigate(`/products/${id}`)
+    navigate(`/productsModify/${id}`)
   }
 
   const handleRegisterCloth = () => {

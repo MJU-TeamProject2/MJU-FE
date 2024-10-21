@@ -1,4 +1,5 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+import {int} from "three/src/nodes/tsl/TSLCore";
 
 // 개별 의류 아이템에 대한 타입
 export type ClothesItem = {
@@ -21,9 +22,22 @@ export type PaginatedResponse<T> = {
   content: T[]
 }
 
-export type RegisterResponse = {
+export type RegisterCloth = {
+  name: string
+  category: string
+  mainImage: File
+  detailImage: File
+  objectFile: File
+  price: number
+  genderCategory: string
+  productNumber: string
+  quantity: number
+  discount: number
+  size: string
+}
+
+export type SuccessResponse = {
   success: boolean
-  data: Object
 }
 
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
@@ -60,30 +74,51 @@ export const retrieveClothesDetail = async (
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
+  console.log( response.data )
   return response.data
 }
 
 export const registerCloth = async (
-  clothesItem: ClothesItem
-): Promise<RegisterResponse> => {
-  const data = new FormData()
+  clothesItem: RegisterCloth
+): Promise<RegisterCloth> => {
+  console.log( clothesItem )
+  const formData = new FormData();
   Object.entries(clothesItem).forEach(([key, value]) => {
-    if (value instanceof File) {
-      data.append(key, value, value.name)
-    } else {
-      data.append(key, value.toString())
+    if( value instanceof File ) {
+      formData.append( key, value, value.name );
     }
-  })
-  console.log(data)
-  const response: ApiResponse<RegisterResponse> = await axiosInstance.post(
-    '/api/v1/clothes/product',
-    data,
-    {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        'Content-Type': 'multipart/form-data',
-      },
+    else if ( typeof value === "string" ){
+      formData.append( key, value )
     }
+    else {
+      formData.append( key, value.toString() )
+    }
+  });
+  const response: ApiResponse<RegisterCloth> = await axiosInstance.post(
+      '/api/v1/clothes/product',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'accept': '*/*'
+        }
+      }
   )
   return response.data
+}
+
+export const deleteCloth = async (
+    clothID: string
+): Promise<string> => {
+  console.log( clothID )
+  const response: ApiResponse<string> = await axiosInstance.delete(
+      `/api/v1/clothes/${clothID}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
+  );
+  return response.data;
 }

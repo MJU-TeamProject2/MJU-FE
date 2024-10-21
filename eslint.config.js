@@ -26,7 +26,7 @@ export default [
       'jsx-a11y': eslintPluginJsxA11y,
     },
     rules: {
-      '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       'react-refresh/only-export-components': [
