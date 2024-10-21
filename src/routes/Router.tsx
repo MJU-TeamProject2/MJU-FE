@@ -12,6 +12,8 @@ import ProductModify from "@/page/productDetail/ProductModify.tsx";
 import Cart from '@/page/user/Cart'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFiiting from '@/page/productDetail/ModelFitting'
+import OrderHistoryPage from '@/page/user/OrderHistoryPage'
+import ChooseAvatar from '@/page/user/ChooseAvatar'
 
 
 const Router = () => {
@@ -21,7 +23,7 @@ const Router = () => {
         <Route element={<MainLayout />}>
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/" element={<Home />} />
-          <Route path="adminHome" element={<AdminHome />} />
+          <Route path="/adminHome" element={<AdminHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/home" element={<Home />} />
@@ -33,6 +35,8 @@ const Router = () => {
           <Route path="/fitting" element={<ModelFiiting />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/registerCloth" element={<ClothesRegister />} />
+          <Route path="/orderHistory" element={<OrderHistoryPage />} />
+          <Route path="/chooseAvatar" element={<ChooseAvatar />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
