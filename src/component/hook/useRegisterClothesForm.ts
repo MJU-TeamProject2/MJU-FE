@@ -3,12 +3,8 @@ import { useState } from 'react'
 const validateProductName = (productName: string): string | null => {
   const productNameRegex = /^Product-\d+$/
   return productNameRegex.test(productName)
-    ? null
-    : '상품 이름의 형식을 지켜주세요.'
-}
-
-const validateNumber = (number: number): string | null => {
-  return number >= 0 ? null : '0 이상의 값을 입력해주세요.'
+      ? null
+      : '상품 이름의 형식을 지켜주세요.'
 }
 
 interface FormData {
@@ -20,6 +16,9 @@ interface FormData {
   discount: number
   size: 'XS' | 'S' | 'M' | 'L' | 'XL'
   quantity: number
+  mainImage: File
+  detailImage: File
+  objectFile: File
 }
 
 interface FormErrors {
@@ -37,7 +36,14 @@ export const useRegisterClothesForm = () => {
     discount: 0,
     size: 'M',
     quantity: 0,
+    mainImage: new File([], ""),
+    detailImage: new File([], ""),
+    objectFile: new File([], "")
   })
+
+  const [mainImage, setMainImage] = useState<File | null>(null)
+  const [detailImage, setDetailImage ] = useState<File | null >(null)
+  const [objectFile, setObjectFile] = useState<File | null>(null)
 
   const [errors, setErrors] = useState<FormErrors>({
     productNumber: null,
@@ -46,13 +52,6 @@ export const useRegisterClothesForm = () => {
 
   const handleNumberChange = (name: string, value: number) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
-
-    if (name === 'discount' || name === 'quantity' || name === 'price') {
-      setErrors((prev) => ({
-        ...prev,
-        phoneNumber: validateNumber(value),
-      }))
-    }
   }
 
   const handleChange = (name: string, value: string) => {
@@ -65,6 +64,20 @@ export const useRegisterClothesForm = () => {
       }))
     }
   }
+  const handleFileChange = (field: string, file: File, fileName: string ) => {
+    setFormData( (prev) => ( { ...prev, [field]: file } ) )
+    switch( field ){
+      case "mainImage":
+        setMainImage( file );
+        break;
+      case "detailImage":
+        setDetailImage( file );
+        break;
+      case "objectFile":
+        setObjectFile( file );
+        break;
+    }
+  }
   const isFormValid = () => {
     const {
       name,
@@ -75,6 +88,9 @@ export const useRegisterClothesForm = () => {
       discount,
       size,
       quantity,
+      mainImage,
+      detailImage,
+      objectFile,
     } = formData
     return (
       name &&
@@ -84,8 +100,11 @@ export const useRegisterClothesForm = () => {
       productNumber &&
       discount &&
       size &&
-      quantity
+      quantity &&
+      mainImage &&
+      detailImage &&
+      objectFile
     )
   }
-  return { formData, errors, handleChange, handleNumberChange, isFormValid }
+  return { formData, errors, handleChange, handleNumberChange, handleFileChange, isFormValid }
 }

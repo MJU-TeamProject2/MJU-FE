@@ -8,9 +8,11 @@ import Login from '@/page/user/Login'
 import AdminLogin from '@/page/user/AdminLogin'
 import Register from '@/page/user/Register'
 import ProductDetail from '@/page/productDetail/ProductDetail'
+import ProductModify from "@/page/productDetail/ProductModify.tsx";
 import Cart from '@/page/user/Cart'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFiiting from '@/page/productDetail/ModelFitting'
+
 
 const Router = () => {
   return (
@@ -27,6 +29,7 @@ const Router = () => {
           <Route path="/user" element={<User />} />
           <Route path="/users" element={<User />} />
           <Route path="/products/:id" element={<ProductDetail />} />
+          <Route path="/productsModify/:id" element={<ProductModify />} />
           <Route path="/fitting" element={<ModelFiiting />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/registerCloth" element={<ClothesRegister />} />
