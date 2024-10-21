@@ -14,7 +14,7 @@ import {
 const User = () => {
   const [name, setName] = useState('')
   const [nickname, setNickname] = useState('')
-  const [age, setAge] = useState(0)
+  const [age, setAge] = useState('')
   const [gender, setGender] = useState('')
   const [email, setEmail] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
@@ -27,7 +27,7 @@ const User = () => {
     }
   }, [])
 
-  const [error, setError] = useState<string | null>(null)
+  const [, setError] = useState<string | null>(null)
 
   const getUser = async () => {
     const result = await inquiryUser()
@@ -64,7 +64,7 @@ const User = () => {
       email.trim() !== '' &&
       name.trim() !== '' &&
       nickname.trim() !== '' &&
-      age !== 0 &&
+      age !== '' &&
       phoneNumber.trim() !== ''
     )
   }

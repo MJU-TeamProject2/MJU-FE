@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi.ts'
+import { retrieveAllClothes, ClothesItem } from '@/api/clothesApi'
 import { useNavigate } from 'react-router-dom'
-import { ClothesItem } from '@/api/clothesApi.ts'
 import {
   AdminHomeContainer,
   OutfitImage,
@@ -20,8 +19,8 @@ const AdminHome: React.FC = () => {
   const [clothes, setClothes] = useState<ClothesItem[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [, setIsLoading] = useState(false)
+  const [, setError] = useState<string | null>(null)
 
   const navigate = useNavigate()
 

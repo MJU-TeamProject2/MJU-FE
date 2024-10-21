@@ -73,7 +73,7 @@ export const inquiryUser = async (): Promise<User> => {
 export const modifyUserInfo = async (
   name: string,
   nickName: string,
-  age: number,
+  age: string,
   email: string,
   phoneNumber: string
 ): Promise<ModifyUserResponse> => {
@@ -92,7 +92,7 @@ export const modifyUserInfo = async (
 
 export type User = {
   name: string
-  age: number
+  age: string
   gender: string
   email: string
   nickName: string

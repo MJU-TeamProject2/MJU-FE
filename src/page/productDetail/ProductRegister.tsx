@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 import {
@@ -18,34 +18,29 @@ import {
   Select,
   BlankImage,
   BlankText,
-  ProductDetailImageContainer,
-  ProductDetailImage,
 } from '@/component/styles/products/registerStyle'
 import { registerCloth } from '@/api/clothesApi'
 
 const ProductRegister: React.FC = () => {
-  const [category, setCategory] = useState('DRESSES')
-  const [discount, setDiscount] = useState(0)
-  const [genderCategory, setGenderCategory] = useState('MALE')
-  const [clothName, setClothName] = useState('')
-  const [productNumber, setProductNumber] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [price, setPrice] = useState('')
-  const [size, setSize] = useState('M')
   const [mainImage, setMainImage] = useState('null')
   const [detailImage, setDetailImage] = useState('null')
   const [detailImageName, setDetailImageName] = useState('')
   const [objectFile, setObjectFile] = useState('null')
-  const [objectFileName, setObjectFileName] = useState( '')
+  const [objectFileName, setObjectFileName] = useState('')
 
-  const { formData, errors, handleChange, handleNumberChange, handleFileChange, isFormValid } =
-    useRegisterClothesForm()
+  const {
+    formData,
+    handleChange,
+    handleNumberChange,
+    handleFileChange,
+    isFormValid,
+  } = useRegisterClothesForm()
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log( formData )
+    console.log(formData)
     if (!isFormValid()) return
     const result = await registerCloth(formData)
 
@@ -53,47 +48,57 @@ const ProductRegister: React.FC = () => {
       console.error(result.message)
     } else {
       console.log('등록 성공')
-      alert( "상품이 등록되었습니다" )
+      alert('상품이 등록되었습니다')
       navigate('/adminHome')
     }
   }
 
-  const handleFile = ( field: string, file: File, fileName: string, value: string ) => {
-    switch( field ){
-      case "mainImage":
-        setMainImage( value )
-        break;
-      case "detailImage":
-        setDetailImage( value )
-        setDetailImageName( fileName )
-        break;
-      case "objectFile":
-        setObjectFile( value )
-        setObjectFileName( fileName )
-        break;
+  const handleFile = (
+    field: string,
+    file: File,
+    fileName: string,
+    value: string
+  ) => {
+    switch (field) {
+      case 'mainImage':
+        setMainImage(value)
+        break
+      case 'detailImage':
+        setDetailImage(value)
+        setDetailImageName(fileName)
+        break
+      case 'objectFile':
+        setObjectFile(value)
+        setObjectFileName(fileName)
+        break
     }
-    handleFileChange( field, file, fileName )
+    handleFileChange(field, file)
   }
 
   const handleImage = (type: string) => {
-    const fileInput = document.getElementById( type )
+    const fileInput = document.getElementById(type) as HTMLInputElement | null
+    if (!fileInput) {
+      console.log('File input element not found')
+      return
+    }
+
     fileInput.onchange = (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      const file = target.files?.[0];
+      const target = event.target as HTMLInputElement
+      const file = target.files?.[0]
       if (!file) {
-        console.log('File is Not Selected');
-        return;
+        console.log('File is Not Selected')
+        return
       }
 
-      const fileReader = new FileReader();
+      const fileReader = new FileReader()
       fileReader.onload = (e: ProgressEvent<FileReader>) => {
-        const base64String = e.target?.result as string;
+        const base64String = e.target?.result as string
 
-        handleFile( type, file, file.name, base64String )
-      };
-      fileReader.readAsDataURL(file);
-    };
-    fileInput.click();
+        handleFile(type, file, file.name, base64String)
+      }
+      fileReader.readAsDataURL(file)
+    }
+    fileInput.click()
   }
 
   return (
@@ -102,29 +107,26 @@ const ProductRegister: React.FC = () => {
       <form onSubmit={handleSubmit}>
         <ProductContainer>
           <ProductImageContainer>
-            { mainImage == "null"
-                ?
-              <BlankImage
-                  onClick={() => handleImage('mainImage')}
-              >
+            {mainImage == 'null' ? (
+              <BlankImage onClick={() => handleImage('mainImage')}>
                 <BlankText> 사진을 선택하세요 </BlankText>
               </BlankImage>
-                :
+            ) : (
               <ProductImage
                 src={mainImage}
                 id="mainImagePreview"
                 onClick={() => handleImage('mainImage')}
               />
-            }
+            )}
           </ProductImageContainer>
           <ProductInformationContainer>
             <ProductInputContainer>
               <Tag> 상품 이름 </Tag>
               <Input
-                  type="text"
-                  name="name"
-                  value={formData.name}
-                  onChange={ (e) => handleChange('name', e.target.value )}
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={(e) => handleChange('name', e.target.value)}
               />
             </ProductInputContainer>
             <ProductInputContainer>
@@ -209,46 +211,39 @@ const ProductRegister: React.FC = () => {
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 상세 사진 </Tag>
-              <FileInput
-                  onClick={ () => handleImage( "detailImage" )}
-              >
-                { detailImage == "null" ? "사진을 선택하세요." : detailImageName }
+              <FileInput onClick={() => handleImage('detailImage')}>
+                {detailImage == 'null' ? '사진을 선택하세요.' : detailImageName}
               </FileInput>
             </ProductInputContainer>
             <ProductInputContainer>
               <Tag> 3D 파일 </Tag>
-              <FileInput
-                  onClick={ () => handleImage( "objectFile" )}
-              >
-                { objectFile == "null" ? "파일을 선택하세요." : objectFileName }
+              <FileInput onClick={() => handleImage('objectFile')}>
+                {objectFile == 'null' ? '파일을 선택하세요.' : objectFileName}
               </FileInput>
             </ProductInputContainer>
-            <Button
-                type="submit">
-              등록
-            </Button>
+            <Button type="submit">등록</Button>
           </ProductInformationContainer>
         </ProductContainer>
         <HiddenContainer>
           <Input
-              type="file"
-              id="mainImage"
-              name="mainImage"
-              accept="image/*"
-              onChange={ () => console.log( "") }
+            type="file"
+            id="mainImage"
+            name="mainImage"
+            accept="image/*"
+            onChange={() => console.log('')}
           />
           <Input
-              type="file"
-              id="detailImage"
-              name="detailImage"
-              accept="image/*"
-              onChange={ () => console.log( "") }
+            type="file"
+            id="detailImage"
+            name="detailImage"
+            accept="image/*"
+            onChange={() => console.log('')}
           />
           <Input
-              type="file"
-              id="objectFile"
-              name="objectFile"
-              onChange={ () => console.log( "") }
+            type="file"
+            id="objectFile"
+            name="objectFile"
+            onChange={() => console.log('')}
           />
         </HiddenContainer>
       </form>
