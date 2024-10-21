@@ -8,27 +8,23 @@ import Login from '@/page/user/Login'
 import AdminLogin from '@/page/user/AdminLogin'
 import Register from '@/page/user/Register'
 import ProductDetail from '@/page/productDetail/ProductDetail'
-import ProductModify from "@/page/productDetail/ProductModify.tsx";
+import ProductModify from '@/page/productDetail/ProductModify.tsx'
 import Cart from '@/page/user/Cart'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFiiting from '@/page/productDetail/ModelFitting'
 import OrderHistoryPage from '@/page/user/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
 
-
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
-          <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/" element={<Home />} />
+          <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminHome" element={<AdminHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/adminHome" element={<AdminHome />} />
-          <Route path="/user" element={<User />} />
           <Route path="/users" element={<User />} />
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/productsModify/:id" element={<ProductModify />} />
