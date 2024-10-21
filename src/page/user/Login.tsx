@@ -20,7 +20,7 @@ const Login = () => {
       setError('로그인에 실패했습니다.')
     } else {
       console.log('로그인 성공')
-      navigate('/home')
+      navigate('/')
     }
   }
 
