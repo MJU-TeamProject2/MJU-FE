@@ -3,12 +3,12 @@ import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { ClothesItem, retrieveClothesDetail } from '@/api/clothesApi.ts'
+import { ClothesItem, retrieveClothesDetail } from '@/api/clothesApi'
 
 const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
-                                                                          objId,
-                                                                          mtlId,
-                                                                        }) => {
+  objId,
+  mtlId,
+}) => {
   const [objClothesItem, setObjClothesItem] = useState<ClothesItem | null>(null)
   const [mtlClothesItem, setMtlClothesItem] = useState<ClothesItem | null>(null)
   const mountRef = useRef<HTMLDivElement>(null)
@@ -35,7 +35,7 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000,
+      1000
     )
     const renderer = new THREE.WebGLRenderer()
     renderer.setSize(window.innerWidth, window.innerHeight)
@@ -92,7 +92,7 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
         },
         (error) => {
           console.log('An error happened', error)
-        },
+        }
       )
     })
 
