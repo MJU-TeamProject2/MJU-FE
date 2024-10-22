@@ -9,6 +9,7 @@ export const ProductRegisterContainer = styled.div`
 export const ProductInformationContainer = styled.div`
   width: 100%;
   flex: 7;
+  text-align: center;
 `
 export const ProductContainer = styled.div`
   display: flex;
@@ -87,7 +88,6 @@ export const FileInput = styled.p`
   text-align: center;
   padding-top: 10px;
   flex: 6;
-  
   &:hover {
     cursor: pointer;
     background-color: lightgray;
@@ -134,4 +134,10 @@ export const BlankText = styled.p`
   color: darkgray;
   font-size: 16px;
   margin: 0;
+`
+export const ErrorMessage = styled.div`
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 10px;
 `
