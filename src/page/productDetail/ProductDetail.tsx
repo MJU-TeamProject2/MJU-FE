@@ -57,7 +57,7 @@ const ProductDetail = () => {
               onChange={(e) => setSelectedSize(e.target.value)}
             >
               <option value="">사이즈 선택</option>
-              {product.clothesSizeList?.map((sizeInfo) => (
+              {product.clothesSizeList?.map((sizeInfo: SizeInfo) => (
                 <option key={sizeInfo.size} value={sizeInfo.size}>
                   {sizeInfo.size} (재고: {sizeInfo.quantity})
                 </option>
@@ -74,5 +74,8 @@ const ProductDetail = () => {
     </ProductDetailContainer>
   )
 }
-
+interface SizeInfo {
+  size: string
+  quantity: number
+}
 export default ProductDetail
