@@ -33,7 +33,7 @@ const ProductDetail = () => {
     navigate('/fitting')
   }
   const handlePostCartItems = async () => {
-    if (id) await postCartItems(id)
+    if (id) await postCartItems(id, selectedSize)
   }
 
   useEffect(() => {
@@ -57,9 +57,9 @@ const ProductDetail = () => {
               onChange={(e) => setSelectedSize(e.target.value)}
             >
               <option value="">사이즈 선택</option>
-              {product.sizes?.map((size: string) => (
-                <option key={size} value={size}>
-                  {size}
+              {product.clothesSizeList?.map((sizeInfo: SizeInfo) => (
+                <option key={sizeInfo.size} value={sizeInfo.size}>
+                  {sizeInfo.size} (재고: {sizeInfo.quantity})
                 </option>
               ))}
             </Select>
@@ -74,5 +74,8 @@ const ProductDetail = () => {
     </ProductDetailContainer>
   )
 }
-
+interface SizeInfo {
+  size: string
+  quantity: number
+}
 export default ProductDetail

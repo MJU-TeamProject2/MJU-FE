@@ -1,12 +1,16 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
 
 export type CartItem = {
+  cartId: number
   clothesId: number
   imageUrl: string
   detailUrl: string
   name: string
   price: number
+  quantity: number
+  size: string
   discount: number
+  availableQuantity: number
   clothesSizeList: { size: string; quantity: number }[]
 }
 
@@ -18,7 +22,6 @@ export const getCartItems = async (): Promise<CartItem[]> => {
   if (response.success && Array.isArray(response.data)) {
     return response.data.map((item) => ({
       ...item,
-      quantity: 1,
     }))
   } else {
     console.log('장바구니에 상품이 없습니다.')
@@ -26,9 +29,13 @@ export const getCartItems = async (): Promise<CartItem[]> => {
   }
 }
 
-export const postCartItems = async (clothesId: string): Promise<void> => {
+export const postCartItems = async (
+  clothesId: string,
+  size: string,
+  quantity: number = 1
+): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
-    await axiosInstance.post('/api/v1/carts', { clothesId })
+    await axiosInstance.post('/api/v1/carts', { clothesId, size, quantity })
   if (!response.success) {
     if (response.data && response.data.code === 'CT001') {
       console.error('해당 옷을 찾을 수 없습니다.')
@@ -41,9 +48,9 @@ export const postCartItems = async (clothesId: string): Promise<void> => {
 }
 
 // 장바구니 상품 삭제
-export const deleteCartItem = async (clothesId: number): Promise<void> => {
+export const deleteCartItem = async (cartId: number): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
-    await axiosInstance.delete(`/api/v1/carts/${clothesId}`)
+    await axiosInstance.delete(`/api/v1/carts/${cartId}`)
 
   if (!response.success) {
     if (response.data && response.data.code === 'CT001') {
@@ -58,11 +65,11 @@ export const deleteCartItem = async (clothesId: number): Promise<void> => {
 
 // 장바구니 상품 수량 업데이트
 export const updateCartItemQuantity = async (
-  clothesId: number,
+  cartId: number,
   quantity: number
 ): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
-    await axiosInstance.patch('/api/v1/carts', { clothesId, quantity })
+    await axiosInstance.patch('/api/v1/carts', { cartId, quantity })
 
   if (!response.success) {
     if (response.data && response.data.code === 'CT001') {

@@ -35,10 +35,6 @@ export type RegisterCloth = {
   size: string
 }
 
-export type SuccessResponse = {
-  success: boolean
-}
-
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
 
 export const retrieveAllClothes = async (
@@ -80,7 +76,6 @@ export const retrieveClothesDetail = async (
 export const registerCloth = async (
   clothesItem: RegisterCloth
 ): Promise<RegisterCloth> => {
-  console.log(clothesItem)
   const formData = new FormData()
   Object.entries(clothesItem).forEach(([key, value]) => {
     if (value instanceof File) {
