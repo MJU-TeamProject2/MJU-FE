@@ -1,10 +1,13 @@
 import { useState } from 'react'
 
-const validateProductName = (productName: string): string | null => {
-  const productNameRegex = /^Product-\d+$/
-  return productNameRegex.test(productName)
-    ? null
-    : '상품 이름의 형식을 지켜주세요.'
+const validatePrice = (price: number): string | null => {
+  return price > -1 ? null : '금액은 0원 이상이어야 합니다,'
+}
+const validateDiscount = (discount: number): string | null => {
+  return discount > -1 ? null : '할인율은 0 이상이어야 합니다.'
+}
+const validateQuantity = (quantity: number): string | null => {
+  return quantity > -1 ? null : '재고는 0개 이상이어야 합니다.'
 }
 
 interface FormData {
@@ -23,7 +26,9 @@ interface FormData {
 
 interface FormErrors {
   productNumber: string | null
-  number: string | null
+  price: string | null
+  discount: string | null
+  quantity: string | null
 }
 
 export const useRegisterClothesForm = () => {
@@ -47,21 +52,33 @@ export const useRegisterClothesForm = () => {
 
   const [errors, setErrors] = useState<FormErrors>({
     productNumber: null,
-    number: null,
+    price: null,
+    discount: null,
+    quantity: null,
   })
-
-  const handleNumberChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
 
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }))
 
-    if (name === 'productNumber') {
-      setErrors((prev) => ({
-        ...prev,
-        productNumber: validateProductName(value),
-      }))
+    switch (name) {
+      case 'price':
+        setErrors((prev) => ({
+          ...prev,
+          price: validatePrice(parseInt(value)),
+        }))
+        break
+      case 'discount':
+        setErrors((prev) => ({
+          ...prev,
+          discount: validateDiscount(parseInt(value)),
+        }))
+        break
+      case 'quantity':
+        setErrors((prev) => ({
+          ...prev,
+          quantity: validateQuantity(parseInt(value)),
+        }))
+        break
     }
   }
   const handleFileChange = (field: string, file: File) => {
@@ -110,7 +127,6 @@ export const useRegisterClothesForm = () => {
     formData,
     errors,
     handleChange,
-    handleNumberChange,
     handleFileChange,
     isFormValid,
   }
