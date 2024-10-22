@@ -21,14 +21,13 @@ const Register = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!isFormValid()) return
-
-    const result = await registerUser(formData)
-
-    if (result instanceof Error) {
-      console.error(result.message)
-    } else {
+    try {
+      await registerUser(formData)
       console.log('회원가입 성공')
       navigate('/login')
+    } catch (e) {
+      console.error(e)
+      alert('회원가입에 실패했습니다.')
     }
   }
 
