@@ -11,11 +11,11 @@ import {
 } from '@/component/styles/user/chooseAvatarStyles'
 
 const mockAvatars = [
-  { id: 1, src: 'mock-avatar1.png' },
-  { id: 2, src: 'mock-avatar2.png' },
-  { id: 3, src: 'mock-avatar3.png' },
-  { id: 4, src: 'mock-avatar4.png' },
-  { id: 5, src: 'mock-avatar5.png' },
+  { id: 1, src: '/character1.png' },
+  { id: 2, src: '/character2.png' },
+  { id: 3, src: '/character3.png' },
+  { id: 4, src: '/character4.png' },
+  { id: 5, src: '/character5.png' },
 ]
 
 const ChooseAvatar: React.FC = () => {
@@ -25,7 +25,7 @@ const ChooseAvatar: React.FC = () => {
 
   const handleAvatarClick = (id: number) => {
     if (selectedAvatar === id) {
-      setSelectedAvatar(null) // 이미 선택된 아바타를 다시 클릭하면 해제
+      setSelectedAvatar(null)
     } else {
       setSelectedAvatar(id)
       setCustomAvatar(null)
