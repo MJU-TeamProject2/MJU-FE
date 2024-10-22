@@ -43,7 +43,6 @@ const OrderHistoryPage: React.FC = () => {
   const [orderHistory, setOrderHistory] = useState<Product[]>([])
 
   useEffect(() => {
-    // Mock data를 설정
     setOrderHistory(mockData)
   }, [])
 

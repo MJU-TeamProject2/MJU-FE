@@ -53,27 +53,6 @@ export const Button = styled.button`
   }
 `
 
-export const GenderButton = styled.button`
-  flex: 5;
-  width: 100%;
-  padding: 10px;
-  background-color: transparent;
-  color: ${colors.white};
-  border: 1px solid ${colors.primary};
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 10px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background-color: ${colors.buttonHover};
-  }
-
-  &:disabled {
-    cursor: default;
-  }
-`
-
 export const InputGroup = styled.div`
   display: flex;
 `
@@ -88,9 +67,4 @@ export const Card = styled.div`
   border-radius: 8px;
   width: 25%;
   box-sizing: border-box;
-`
-
-export const ErrorDiv = styled.div`
-  width: 100%;
-  text-align: center;
 `

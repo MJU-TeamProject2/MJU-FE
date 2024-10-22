@@ -70,11 +70,6 @@ export const GenderButton = styled(Button)`
   &:last-child {
     margin-right: 0;
   }
-
-  &.selected {
-    background-color: ${colors.primary};
-    color: ${colors.background};
-  }
 `
 
 export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
