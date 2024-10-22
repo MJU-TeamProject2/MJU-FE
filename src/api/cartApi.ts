@@ -21,7 +21,7 @@ export const getCartItems = async (): Promise<CartItem[]> => {
 
   if (response.success && Array.isArray(response.data)) {
     return response.data.map((item) => ({
-      ...item
+      ...item,
     }))
   } else {
     console.log('장바구니에 상품이 없습니다.')
@@ -29,7 +29,11 @@ export const getCartItems = async (): Promise<CartItem[]> => {
   }
 }
 
-export const postCartItems = async (clothesId: string, size: string, quantity: number = 1): Promise<void> => {
+export const postCartItems = async (
+  clothesId: string,
+  size: string,
+  quantity: number = 1
+): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
     await axiosInstance.post('/api/v1/carts', { clothesId, size, quantity })
   if (!response.success) {
