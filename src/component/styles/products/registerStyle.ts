@@ -18,12 +18,6 @@ export const ProductContainer = styled.div`
   padding: 5px 180px;
 `
 
-export const ProductDetailImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-`
-
 export const ProductInputContainer = styled.div`
   display: flex;
   margin: 20px 0;
@@ -58,19 +52,6 @@ export const ProductImage = styled.img`
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`
-
-export const ProductDetailImage = styled.img`
-  display: flex;
-  flex: 2;
-  object-fit: contain;
-  object-position: center;
-  max-width: 40%;
-  margin: 10px;
 
   &:hover {
     cursor: pointer;

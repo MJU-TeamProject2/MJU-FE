@@ -43,34 +43,6 @@ export const PriceInfo = styled.div`
   text-align: right;
 `
 
-export const QuantityButtonContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`
-
-export const QuantityButton = styled.button`
-  width: 30px;
-  height: 30px;
-  background-color: #f0f0f0;
-  color: #000;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:hover {
-    background-color: #e0e0e0;
-  }
-
-  &:active {
-    background-color: #ccc;
-  }
-`
-
 export const PurchaseButton = styled.button`
   width: 100%;
   padding: 15px 0;
