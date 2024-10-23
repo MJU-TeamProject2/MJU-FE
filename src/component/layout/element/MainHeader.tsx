@@ -13,7 +13,7 @@ const MainHeader = () => {
   const navigate = useNavigate()
 
   const handleBackClick = () => {
-    navigate(-1) // This navigates to the previous page
+    navigate(-1)
   }
 
   const handleUserIconClick = () => {
