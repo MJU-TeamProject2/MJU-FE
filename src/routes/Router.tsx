@@ -14,6 +14,7 @@ import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFiiting from '@/page/productDetail/ModelFitting'
 import OrderHistoryPage from '@/page/user/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
+import AdminLayout from '@/component/layout/AdminLayout'
 
 const Router = () => {
   return (
@@ -21,18 +22,20 @@ const Router = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/adminLogin" element={<AdminLogin />} />
-          <Route path="/adminHome" element={<AdminHome />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/users" element={<User />} />
           <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/productsModify/:id" element={<ProductModify />} />
           <Route path="/fitting" element={<ModelFiiting />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/registerCloth" element={<ClothesRegister />} />
           <Route path="/orderHistory" element={<OrderHistoryPage />} />
           <Route path="/chooseAvatar" element={<ChooseAvatar />} />
+        </Route>
+        <Route element={<AdminLayout />}>
+          <Route path="/registerCloth" element={<ClothesRegister />} />
+          <Route path="/adminLogin" element={<AdminLogin />} />
+          <Route path="/adminHome" element={<AdminHome />} />
+          <Route path="/productsModify/:id" element={<ProductModify />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
