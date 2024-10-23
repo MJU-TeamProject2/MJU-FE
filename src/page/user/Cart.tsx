@@ -109,15 +109,10 @@ const Cart: React.FC = () => {
     }
 
     try {
-      // 선택된 상품을 구매 처리
       await purchaseCartItems(selectedProducts)
-
-      // 모든 상품 삭제 후 장바구니 비우기
       await Promise.all(
         products.map((product) => deleteCartItem(Number(product.cartId)))
       )
-
-      // 장바구니 초기화
       setProducts([])
       setSelectedProducts([])
 
