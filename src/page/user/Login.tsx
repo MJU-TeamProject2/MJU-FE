@@ -35,7 +35,7 @@ const Login = () => {
     try {
       await loginUser(email, password)
       console.log('로그인 성공')
-      navigate('/')
+      navigate('/chooseAvatar')
     } catch (error) {
       console.error(error)
       setLoginError('로그인에 실패했습니다.')

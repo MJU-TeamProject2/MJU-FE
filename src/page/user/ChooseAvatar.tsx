@@ -25,7 +25,7 @@ const ChooseAvatar: React.FC = () => {
 
   const handleAvatarClick = (id: number) => {
     if (selectedAvatar === id) {
-      setSelectedAvatar(null) // 이미 선택된 아바타를 다시 클릭하면 해제
+      setSelectedAvatar(null)
     } else {
       setSelectedAvatar(id)
       setCustomAvatar(null)
@@ -46,7 +46,7 @@ const ChooseAvatar: React.FC = () => {
 
   const handleSelectClick = () => {
     if (selectedAvatar !== null || customAvatar !== null) {
-      navigate('/home', { state: { avatarId: selectedAvatar, customAvatar } })
+      navigate('/', { state: { avatarId: selectedAvatar, customAvatar } })
     } else {
       alert('아바타를 선택해주세요.')
     }
