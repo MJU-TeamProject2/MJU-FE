@@ -10,10 +10,13 @@ const validateQuantity = (quantity: number): string | null => {
   return quantity > -1 ? null : '재고는 0개 이상이어야 합니다.'
 }
 
+export type Category = 'DRESSES' | 'OUTERWEAR' | 'PANTS' | 'SHOES' | 'TOPS'
+export type Gender = 'MALE' | 'FEMALE' | 'UNISEX'
+
 interface FormData {
   name: string
-  category: 'DRESSES' | 'OUTERWEAR' | 'SHOES' | 'PANTS' | 'TOPS'
-  genderCategory: 'MALE' | 'FEMALE' | 'UNISEX'
+  category: Category
+  genderCategory: Gender
   price: number
   productNumber: string
   discount: number
@@ -22,6 +25,7 @@ interface FormData {
   mainImage: File
   detailImage: File
   objectFile: File
+  mtlFile: File
 }
 
 interface FormErrors {
@@ -44,11 +48,13 @@ export const useRegisterClothesForm = () => {
     mainImage: new File([], ''),
     detailImage: new File([], ''),
     objectFile: new File([], ''),
+    mtlFile: new File([], ''),
   })
 
   const [, setMainImage] = useState<File | null>(null)
   const [, setDetailImage] = useState<File | null>(null)
   const [, setObjectFile] = useState<File | null>(null)
+  const [, setMtlFile] = useState<File | null>(null)
 
   const [errors, setErrors] = useState<FormErrors>({
     productNumber: null,
@@ -93,6 +99,9 @@ export const useRegisterClothesForm = () => {
       case 'objectFile':
         setObjectFile(file)
         break
+      case 'mtlFile':
+        setMtlFile(file)
+        break
     }
   }
   const isFormValid = () => {
@@ -108,6 +117,7 @@ export const useRegisterClothesForm = () => {
       mainImage,
       detailImage,
       objectFile,
+      mtlFile,
     } = formData
     return (
       name &&
@@ -120,11 +130,13 @@ export const useRegisterClothesForm = () => {
       quantity &&
       mainImage &&
       detailImage &&
-      objectFile
+      objectFile &&
+      mtlFile
     )
   }
   return {
     formData,
+    setFormData,
     errors,
     handleChange,
     handleFileChange,
