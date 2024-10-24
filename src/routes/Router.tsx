@@ -11,7 +11,7 @@ import ProductDetail from '@/page/productDetail/ProductDetail'
 import ProductModify from '@/page/productDetail/ProductModify'
 import Cart from '@/page/user/Cart'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
-import ModelFiiting from '@/page/productDetail/ModelFitting'
+import ModelFitting from '@/page/productDetail/ModelFitting'
 import OrderHistoryPage from '@/page/user/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
 import AdminLayout from '@/component/layout/AdminLayout'
@@ -26,7 +26,7 @@ const Router = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/users" element={<User />} />
           <Route path="/products/:id" element={<ProductDetail />} />
-          <Route path="/fitting" element={<ModelFiiting />} />
+          <Route path="/fitting" element={<ModelFitting />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/orderHistory" element={<OrderHistoryPage />} />
           <Route path="/chooseAvatar" element={<ChooseAvatar />} />

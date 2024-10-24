@@ -55,16 +55,17 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
     const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
     directionalLight.position.set(1, 1, 1).normalize()
     scene.add(directionalLight)
+    const axesHelper = new THREE.AxesHelper(5);
+    scene.add(axesHelper);
 
     // Model loading
     const mtlLoader = new MTLLoader()
-    mtlLoader.load(mtlClothesItem.imageUrl, (materials) => {
+    mtlLoader.load(mtlClothesItem.objectUrl, (materials) => {
       materials.preload()
-
       const objLoader = new OBJLoader()
       objLoader.setMaterials(materials)
       objLoader.load(
-        objClothesItem.imageUrl,
+        objClothesItem.objectUrl,
         (object) => {
           object.traverse((child) => {
             if (child instanceof THREE.Mesh) {
