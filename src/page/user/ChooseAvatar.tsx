@@ -10,12 +10,18 @@ import {
   UploadBox,
 } from '@/component/styles/user/chooseAvatarStyles'
 
+import avatar1 from '@/assets/avatars/avatar1.png'
+import avatar2 from '@/assets/avatars/avatar2.png'
+import avatar3 from '@/assets/avatars/avatar3.png'
+import avatar4 from '@/assets/avatars/avatar4.png'
+import avatar5 from '@/assets/avatars/avatar5.png'
+
 const mockAvatars = [
-  { id: 1, src: 'mock-avatar1.png' },
-  { id: 2, src: 'mock-avatar2.png' },
-  { id: 3, src: 'mock-avatar3.png' },
-  { id: 4, src: 'mock-avatar4.png' },
-  { id: 5, src: 'mock-avatar5.png' },
+  { id: 1, src: avatar1 },
+  { id: 2, src: avatar2 },
+  { id: 3, src: avatar3 },
+  { id: 4, src: avatar4 },
+  { id: 5, src: avatar5 },
 ]
 
 const ChooseAvatar: React.FC = () => {
