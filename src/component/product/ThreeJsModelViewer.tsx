@@ -5,6 +5,28 @@ import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { ClothesItem, retrieveClothesDetail } from '@/api/clothesApi'
 
+// 타입 정의
+type SizeType = 'XS' | 'S' | 'M' | 'L' | 'XL'
+type HeightType = '150~' | '160~' | '170~' | '180~' | '190~'
+type GenderType = '남자' | '여자'
+
+// 상수 정의
+const sizeScales: Record<SizeType, number> = {
+  'XS': 0.08,
+  'S': 0.09,
+  'M': 0.1,
+  'L': 0.11,
+  'XL': 0.12
+}
+
+const heightScales: Record<HeightType, number> = {
+  '150~': 0.08,
+  '160~': 0.09,
+  '170~': 0.1,
+  '180~': 0.11,
+  '190~': 0.12
+}
+
 const buttonStyles = {
   padding: '8px 24px',
   border: '1px solid #ddd',
@@ -28,10 +50,52 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
   const [objClothesItem, setObjClothesItem] = useState<ClothesItem | null>(null)
   const [mtlClothesItem, setMtlClothesItem] = useState<ClothesItem | null>(null)
   const mountRef = useRef<HTMLDivElement>(null)
+  const modelRef = useRef<THREE.Object3D | null>(null)
 
-  const [gender, setGender] = useState<'남자' | '여자' | null>(null)
-  const [size, setSize] = useState<'XS' | 'S' | 'M' | 'L' | 'XL' | null>(null)
-  const [height, setHeight] = useState<'150~' | '160~' | '170~' | '180~' | '190~' | null>(null)
+  const [gender, setGender] = useState<GenderType>('남자')
+  const [size, setSize] = useState<SizeType>('M')
+  const [height, setHeight] = useState<HeightType>('170~')
+
+  const updateModelScale = () => {
+    if (modelRef.current) {
+      const widthScale = sizeScales[size]
+      const heightScale = heightScales[height]
+      modelRef.current.scale.set(widthScale, heightScale, widthScale)
+    }
+  }
+
+  const updateModelColor = (selectedGender: GenderType) => {
+    if (modelRef.current) {
+      modelRef.current.traverse((child) => {
+        if (child instanceof THREE.Mesh) {
+          if (selectedGender === '남자') {
+            child.material.color.setRGB(0.1, 0.1, 0.8)
+          } else {
+            child.material.color.setRGB(0.8, 0.1, 0.1)
+          }
+        }
+      })
+    }
+  }
+
+  const handleGenderChange = (newGender: GenderType) => {
+    setGender(newGender)
+    updateModelColor(newGender)
+  }
+
+  useEffect(() => {
+    if (modelRef.current) {
+      updateModelScale()
+    }
+  }, [size, height])
+
+  const handleSizeChange = (newSize: SizeType) => {
+    setSize(newSize)
+  }
+
+  const handleHeightChange = (newHeight: HeightType) => {
+    setHeight(newHeight)
+  }
 
   useEffect(() => {
     const fetchClothesItems = async () => {
@@ -69,7 +133,6 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
 
     renderer.setSize(renderWidth, renderHeight)
 
-    // 기존 canvas 제거
     while (container.firstChild) {
       container.removeChild(container.firstChild)
     }
@@ -100,12 +163,16 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
           object.traverse((child) => {
             if (child instanceof THREE.Mesh) {
               child.material = materials.create('material0')
-              child.material.color.setRGB(0.8, 0.1, 0.1)
+              child.material.color.setRGB(0.1, 0.1, 0.8)
               child.material.specular.setRGB(1.0, 0.9, 0.9)
               child.material.shininess = 100
             }
           })
-          object.scale.set(0.1, 0.1, 0.1)
+
+          const widthScale = sizeScales[size]
+          const heightScale = heightScales[height]
+          object.scale.set(widthScale, heightScale, widthScale)
+
           object.position.set(0, 0, 0)
           object.rotation.y = (Math.PI / 180) * -25
 
@@ -113,6 +180,7 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
           const center = box.getCenter(new THREE.Vector3())
           object.position.sub(center)
 
+          modelRef.current = object
           scene.add(object)
 
           camera.position.set(0, 0, 0.3)
@@ -209,13 +277,13 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
           }}>
             <SelectionButton
               selected={gender === '남자'}
-              onClick={() => setGender('남자')}
+              onClick={() => handleGenderChange('남자')}
             >
               남자
             </SelectionButton>
             <SelectionButton
               selected={gender === '여자'}
-              onClick={() => setGender('여자')}
+              onClick={() => handleGenderChange('여자')}
             >
               여자
             </SelectionButton>
@@ -233,11 +301,11 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
             display: 'flex',
             gap: '10px'
           }}>
-            {['XS', 'S', 'M', 'L', 'XL'].map((s) => (
+            {(Object.keys(sizeScales) as SizeType[]).map((s) => (
               <SelectionButton
                 key={s}
                 selected={size === s}
-                onClick={() => setSize(s as any)}
+                onClick={() => handleSizeChange(s)}
               >
                 {s}
               </SelectionButton>
@@ -256,11 +324,11 @@ const ThreeJsModelViewer: React.FC<{ objId: string; mtlId: string }> = ({
             display: 'flex',
             gap: '10px'
           }}>
-            {['150~', '160~', '170~', '180~', '190~'].map((h) => (
+            {(Object.keys(heightScales) as HeightType[]).map((h) => (
               <SelectionButton
                 key={h}
                 selected={height === h}
-                onClick={() => setHeight(h as any)}
+                onClick={() => handleHeightChange(h)}
               >
                 {h}
               </SelectionButton>
