@@ -70,7 +70,12 @@ export const Price = styled.p`
   margin-bottom: 20px;
   color: ${colors.white};
 `
-
+export const SoldOut = styled.p`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: red;
+`
 export const Select = styled.select`
   width: 100%;
   padding: 10px;
