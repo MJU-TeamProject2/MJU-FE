@@ -28,6 +28,8 @@ const ProductRegister: React.FC = () => {
   const [detailImageName, setDetailImageName] = useState('')
   const [objectFile, setObjectFile] = useState('null')
   const [objectFileName, setObjectFileName] = useState('')
+  const [mtlFile, setMtlFile] = useState('null')
+  const [mtlFileName, setMtlFileName] = useState('')
   const { formData, errors, handleChange, handleFileChange, isFormValid } =
     useRegisterClothesForm()
 
@@ -48,7 +50,6 @@ const ProductRegister: React.FC = () => {
     if (!isFormValid()) {
       alert('빈칸을 모두 채워주세요')
     }
-    console.log(formData)
     const result = await registerCloth(formData)
     if (result instanceof Error) {
       console.error(result.message)
@@ -77,6 +78,10 @@ const ProductRegister: React.FC = () => {
         setObjectFile(value)
         setObjectFileName(fileName)
         break
+      case 'mtlFile':
+        setMtlFile(value)
+        setMtlFileName(fileName)
+        break
     }
     handleFileChange(field, file)
   }
@@ -88,7 +93,8 @@ const ProductRegister: React.FC = () => {
       return
     }
     const fileSizeLimit = 10 * 1024 * 1024
-    //const objectFileExtensions = ['obj', 'mtl']
+    const objectFileExtensions = ['obj']
+    const materialFileExtensions = ['mtl']
 
     fileInput.onchange = (event: Event) => {
       const target = event.target as HTMLInputElement
@@ -97,11 +103,18 @@ const ProductRegister: React.FC = () => {
         console.log('File is Not Selected')
         return
       }
-      /*
+
       if (type == 'objectFile') {
         const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
         if (!fileExtension || !objectFileExtensions.includes(fileExtension)) {
-          alert('3D 파일은 obj 또는 mtl 파일만 업로드 가능합니다.')
+          alert('3D 파일은 obj 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else if (type == 'mtlFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !materialFileExtensions.includes(fileExtension)) {
+          alert('재질 파일은 mtl 파일만 업로드 가능합니다.')
           target.value = ''
           return
         }
@@ -112,7 +125,7 @@ const ProductRegister: React.FC = () => {
           return
         }
       }
-      */
+
       if (file.size > fileSizeLimit) {
         alert('파일 크기는 10MB를 초과할 수 없습니다.')
         target.value = ''
@@ -254,7 +267,15 @@ const ProductRegister: React.FC = () => {
             <ProductInputContainer>
               <Tag> 3D 파일 </Tag>
               <FileInput onClick={() => handleImage('objectFile')}>
-                {objectFile == 'null' ? '파일을 선택하세요.' : objectFileName}
+                {objectFile == 'null'
+                  ? 'obj 파일을 선택하세요.'
+                  : objectFileName}
+              </FileInput>
+            </ProductInputContainer>
+            <ProductInputContainer>
+              <Tag> 재질 파일 </Tag>
+              <FileInput onClick={() => handleImage('mtlFile')}>
+                {mtlFile == 'null' ? 'mtl 파일을 선택하세요.' : mtlFileName}
               </FileInput>
             </ProductInputContainer>
             <Button type="submit">등록</Button>
@@ -279,6 +300,12 @@ const ProductRegister: React.FC = () => {
             type="file"
             id="objectFile"
             name="objectFile"
+            onChange={() => console.log('')}
+          />
+          <Input
+            type="file"
+            id="mtlFile"
+            name="mtlFile"
             onChange={() => console.log('')}
           />
         </HiddenContainer>
