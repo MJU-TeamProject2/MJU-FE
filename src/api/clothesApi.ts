@@ -14,6 +14,7 @@ export type ClothesItem = {
   objectUrl: string
   mtlUrl: string
   clothesSizeList: any[]
+  objectUrl: string
 }
 
 export type PaginatedResponse<T> = {
@@ -71,7 +72,7 @@ export const retrieveClothesDetail = async (
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
-  console.log(response.data)
+  // console.log(response.data)
   return response.data
 }
 
@@ -133,7 +134,7 @@ export const modifyCloth = async (
 export const deleteCloth = async (
   clothID: string | undefined
 ): Promise<string> => {
-  console.log(clothID)
+  // console.log(clothID)
   const response: ApiResponse<string> = await axiosInstance.delete(
     `/api/v1/clothes/${clothID}`,
     {
