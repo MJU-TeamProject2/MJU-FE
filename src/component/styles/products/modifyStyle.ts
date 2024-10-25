@@ -16,14 +16,26 @@ export const ProductImageContainer = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
   margin: 30px;
 `
 
 export const ButtonContainer = styled.div`
   display: flex;
 `
+export const ModifyButtonContainer = styled.div`
+  display: none;
+`
 
 export const ProductInfoContainer = styled.div`
+  flex: 2;
+  width: 100%;
+  height: 100%;
+  margin: 30px;
+`
+
+export const ProductFixContainer = styled.div`
+  display: none;
   flex: 2;
   width: 100%;
   height: 100%;
@@ -34,7 +46,7 @@ export const ProductWrapper = styled.div`
   width: 100%;
   align-items: center;
   display: flex;
-  margin: 10px;
+  margin: 5%;
 `
 
 export const ProductMainImage = styled.img`
@@ -45,29 +57,58 @@ export const ProductMainImage = styled.img`
   border-radius: 8px;
 `
 
-export const ProductTag = styled.p `
+export const ProductTag = styled.p`
   font-size: 24px;
   flex: 2;
-  color: ${colors.white}
+  color: ${colors.white};
 `
 
 export const ProductInfo = styled.p`
-  font-size: 24px;
+  font-size: 20px;
   flex: 5;
-  color: ${ colors.blue }
+  color: lightblue;
+  padding: 2%;
 `
 
 export const Title = styled.h1`
   text-align: center;
   width: 100%;
   margin: 20px;
-  color: ${ colors.white }
+  color: ${colors.white};
 `
 
 export const ProductSection = styled.div`
   display: flex;
   width: 80%;
   height: 100%;
+`
+
+export const Input = styled.input`
+  flex: 5;
+  padding: 2.5%;
+  font-size: 20px;
+`
+
+export const FileInput = styled.p`
+  background-color: white;
+  border: solid 1px darkgray;
+  border-radius: 3px;
+  text-align: center;
+  padding: 2%;
+  flex: 5;
+  &:hover {
+    cursor: pointer;
+    background-color: lightgray;
+  }
+`
+
+export const Select = styled.select`
+  flex: 5;
+  padding: 2%;
+  font-size: 20px;
+`
+export const Option = styled.option`
+  font-size: 20px;
 `
 
 export const Button = styled.button`
@@ -85,5 +126,73 @@ export const Button = styled.button`
 
   &:hover {
     background-color: ${colors.buttonHover};
+  }
+`
+
+export const DeleteButton = styled.button`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-inline: 30px;
+  background-color: darkred;
+  color: ${colors.white};
+  border: 1px solid ${colors.primary};
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+export const ModifyButton = styled.button`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-inline: 30px;
+  background-color: darkgreen;
+  color: ${colors.white};
+  border: 1px solid ${colors.primary};
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`
+
+export const Form = styled.form`
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  justify-content: center;
+  display: flex;
+`
+export const HiddenContainer = styled.div`
+  display: none;
+`
+
+export const SizeButtonContainer = styled.div`
+  display: flex;
+  flex: 5;
+  width: 100%;
+`
+export const SizeButton = styled.button`
+  border: solid 1px lightblue;
+  border-radius: 2px;
+  padding-inline: 30px;
+  padding-block: 10px;
+  background-color: ${colors.adminBackground};
+  color: lightblue;
+  font-weight: bold;
+  margin: 2%;
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
   }
 `
