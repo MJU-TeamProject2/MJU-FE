@@ -56,8 +56,35 @@ const ProductDetail = () => {
   const handleFittingClick = () => {
     navigate('/fitting')
   }
+  const handleBuyButton = async () => {
+    const token = localStorage.getItem('accessToken')
+    try {
+      if (!token) {
+        throw new Error('로그인이 필요합니다.')
+      } else if (id) {
+        await postCartItems(id, selectedSize)
+        navigate('/cart')
+      }
+    } catch (error) {
+      console.error(error)
+      alert('로그인이 필요합니다.')
+      navigate('/login')
+    }
+  }
   const handlePostCartItems = async () => {
-    if (id) await postCartItems(id, selectedSize)
+    const token = localStorage.getItem('accessToken')
+    try {
+      if (!token) {
+        throw new Error('로그인이 필요합니다.')
+      } else if (id) {
+        await postCartItems(id, selectedSize)
+        alert('장바구니 추가 완료')
+      }
+    } catch (error) {
+      console.error(error)
+      alert('로그인이 필요합니다.')
+      navigate('/login')
+    }
   }
 
   useEffect(() => {
@@ -92,7 +119,9 @@ const ProductDetail = () => {
               </Select>
             )}
             <ButtonGroup>
-              <BuyButton disabled={isSoldOut}>구매하기</BuyButton>
+              <BuyButton onClick={handleBuyButton} disabled={isSoldOut}>
+                구매하기
+              </BuyButton>
               <CartButton onClick={handlePostCartItems} disabled={isSoldOut}>
                 장바구니
               </CartButton>

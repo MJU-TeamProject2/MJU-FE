@@ -27,7 +27,7 @@ const Register = () => {
       navigate('/login')
     } catch (e) {
       console.error(e)
-      alert('회원가입에 실패했습니다.')
+      alert(e)
     }
   }
 
