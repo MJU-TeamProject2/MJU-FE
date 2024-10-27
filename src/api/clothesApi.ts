@@ -11,6 +11,8 @@ export type ClothesItem = {
   productNumber: string | null
   discount: number | null
   detailUrl: string
+  objectUrl: string
+  mtlUrl: string
   clothesSizeList: any[]
 }
 
@@ -33,10 +35,6 @@ export type RegisterCloth = {
   quantity: number
   discount: number
   size: string
-}
-
-export type SuccessResponse = {
-  success: boolean
 }
 
 export type ClothesListResponse = PaginatedResponse<ClothesItem>
@@ -73,14 +71,12 @@ export const retrieveClothesDetail = async (
   const response: ApiResponse<ClothesItem> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
-  console.log(response.data)
   return response.data
 }
 
 export const registerCloth = async (
   clothesItem: RegisterCloth
 ): Promise<RegisterCloth> => {
-  console.log(clothesItem)
   const formData = new FormData()
   Object.entries(clothesItem).forEach(([key, value]) => {
     if (value instanceof File) {
@@ -105,10 +101,37 @@ export const registerCloth = async (
   return response.data
 }
 
+export const modifyCloth = async (
+  clothesItem: RegisterCloth,
+  clothID: string | undefined
+): Promise<RegisterCloth> => {
+  const formData = new FormData()
+  Object.entries(clothesItem).forEach(([key, value]) => {
+    if (value instanceof File) {
+      formData.append(key, value, value.name)
+    } else if (typeof value === 'string') {
+      formData.append(key, value)
+    } else {
+      formData.append(key, value.toString())
+    }
+  })
+  const response: ApiResponse<RegisterCloth> = await axiosInstance.patch(
+    `/api/v1/clothes/${clothID}`,
+    formData,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        accept: '*/*',
+      },
+    }
+  )
+  return response.data
+}
+
 export const deleteCloth = async (
   clothID: string | undefined
 ): Promise<string> => {
-  console.log(clothID)
   const response: ApiResponse<string> = await axiosInstance.delete(
     `/api/v1/clothes/${clothID}`,
     {

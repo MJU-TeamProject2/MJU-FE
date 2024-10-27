@@ -7,6 +7,7 @@ export const registerUser = async (
     '/api/v1/customer/register',
     userData
   )
+  console.log(response.success)
   return response.data
 }
 

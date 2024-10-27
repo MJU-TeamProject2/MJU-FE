@@ -9,18 +9,13 @@ export const ProductRegisterContainer = styled.div`
 export const ProductInformationContainer = styled.div`
   width: 100%;
   flex: 7;
+  text-align: center;
 `
 export const ProductContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
   padding: 5px 180px;
-`
-
-export const ProductDetailImageContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
 `
 
 export const ProductInputContainer = styled.div`
@@ -63,19 +58,6 @@ export const ProductImage = styled.img`
   }
 `
 
-export const ProductDetailImage = styled.img`
-  display: flex;
-  flex: 2;
-  object-fit: contain;
-  object-position: center;
-  max-width: 40%;
-  margin: 10px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`
-
 export const Input = styled.input`
   flex: 6;
 `
@@ -87,7 +69,6 @@ export const FileInput = styled.p`
   text-align: center;
   padding-top: 10px;
   flex: 6;
-  
   &:hover {
     cursor: pointer;
     background-color: lightgray;
@@ -134,4 +115,10 @@ export const BlankText = styled.p`
   color: darkgray;
   font-size: 16px;
   margin: 0;
+`
+export const ErrorMessage = styled.div`
+  color: #ff6b6b;
+  font-size: 12px;
+  margin-top: -15px;
+  margin-bottom: 10px;
 `

@@ -10,6 +10,7 @@ import {
   PurchaseButton,
   TotalSection,
   DeleteButton,
+  QuantityButton,
 } from '@/component/styles/user/cartStyles'
 import {
   getCartItems,
@@ -21,30 +22,35 @@ import { useNavigate } from 'react-router-dom'
 
 interface Product {
   id: string
+  cartId: string
   name: string
   size: string
   price: number
   originalPrice: number
   imageUrl: string
   quantity: number
+  availableQuantity: number
 }
 
 const Cart: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
-  const navigate = useNavigate() // useNavigate 사용
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchCartItems = async () => {
       const cartItems = await getCartItems()
       const formattedProducts = cartItems.map((item) => ({
+        cartId: item.cartId.toString(),
         id: item.clothesId.toString(),
         name: item.name,
-        size: 'M',
-        price: item.price,
-        originalPrice: item.price + item.discount,
+        size: item.size,
+        price:
+          item.price * (item.discount === 0 ? 1 : (100 - item.discount) / 100),
+        originalPrice: item.price,
         imageUrl: item.imageUrl,
-        quantity: 1,
+        quantity: item.quantity,
+        availableQuantity: item.availableQuantity,
       }))
       setProducts(formattedProducts)
     }
@@ -63,20 +69,22 @@ const Cart: React.FC = () => {
     if (selectedProducts.length === products.length && products.length > 0) {
       setSelectedProducts([])
     } else {
-      setSelectedProducts(products.map((product) => product.id))
+      setSelectedProducts(products.map((product) => product.cartId))
     }
   }
 
   const handleDeleteProduct = async (productId: string) => {
     await deleteCartItem(Number(productId))
-    setProducts(products.filter((product) => product.id !== productId))
-    setSelectedProducts(selectedProducts.filter((id) => id !== productId))
+    setProducts(products.filter((product) => product.cartId !== productId))
+    setSelectedProducts(
+      selectedProducts.filter((cartId) => cartId !== productId)
+    )
   }
 
   const handleDeleteSelected = async () => {
     await Promise.all(selectedProducts.map((id) => deleteCartItem(Number(id))))
     setProducts(
-      products.filter((product) => !selectedProducts.includes(product.id))
+      products.filter((product) => !selectedProducts.includes(product.cartId))
     )
     setSelectedProducts([])
   }
@@ -87,7 +95,9 @@ const Cart: React.FC = () => {
   ) => {
     await updateCartItemQuantity(Number(productId), newQuantity)
     const updatedProducts = products.map((product) =>
-      product.id === productId ? { ...product, quantity: newQuantity } : product
+      product.cartId === productId
+        ? { ...product, quantity: newQuantity }
+        : product
     )
     setProducts(updatedProducts)
   }
@@ -97,9 +107,21 @@ const Cart: React.FC = () => {
       alert('선택된 상품이 없습니다.')
       return
     }
-    await purchaseCartItems(selectedProducts)
-    alert('구매가 완료되었습니다!')
-    navigate('/')
+
+    try {
+      await purchaseCartItems(selectedProducts)
+      await Promise.all(
+        products.map((product) => deleteCartItem(Number(product.cartId)))
+      )
+      setProducts([])
+      setSelectedProducts([])
+
+      alert('구매가 완료되었습니다!')
+      navigate('/')
+    } catch (error) {
+      console.error('구매 중 오류가 발생했습니다:', error)
+      alert('구매에 실패했습니다. 다시 시도해 주세요.')
+    }
   }
 
   const calculateTotalPrice = () => {
@@ -138,41 +160,48 @@ const Cart: React.FC = () => {
       </CartHeader>
 
       {products.map((product) => (
-        <ProductContainer key={product.id}>
+        <ProductContainer key={product.cartId}>
           <Checkbox
             type="checkbox"
-            checked={selectedProducts.includes(product.id)}
-            onChange={() => handleProductSelection(product.id)}
+            checked={selectedProducts.includes(product.cartId)}
+            onChange={() => handleProductSelection(product.cartId)}
           />
-          <ProductImage src={product.imageUrl} alt="Product Image" />
+          <ProductImage src={product.imageUrl} alt={product.name} />
           <ProductInfo>
             <p>{product.name}</p>
-            <p>
-              {product.size} / {product.quantity}개
-            </p>
-            <p style={{ textDecoration: 'line-through', color: '#767676' }}>
-              {product.originalPrice.toLocaleString()}원
-            </p>
+            <p>{product.quantity}개</p>
+            {product.originalPrice !== product.price && (
+              <p style={{ textDecoration: 'line-through', color: '#767676' }}>
+                {(product.originalPrice * product.quantity).toLocaleString()}원
+              </p>
+            )}
             <p style={{ fontWeight: 'bold', color: '#000' }}>
-              {product.price.toLocaleString()}원
+              {(product.price * product.quantity).toLocaleString()}원
             </p>
-            <button
+            <QuantityButton
               onClick={() =>
-                handleQuantityUpdate(product.id, product.quantity + 1)
+                handleQuantityUpdate(product.cartId, product.quantity + 1)
               }
             >
               수량 증가
-            </button>
-            <button
+            </QuantityButton>
+            <QuantityButton
               onClick={() =>
-                handleQuantityUpdate(product.id, product.quantity - 1)
+                handleQuantityUpdate(
+                  product.cartId,
+                  product.quantity - 1 >= 1
+                    ? product.quantity - 1
+                    : product.quantity
+                )
               }
             >
               수량 감소
-            </button>
+            </QuantityButton>
           </ProductInfo>
           <PriceInfo>
-            <button onClick={() => handleDeleteProduct(product.id)}>X</button>
+            <button onClick={() => handleDeleteProduct(product.cartId)}>
+              X
+            </button>
           </PriceInfo>
         </ProductContainer>
       ))}

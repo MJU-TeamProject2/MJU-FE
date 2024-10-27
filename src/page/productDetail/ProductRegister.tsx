@@ -18,6 +18,7 @@ import {
   Select,
   BlankImage,
   BlankText,
+  ErrorMessage,
 } from '@/component/styles/products/registerStyle'
 import { registerCloth } from '@/api/clothesApi'
 
@@ -27,27 +28,33 @@ const ProductRegister: React.FC = () => {
   const [detailImageName, setDetailImageName] = useState('')
   const [objectFile, setObjectFile] = useState('null')
   const [objectFileName, setObjectFileName] = useState('')
-
-  const {
-    formData,
-    handleChange,
-    handleNumberChange,
-    handleFileChange,
-    isFormValid,
-  } = useRegisterClothesForm()
+  const [mtlFile, setMtlFile] = useState('null')
+  const [mtlFileName, setMtlFileName] = useState('')
+  const { formData, errors, handleChange, handleFileChange, isFormValid } =
+    useRegisterClothesForm()
 
   const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(formData)
-    if (!isFormValid()) return
-    const result = await registerCloth(formData)
+    if (
+      errors.productNumber ||
+      errors.quantity ||
+      errors.discount ||
+      errors.price
+    ) {
+      alert('잘못 입력된 값이 존재합니다.')
+      return
+    }
 
+    if (!isFormValid()) {
+      alert('빈칸을 모두 채워주세요')
+    }
+    const result = await registerCloth(formData)
     if (result instanceof Error) {
       console.error(result.message)
+      alert(result.message)
     } else {
-      console.log('등록 성공')
       alert('상품이 등록되었습니다')
       navigate('/adminHome')
     }
@@ -71,6 +78,10 @@ const ProductRegister: React.FC = () => {
         setObjectFile(value)
         setObjectFileName(fileName)
         break
+      case 'mtlFile':
+        setMtlFile(value)
+        setMtlFileName(fileName)
+        break
     }
     handleFileChange(field, file)
   }
@@ -81,12 +92,43 @@ const ProductRegister: React.FC = () => {
       console.log('File input element not found')
       return
     }
+    const fileSizeLimit = 10 * 1024 * 1024
+    const objectFileExtensions = ['obj']
+    const materialFileExtensions = ['mtl']
 
     fileInput.onchange = (event: Event) => {
       const target = event.target as HTMLInputElement
       const file = target.files?.[0]
       if (!file) {
         console.log('File is Not Selected')
+        return
+      }
+
+      if (type == 'objectFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !objectFileExtensions.includes(fileExtension)) {
+          alert('3D 파일은 obj 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else if (type == 'mtlFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !materialFileExtensions.includes(fileExtension)) {
+          alert('재질 파일은 mtl 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else {
+        if (!file.type.startsWith('image/')) {
+          alert('이미지 파일만 업로드 가능합니다')
+          target.value = ''
+          return
+        }
+      }
+
+      if (file.size > fileSizeLimit) {
+        alert('파일 크기는 10MB를 초과할 수 없습니다.')
+        target.value = ''
         return
       }
 
@@ -162,9 +204,10 @@ const ProductRegister: React.FC = () => {
                 name="price"
                 placeholder="0"
                 value={formData.price}
-                onChange={(e) => handleNumberChange('price', e.target.value)}
+                onChange={(e) => handleChange('price', e.target.value)}
               />
             </ProductInputContainer>
+            {errors.price && <ErrorMessage> {errors.price} </ErrorMessage>}
             <ProductInputContainer>
               <Tag> 상품 번호 </Tag>
               <Input
@@ -182,9 +225,12 @@ const ProductRegister: React.FC = () => {
                 name="discount"
                 placeholder="0"
                 value={formData.discount}
-                onChange={(e) => handleNumberChange('discount', e.target.value)}
+                onChange={(e) => handleChange('discount', e.target.value)}
               />
             </ProductInputContainer>
+            {errors.discount && (
+              <ErrorMessage> {errors.discount} </ErrorMessage>
+            )}
             <ProductInputContainer>
               <Tag> 사이즈 </Tag>
               <Select
@@ -206,9 +252,12 @@ const ProductRegister: React.FC = () => {
                 name="quantity"
                 value={formData.quantity}
                 placeholder="0"
-                onChange={(e) => handleNumberChange('quantity', e.target.value)}
+                onChange={(e) => handleChange('quantity', e.target.value)}
               />
             </ProductInputContainer>
+            {errors.quantity && (
+              <ErrorMessage> {errors.quantity} </ErrorMessage>
+            )}
             <ProductInputContainer>
               <Tag> 상세 사진 </Tag>
               <FileInput onClick={() => handleImage('detailImage')}>
@@ -218,7 +267,15 @@ const ProductRegister: React.FC = () => {
             <ProductInputContainer>
               <Tag> 3D 파일 </Tag>
               <FileInput onClick={() => handleImage('objectFile')}>
-                {objectFile == 'null' ? '파일을 선택하세요.' : objectFileName}
+                {objectFile == 'null'
+                  ? 'obj 파일을 선택하세요.'
+                  : objectFileName}
+              </FileInput>
+            </ProductInputContainer>
+            <ProductInputContainer>
+              <Tag> 재질 파일 </Tag>
+              <FileInput onClick={() => handleImage('mtlFile')}>
+                {mtlFile == 'null' ? 'mtl 파일을 선택하세요.' : mtlFileName}
               </FileInput>
             </ProductInputContainer>
             <Button type="submit">등록</Button>
@@ -243,6 +300,12 @@ const ProductRegister: React.FC = () => {
             type="file"
             id="objectFile"
             name="objectFile"
+            onChange={() => console.log('')}
+          />
+          <Input
+            type="file"
+            id="mtlFile"
+            name="mtlFile"
             onChange={() => console.log('')}
           />
         </HiddenContainer>
