@@ -82,7 +82,7 @@ jobs:
             exit 1
           fi
           echo "Using build directory: $BUILD_DIR"
-          scp -i private_key -o StrictHostKeyChecking=no -r $BUILD_DIR/* ${EC2_USER}@${HOST_DNS}:/var/www/html/
+          scp -i private_key -o StrictHostKeyChecking=no -r $BUILD_DIR/* ${EC2_USER}@${HOST_DNS}:/var/www/html
           ssh -i private_key -o StrictHostKeyChecking=no ${EC2_USER}@${HOST_DNS} '
             sudo systemctl restart nginx
           '

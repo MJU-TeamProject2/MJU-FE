@@ -10,6 +10,7 @@ import {
   PurchaseButton,
   TotalSection,
   DeleteButton,
+  QuantityButton,
 } from '@/component/styles/user/cartStyles'
 import {
   getCartItems,
@@ -34,7 +35,7 @@ interface Product {
 const Cart: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [selectedProducts, setSelectedProducts] = useState<string[]>([])
-  const navigate = useNavigate() // useNavigate 사용
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchCartItems = async () => {
@@ -44,11 +45,12 @@ const Cart: React.FC = () => {
         id: item.clothesId.toString(),
         name: item.name,
         size: item.size,
-        price: item.price * ((item.discount === 0) ? 1 : ((100 - item.discount) / 100)),
+        price:
+          item.price * (item.discount === 0 ? 1 : (100 - item.discount) / 100),
         originalPrice: item.price,
         imageUrl: item.imageUrl,
         quantity: item.quantity,
-        availableQuantity: item.availableQuantity
+        availableQuantity: item.availableQuantity,
       }))
       setProducts(formattedProducts)
     }
@@ -74,7 +76,9 @@ const Cart: React.FC = () => {
   const handleDeleteProduct = async (productId: string) => {
     await deleteCartItem(Number(productId))
     setProducts(products.filter((product) => product.cartId !== productId))
-    setSelectedProducts(selectedProducts.filter((cartId) => cartId !== productId))
+    setSelectedProducts(
+      selectedProducts.filter((cartId) => cartId !== productId)
+    )
   }
 
   const handleDeleteSelected = async () => {
@@ -91,7 +95,9 @@ const Cart: React.FC = () => {
   ) => {
     await updateCartItemQuantity(Number(productId), newQuantity)
     const updatedProducts = products.map((product) =>
-      product.cartId === productId ? { ...product, quantity: newQuantity } : product
+      product.cartId === productId
+        ? { ...product, quantity: newQuantity }
+        : product
     )
     setProducts(updatedProducts)
   }
@@ -101,9 +107,21 @@ const Cart: React.FC = () => {
       alert('선택된 상품이 없습니다.')
       return
     }
-    await purchaseCartItems(selectedProducts)
-    alert('구매가 완료되었습니다!')
-    navigate('/')
+
+    try {
+      await purchaseCartItems(selectedProducts)
+      await Promise.all(
+        products.map((product) => deleteCartItem(Number(product.cartId)))
+      )
+      setProducts([])
+      setSelectedProducts([])
+
+      alert('구매가 완료되었습니다!')
+      navigate('/')
+    } catch (error) {
+      console.error('구매 중 오류가 발생했습니다:', error)
+      alert('구매에 실패했습니다. 다시 시도해 주세요.')
+    }
   }
 
   const calculateTotalPrice = () => {
@@ -151,9 +169,7 @@ const Cart: React.FC = () => {
           <ProductImage src={product.imageUrl} alt={product.name} />
           <ProductInfo>
             <p>{product.name}</p>
-            <p>
-              {product.quantity}개
-            </p>
+            <p>{product.quantity}개</p>
             {product.originalPrice !== product.price && (
               <p style={{ textDecoration: 'line-through', color: '#767676' }}>
                 {(product.originalPrice * product.quantity).toLocaleString()}원
@@ -162,23 +178,30 @@ const Cart: React.FC = () => {
             <p style={{ fontWeight: 'bold', color: '#000' }}>
               {(product.price * product.quantity).toLocaleString()}원
             </p>
-            <button
+            <QuantityButton
               onClick={() =>
                 handleQuantityUpdate(product.cartId, product.quantity + 1)
               }
             >
               수량 증가
-            </button>
-            <button
+            </QuantityButton>
+            <QuantityButton
               onClick={() =>
-                handleQuantityUpdate(product.cartId, product.quantity - 1 >= 1 ? product.quantity - 1 : product.quantity )
+                handleQuantityUpdate(
+                  product.cartId,
+                  product.quantity - 1 >= 1
+                    ? product.quantity - 1
+                    : product.quantity
+                )
               }
             >
               수량 감소
-            </button>
+            </QuantityButton>
           </ProductInfo>
           <PriceInfo>
-            <button onClick={() => handleDeleteProduct(product.cartId)}>X</button>
+            <button onClick={() => handleDeleteProduct(product.cartId)}>
+              X
+            </button>
           </PriceInfo>
         </ProductContainer>
       ))}

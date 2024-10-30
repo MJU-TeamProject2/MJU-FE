@@ -80,3 +80,21 @@ export const DeleteButton = styled.button`
     background-color: #d32f2f;
   }
 `
+
+export const QuantityButton = styled.button`
+  background-color: #e0e0e0;
+  color: #333;
+  border: 1px solid #bbb;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+
+  &:hover {
+    background-color: #d0d0d0;
+  }
+
+  &:active {
+    background-color: #ccc;
+  }
+`

@@ -77,6 +77,11 @@ const User = () => {
     navigate('/')
   }
 
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault()
+    navigate(-1)
+  }
+
   return (
     <UserModifyContainer>
       <Card>
@@ -142,11 +147,10 @@ const User = () => {
             >
               수정
             </Button>
-            <Button>닫기</Button>
+            <Button onClick={handleClose}>닫기</Button>
             <Button
-              onClick={() => {
-                handleLogout()
-              }}
+              type="button"
+              onClick={handleLogout}
             >
               로그아웃
             </Button>
