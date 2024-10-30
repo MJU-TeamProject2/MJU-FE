@@ -78,13 +78,22 @@ const ProductModify = () => {
 
   const selectSizeToSeeQuantity = (value: string) => {
     const sizeList = ['XS', 'S', 'M', 'L', 'XL']
+    console.log(product.clothesSizeList)
     for (let i = 0; i < 5; i++) {
       let id = sizeList[i]
       let element = document.getElementById(id)
       if (id == value && element != null) {
         element.style.backgroundColor = 'lightblue'
         element.style.color = '#1E1F30'
-        setQuantity(product.clothesSizeList[i].quantity)
+        let isSizeExisted = false
+        for (const sizeArray of product.clothesSizeList) {
+          if (sizeArray.size == value) {
+            isSizeExisted = true
+            setQuantity(product.clothesSizeList[i].quantity)
+            break
+          }
+        }
+        if (!isSizeExisted) setQuantity('0')
       } else if (element != null) {
         element.style.backgroundColor = '#1E1F30'
         element.style.color = 'lightblue'
@@ -461,17 +470,15 @@ const ProductModify = () => {
               <ProductTag> 제품 사진 </ProductTag>
               <FileInput onClick={() => handleImage('detailImage')}>
                 {' '}
-                {mainImageName == 'null'
+                {detailImageName == 'null'
                   ? '파일을 선택하세요'
-                  : mainImageName}{' '}
+                  : detailImageName}{' '}
               </FileInput>
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 미리보기 </ProductTag>
               <FileInput onClick={() => handleImage('mainImage')}>
-                {detailImageName == 'null'
-                  ? '파일을 선택하세요'
-                  : detailImageName}
+                {mainImageName == 'null' ? '파일을 선택하세요' : mainImageName}
               </FileInput>
             </ProductWrapper>
             <ProductWrapper>
