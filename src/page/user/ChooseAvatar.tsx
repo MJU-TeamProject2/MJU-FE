@@ -51,11 +51,14 @@ const ChooseAvatar: React.FC = () => {
   }
 
   const handleSelectClick = () => {
-    if (selectedAvatar !== null || customAvatar !== null) {
-      navigate('/', { state: { avatarId: selectedAvatar, customAvatar } })
-    } else {
-      alert('아바타를 선택해주세요.')
-    }
+    const avatarToSave =
+      customAvatar ||
+      (selectedAvatar ? mockAvatars[selectedAvatar - 1].src : null)
+    localStorage.setItem(
+      'selectedAvatar',
+      JSON.stringify({ customAvatar: avatarToSave })
+    )
+    navigate('/') // 홈으로 이동
   }
 
   const handleCloseClick = () => {
