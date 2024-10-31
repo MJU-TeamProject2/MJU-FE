@@ -98,3 +98,46 @@ export const QuantityButton = styled.button`
     background-color: #ccc;
   }
 `
+
+export const AddressInputContainer = styled.div`
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: ${colors.lightGray};
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+`
+
+export const PaymentMethodContainer = styled(AddressInputContainer)`
+  margin-top: 20px;
+`
+
+export const InputGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+export const InputLabel = styled.label`
+  font-weight: bold;
+  font-size: 16px;
+  min-width: 100px; /* 레이블 폭 고정 */
+  white-space: nowrap;
+`
+
+export const InputField = styled.input`
+  padding: 15px 10px;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+  height: 50px; /* 세로 길이 추가 */
+`
+
+export const SectionTitle = styled.p`
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 18px;
+`
