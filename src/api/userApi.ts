@@ -1,4 +1,5 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+import { AxiosError } from 'axios'
 
 export const registerUser = async (
   userData: User
@@ -39,21 +40,29 @@ export const loginAdmin = async (
   code: string,
   password: string
 ): Promise<AdminLoginResponse> => {
-  const response: ApiResponse<AdminLoginResponse> = await axiosInstance.post(
-    '/api/v1/admin/login',
-    {
-      code,
-      password,
-    }
-  )
+  try {
+    const response: ApiResponse<AdminLoginResponse> = await axiosInstance.post(
+      '/api/v1/admin/login',
+      {
+        code,
+        password,
+      }
+    )
 
-  if (response.success) {
-    const { accessToken, refreshToken } = response.data
-    localStorage.setItem('accessToken', accessToken)
-    localStorage.setItem('refreshToken', refreshToken)
+    if (response.success) {
+      const { accessToken, refreshToken } = response.data
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
+    }
+
+    return response.data
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw new Error(error.response?.data?.message || '로그인에 실패했습니다.')
+    }
+    throw new Error('로그인 중 오류가 발생했습니다.')
   }
 
-  return response.data
 }
 
 // 회원 정보를 불러오는 함수

@@ -12,15 +12,12 @@ const AdminLogin = () => {
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    const result = await loginAdmin(code, password)
-
-    if (result instanceof Error) {
-      console.error(result.message)
-      setError('로그인에 실패했습니다.')
-    } else {
+    try {
+      await loginAdmin(code, password)
       console.log('어드민 로그인 성공')
       navigate('/adminHome')
+    } catch (error) {
+      setError('로그인에 실패했습니다.')
     }
   }
 
