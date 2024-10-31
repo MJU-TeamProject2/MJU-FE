@@ -35,7 +35,7 @@ import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
-  const { formData, errors, handleFileChange, isFormValid } =
+  const { formData, errors, handleChange, handleFileChange, isFormValid } =
     useRegisterClothesForm()
 
   const [name, setName] = useState('')
@@ -46,6 +46,7 @@ const ProductModify = () => {
   const [price, setPrice] = useState('')
   const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
+  const [sizeLIst, setSizeList] = useState<any>(null)
 
   const [, setMainImage] = useState('null')
   const [, setDetailImage] = useState('null')
@@ -63,7 +64,7 @@ const ProductModify = () => {
     if (id) {
       const details = await retrieveClothesDetail(id)
       setProduct(details)
-      console.log(details.clothesSizeList)
+      setSizeList(details.clothesSizeList)
 
       setName(details.name || '')
       setCategory(details.category)
@@ -77,24 +78,23 @@ const ProductModify = () => {
   }
 
   const selectSizeToSeeQuantity = (value: string) => {
-    const sizeList = ['XS', 'S', 'M', 'L', 'XL']
-    console.log(product.clothesSizeList)
-    for (let i = 0; i < 5; i++) {
-      let id = sizeList[i]
-      let element = document.getElementById(id)
-      if (id == value && element != null) {
+    const sizeList = {
+      XS: 0,
+      S: 0,
+      M: 0,
+      L: 0,
+      XL: 0,
+    }
+    for (const sizeQuantity of product.clothesSizeList) {
+      sizeList[sizeQuantity.size] = sizeQuantity.quantity
+    }
+    for (const sizeValue in sizeList) {
+      let element = document.getElementById(sizeValue)
+      if (element !== null && sizeValue == value) {
         element.style.backgroundColor = 'lightblue'
         element.style.color = '#1E1F30'
-        let isSizeExisted = false
-        for (const sizeArray of product.clothesSizeList) {
-          if (sizeArray.size == value) {
-            isSizeExisted = true
-            setQuantity(product.clothesSizeList[i].quantity)
-            break
-          }
-        }
-        if (!isSizeExisted) setQuantity('0')
-      } else if (element != null) {
+        setQuantity(sizeList[sizeValue])
+      } else if (element !== null) {
         element.style.backgroundColor = '#1E1F30'
         element.style.color = 'lightblue'
       }
@@ -124,7 +124,7 @@ const ProductModify = () => {
         setProductNumber(product.productNumber)
         setDiscount(product.discount)
         setPrice(product.price)
-
+        fillForm()
         infoWrapper.style.display = 'none'
         infoButtonGroup.style.display = 'none'
         modifyWrapper.style.display = 'block'
@@ -238,8 +238,41 @@ const ProductModify = () => {
     }
   }
 
+  const fillForm = () => {
+    const inputName = document.getElementById('inputName') as HTMLInputElement
+    const inputCategory = document.getElementById(
+      'inputCategory'
+    ) as HTMLInputElement
+    const inputGenderCategory = document.getElementById(
+      'inputGenderCategory'
+    ) as HTMLInputElement
+    const inputPrice = document.getElementById('inputPrice') as HTMLInputElement
+    const inputDiscount = document.getElementById(
+      'inputDiscount'
+    ) as HTMLInputElement
+    const inputProductNumber = document.getElementById(
+      'inputProductNumber'
+    ) as HTMLInputElement
+    const inputSize = document.getElementById('inputSize') as HTMLInputElement
+    const inputQuantity = document.getElementById(
+      'inputQuantity'
+    ) as HTMLInputElement
+
+    if (inputName !== null) handleChange('name', inputName.value)
+    if (inputCategory !== null) handleChange('category', inputCategory.value)
+    if (inputGenderCategory !== null)
+      handleChange('genderCategory', inputGenderCategory.value)
+    if (inputPrice !== null) handleChange('price', inputPrice.value)
+    if (inputDiscount !== null) handleChange('discount', inputDiscount.value)
+    if (inputProductNumber !== null)
+      handleChange('productNumber', inputProductNumber.value)
+    if (inputSize !== null) handleChange('size', inputSize.value)
+    if (inputQuantity !== null) handleChange('quantity', inputQuantity.value)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    console.log(product)
     if (
       errors.productNumber ||
       errors.quantity ||
@@ -269,7 +302,8 @@ const ProductModify = () => {
     }
   }, [])
 
-  const handleChange = (field: string, value: string) => {
+  const handleData = (field: string, value: string) => {
+    handleChange(field, value)
     switch (field) {
       case 'name':
         setName(value)
@@ -384,8 +418,9 @@ const ProductModify = () => {
               <Input
                 type="text"
                 name="name"
+                id="inputName"
                 value={name}
-                onChange={(e) => handleChange('name', e.target.value)}
+                onChange={(e) => handleData('name', e.target.value)}
               />
             </ProductWrapper>
             <ProductWrapper>
@@ -393,7 +428,8 @@ const ProductModify = () => {
               <Select
                 name="category"
                 value={category}
-                onChange={(e) => handleChange('category', e.target.value)}
+                id="inputCategory"
+                onChange={(e) => handleData('category', e.target.value)}
               >
                 <Option value="DRESSES"> 드레스 </Option>
                 <Option value="OUTERWEAR"> 겉옷 </Option>
@@ -407,7 +443,8 @@ const ProductModify = () => {
               <Select
                 name="genderCategory"
                 value={genderCategory}
-                onChange={(e) => handleChange('genderCategory', e.target.value)}
+                id="inputGenderCategory"
+                onChange={(e) => handleData('genderCategory', e.target.value)}
               >
                 <Option value="MALE"> 남성용 </Option>
                 <Option value="FEMALE"> 여성용 </Option>
@@ -419,8 +456,9 @@ const ProductModify = () => {
               <Input
                 type="text"
                 name="productNumber"
+                id="inputProductNumber"
                 value={productNumber}
-                onChange={(e) => handleChange('productNumber', e.target.value)}
+                onChange={(e) => handleData('productNumber', e.target.value)}
               />
             </ProductWrapper>
             <ProductWrapper>
@@ -428,8 +466,9 @@ const ProductModify = () => {
               <Input
                 type="number"
                 name="discount"
+                id="inputDiscount"
                 value={discount}
-                onChange={(e) => handleChange('discount', e.target.value)}
+                onChange={(e) => handleData('discount', e.target.value)}
               />
             </ProductWrapper>
             <ProductWrapper>
@@ -437,16 +476,18 @@ const ProductModify = () => {
               <Input
                 type="number"
                 name="price"
+                id="inputPrice"
                 value={price}
-                onChange={(e) => handleChange('price', e.target.value)}
+                onChange={(e) => handleData('price', e.target.value)}
               />
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 사이즈 </ProductTag>
               <Select
                 name="size"
+                id="inputSize"
                 value={size}
-                onChange={(e) => handleChange('size', e.target.value)}
+                onChange={(e) => handleData('size', e.target.value)}
               >
                 <Option value="XS"> XS </Option>
                 <Option value="S"> S </Option>
@@ -459,9 +500,10 @@ const ProductModify = () => {
               <ProductTag> 재고 </ProductTag>
               <Input
                 type="number"
+                id="inputQuantity"
                 name="quantity"
                 value={quantity}
-                onChange={(e) => handleChange('quantity', e.target.value)}
+                onChange={(e) => handleData('quantity', e.target.value)}
               />
             </ProductWrapper>
           </ProductFixContainer>

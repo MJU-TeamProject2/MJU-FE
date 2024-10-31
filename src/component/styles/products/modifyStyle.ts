@@ -67,6 +67,7 @@ export const ProductTag = styled.p`
   font-size: 24px;
   flex: 2;
   color: ${colors.white};
+  font-weight: bold;
 `
 
 export const ProductInfo = styled.p`
@@ -81,6 +82,7 @@ export const Title = styled.h1`
   text-align: center;
   width: 100%;
   margin: 20px;
+  font-size: 36px;
   color: ${colors.white};
 `
 
