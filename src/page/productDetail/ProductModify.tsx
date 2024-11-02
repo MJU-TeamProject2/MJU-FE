@@ -16,14 +16,12 @@ import {
   ProductInfo,
   Title,
   Input,
-  FileInput,
   Select,
   Option,
   ProductSection,
   ButtonContainer,
   Button,
   DeleteButton,
-  ModifyButton,
   ModifyButtonContainer,
   HiddenContainer,
   SizeButtonContainer,
@@ -32,11 +30,13 @@ import {
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
+interface jsonType {
+  [key: string]: any
+}
 const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
-  const { formData, errors, handleChange, handleFileChange, isFormValid } =
-    useRegisterClothesForm()
+  const { errors, handleChange } = useRegisterClothesForm()
 
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
@@ -46,15 +46,6 @@ const ProductModify = () => {
   const [price, setPrice] = useState('')
   const [, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
-
-  const [, setMainImage] = useState('null')
-  const [, setDetailImage] = useState('null')
-  const [, setObjectFile] = useState('null')
-  const [, setMtlFile] = useState('null')
-  const [, setMainImageName] = useState('null')
-  const [, setDetailImageName] = useState('null')
-  const [, setObjectFileName] = useState('null')
-  const [, setMtlFileName] = useState('null')
 
   const navigate = useNavigate()
   const isMounted = useRef(false)
@@ -76,7 +67,7 @@ const ProductModify = () => {
   }
 
   const selectSizeToSeeQuantity = (value: string) => {
-    const sizeList = {
+    const sizeList: jsonType = {
       XS: 0,
       S: 0,
       M: 0,
@@ -132,94 +123,6 @@ const ProductModify = () => {
     }
   }
 
-  const handleFile = (
-    field: string,
-    file: File,
-    fileName: string,
-    value: string
-  ) => {
-    console.log(field)
-    console.log(file)
-    console.log(fileName)
-    console.log(value)
-    switch (field) {
-      case 'mainImage':
-        setMainImage(value)
-        setMainImageName(fileName)
-        break
-      case 'detailImage':
-        setDetailImage(value)
-        setDetailImageName(fileName)
-        break
-      case 'objectFile':
-        setObjectFile(value)
-        setObjectFileName(fileName)
-        break
-      case 'mtlFile':
-        setMtlFile(value)
-        setMtlFileName(fileName)
-        break
-    }
-    handleFileChange(field, file)
-  }
-
-  const handleImage = (type: string) => {
-    const fileInput = document.getElementById(type) as HTMLInputElement | null
-    if (!fileInput) {
-      console.log('File input element not found')
-      return
-    }
-    const fileSizeLimit = 10 * 1024 * 1024
-    const objectFileExtensions = ['obj']
-    const materialFileExtensions = ['mtl']
-
-    fileInput.onchange = (event: Event) => {
-      const target = event.target as HTMLInputElement
-      const file = target.files?.[0]
-      if (!file) {
-        console.log('File is Not Selected')
-        return
-      }
-
-      if (type == 'objectFile') {
-        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
-        if (!fileExtension || !objectFileExtensions.includes(fileExtension)) {
-          alert('3D 파일은 obj 파일만 업로드 가능합니다.')
-          target.value = ''
-          return
-        }
-      } else if (type == 'mtlFile') {
-        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
-        if (!fileExtension || !materialFileExtensions.includes(fileExtension)) {
-          alert('재질 파일은 mtl 파일만 업로드 가능합니다.')
-          target.value = ''
-          return
-        }
-      } else {
-        if (!file.type.startsWith('image/')) {
-          alert('이미지 파일만 업로드 가능합니다')
-          target.value = ''
-          return
-        }
-      }
-
-      if (file.size > fileSizeLimit) {
-        alert('파일 크기는 10MB를 초과할 수 없습니다.')
-        target.value = ''
-        return
-      }
-
-      const fileReader = new FileReader()
-      fileReader.onload = (e: ProgressEvent<FileReader>) => {
-        const base64String = e.target?.result as string
-
-        handleFile(type, file, file.name, base64String)
-      }
-      fileReader.readAsDataURL(file)
-    }
-    fileInput.click()
-  }
-
   const deleteItem = async () => {
     let select = confirm('해당 상품을 삭제하겠습니까?')
     if (select) {
@@ -272,7 +175,7 @@ const ProductModify = () => {
       alert('잘못 입력된 값이 존재합니다.')
       return
     }
-    const changedList = {}
+    const changedList: jsonType = {}
     if (product.price != price) changedList['price'] = price
     if (product.name != name) changedList['name'] = name
     if (product.category != category) changedList['category'] = category
