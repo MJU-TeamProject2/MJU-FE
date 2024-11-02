@@ -29,29 +29,35 @@ export const ModifyButtonContainer = styled.div`
 
 export const ProductInfoContainer = styled.div`
   flex: 2;
-  width: 100%;
+  text-align: center;
+  width: 70%;
   height: 100%;
   margin: 30px;
+  border-radius: 7px;
+  border: 1px solid white;
 `
 
 export const ProductFixContainer = styled.div`
   display: none;
   flex: 2;
-  width: 100%;
+  width: 70%;
   height: 100%;
   margin: 30px;
+  border-radius: 7px;
+  border: 1px solid white;
+  text-align: center;
 `
 
 export const ProductWrapper = styled.div`
   width: 100%;
   align-items: center;
   display: flex;
-  margin: 5%;
+  padding: 2%;
 `
 
 export const ProductMainImage = styled.img`
   max-height: 80%;
-  max-width: 90%;
+  width: 20%;
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -61,32 +67,44 @@ export const ProductTag = styled.p`
   font-size: 24px;
   flex: 2;
   color: ${colors.white};
+  font-weight: bold;
 `
 
 export const ProductInfo = styled.p`
   font-size: 20px;
-  flex: 5;
+  flex: 6;
   color: lightblue;
-  padding: 2%;
+  padding: 1%;
+  border-left: 1px solid lightgray;
 `
 
 export const Title = styled.h1`
   text-align: center;
   width: 100%;
   margin: 20px;
+  font-size: 36px;
   color: ${colors.white};
 `
 
 export const ProductSection = styled.div`
-  display: flex;
   width: 80%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const Input = styled.input`
-  flex: 5;
-  padding: 2.5%;
+  flex: 6;
+  padding: 1.5%;
+  width: 100%;
   font-size: 20px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid lightgray;
+  color: lightgray;
+  outline: none;
+  text-align: center;
 `
 
 export const FileInput = styled.p`
@@ -94,7 +112,8 @@ export const FileInput = styled.p`
   border: solid 1px darkgray;
   border-radius: 3px;
   text-align: center;
-  padding: 2%;
+  padding: 1.5%;
+  margin: 1.5%;
   flex: 5;
   &:hover {
     cursor: pointer;
@@ -103,12 +122,13 @@ export const FileInput = styled.p`
 `
 
 export const Select = styled.select`
-  flex: 5;
-  padding: 2%;
-  font-size: 20px;
+  flex: 6;
+  padding: 1.5%;
+  font-size: 16px;
+  text-align: center;
 `
 export const Option = styled.option`
-  font-size: 20px;
+  font-size: 16px;
 `
 
 export const Button = styled.button`
@@ -178,8 +198,10 @@ export const HiddenContainer = styled.div`
 
 export const SizeButtonContainer = styled.div`
   display: flex;
-  flex: 5;
+  justify-content: center;
+  flex: 6;
   width: 100%;
+  border-left: 1px solid lightgray;
 `
 export const SizeButton = styled.button`
   border: solid 1px lightblue;
