@@ -120,14 +120,14 @@ export const useRegisterClothesForm = () => {
       mtlFile,
     } = formData
     return (
-      name &&
+      name?.trim() &&
       category &&
       genderCategory &&
-      price &&
+      price.toString().trim() !== '' &&
       productNumber &&
-      discount &&
+      discount.toString().trim() !== '' &&
       size &&
-      quantity &&
+      quantity.toString().trim() !== '' &&
       mainImage &&
       detailImage &&
       objectFile &&
