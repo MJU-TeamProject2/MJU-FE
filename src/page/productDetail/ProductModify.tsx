@@ -44,18 +44,17 @@ const ProductModify = () => {
   const [productNumber, setProductNumber] = useState('')
   const [discount, setDiscount] = useState('')
   const [price, setPrice] = useState('')
-  const [size, setSize] = useState('')
+  const [, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
-  const [sizeLIst, setSizeList] = useState<any>(null)
 
   const [, setMainImage] = useState('null')
   const [, setDetailImage] = useState('null')
   const [, setObjectFile] = useState('null')
   const [, setMtlFile] = useState('null')
-  const [mainImageName, setMainImageName] = useState('null')
-  const [detailImageName, setDetailImageName] = useState('null')
-  const [objectFileName, setObjectFileName] = useState('null')
-  const [mtlFileName, setMtlFileName] = useState('null')
+  const [, setMainImageName] = useState('null')
+  const [, setDetailImageName] = useState('null')
+  const [, setObjectFileName] = useState('null')
+  const [, setMtlFileName] = useState('null')
 
   const navigate = useNavigate()
   const isMounted = useRef(false)
@@ -64,7 +63,6 @@ const ProductModify = () => {
     if (id) {
       const details = await retrieveClothesDetail(id)
       setProduct(details)
-      setSizeList(details.clothesSizeList)
 
       setName(details.name || '')
       setCategory(details.category)
@@ -104,18 +102,14 @@ const ProductModify = () => {
   const letModify = (time: number) => {
     const infoWrapper = document.getElementById('nonModify')
     const modifyWrapper = document.getElementById('modify')
-    const modifyWrapper2 = document.getElementById('modify2')
     const infoButtonGroup = document.getElementById('infoButtonGroup')
     const modifyButtonGroup = document.getElementById('modifyButtonGroup')
-    const modifyButtonGroup2 = document.getElementById('modifyButtonGroup2')
 
     if (
       infoWrapper != null &&
       modifyWrapper != null &&
       infoButtonGroup != null &&
-      modifyButtonGroup != null &&
-      modifyWrapper2 != null &&
-      modifyButtonGroup2 != null
+      modifyButtonGroup != null
     ) {
       if (time === 1) {
         setName(product.name)
@@ -129,16 +123,9 @@ const ProductModify = () => {
         infoButtonGroup.style.display = 'none'
         modifyWrapper.style.display = 'block'
         modifyButtonGroup.style.display = 'flex'
-      } else if (time === 2) {
-        modifyWrapper.style.display = 'none'
-        modifyButtonGroup.style.display = 'none'
-        modifyWrapper2.style.display = 'block'
-        modifyButtonGroup2.style.display = 'flex'
       } else if (time === 3) {
         modifyWrapper.style.display = 'none'
         modifyButtonGroup.style.display = 'none'
-        modifyWrapper2.style.display = 'none'
-        modifyButtonGroup2.style.display = 'none'
         infoWrapper.style.display = 'block'
         infoButtonGroup.style.display = 'flex'
       }
@@ -151,6 +138,10 @@ const ProductModify = () => {
     fileName: string,
     value: string
   ) => {
+    console.log(field)
+    console.log(file)
+    console.log(fileName)
+    console.log(value)
     switch (field) {
       case 'mainImage':
         setMainImage(value)
@@ -272,7 +263,6 @@ const ProductModify = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(product)
     if (
       errors.productNumber ||
       errors.quantity ||
@@ -282,10 +272,17 @@ const ProductModify = () => {
       alert('잘못 입력된 값이 존재합니다.')
       return
     }
-    if (!isFormValid()) {
-      alert('빈칸을 모두 채워주세요')
-    }
-    const result = await modifyCloth(formData, id)
+    const changedList = {}
+    if (product.price != price) changedList['price'] = price
+    if (product.name != name) changedList['name'] = name
+    if (product.category != category) changedList['category'] = category
+    if (product.genderCategory != genderCategory)
+      changedList['genderCategory'] = genderCategory
+    if (product.productNumber != productNumber)
+      changedList['productNumber'] = productNumber
+    if (product.discount != discount) changedList['discount'] = discount
+
+    const result = await modifyCloth(changedList, id)
     if (result instanceof Error) {
       console.error(result.message)
       alert(result.message)
@@ -481,62 +478,6 @@ const ProductModify = () => {
                 onChange={(e) => handleData('price', e.target.value)}
               />
             </ProductWrapper>
-            <ProductWrapper>
-              <ProductTag> 사이즈 </ProductTag>
-              <Select
-                name="size"
-                id="inputSize"
-                value={size}
-                onChange={(e) => handleData('size', e.target.value)}
-              >
-                <Option value="XS"> XS </Option>
-                <Option value="S"> S </Option>
-                <Option value="M"> M </Option>
-                <Option value="L"> L </Option>
-                <Option value="XL"> XL </Option>
-              </Select>
-            </ProductWrapper>
-            <ProductWrapper>
-              <ProductTag> 재고 </ProductTag>
-              <Input
-                type="number"
-                id="inputQuantity"
-                name="quantity"
-                value={quantity}
-                onChange={(e) => handleData('quantity', e.target.value)}
-              />
-            </ProductWrapper>
-          </ProductFixContainer>
-          <ProductFixContainer id="modify2">
-            <ProductWrapper>
-              <ProductTag> 제품 사진 </ProductTag>
-              <FileInput onClick={() => handleImage('detailImage')}>
-                {' '}
-                {detailImageName == 'null'
-                  ? '파일을 선택하세요'
-                  : detailImageName}{' '}
-              </FileInput>
-            </ProductWrapper>
-            <ProductWrapper>
-              <ProductTag> 미리보기 </ProductTag>
-              <FileInput onClick={() => handleImage('mainImage')}>
-                {mainImageName == 'null' ? '파일을 선택하세요' : mainImageName}
-              </FileInput>
-            </ProductWrapper>
-            <ProductWrapper>
-              <ProductTag> 3D 파일 </ProductTag>
-              <FileInput onClick={() => handleImage('objectFile')}>
-                {objectFileName == 'null'
-                  ? '파일을 선택하세요'
-                  : objectFileName}
-              </FileInput>
-            </ProductWrapper>
-            <ProductWrapper>
-              <ProductTag> 재질 파일 </ProductTag>
-              <FileInput onClick={() => handleImage('mtlFile')}>
-                {mtlFileName == 'null' ? '파일을 선택하세요' : mtlFileName}
-              </FileInput>
-            </ProductWrapper>
           </ProductFixContainer>
         </ProductSection>
         <HiddenContainer>
@@ -573,13 +514,7 @@ const ProductModify = () => {
         <DeleteButton onClick={deleteItem}>삭제</DeleteButton>
       </ButtonContainer>
       <ModifyButtonContainer id="modifyButtonGroup">
-        <ModifyButton onClick={() => letModify(2)}> 다음 </ModifyButton>
-        <Button onClick={() => letModify(3)}>취소</Button>
-      </ModifyButtonContainer>
-      <ModifyButtonContainer id="modifyButtonGroup2">
-        <ModifyButton type="submit" form="modifyForm">
-          수정
-        </ModifyButton>
+        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
         <Button onClick={() => letModify(3)}>취소</Button>
       </ModifyButtonContainer>
     </ProductModifyContainer>
