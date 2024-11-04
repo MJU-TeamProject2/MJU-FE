@@ -94,13 +94,13 @@ export const getAddress = async (): Promise<ApiResponse<AddressInfo[]>> => {
   return response;
 }
 
-export const createAddress = async (address: AddressInfo): Promise<number> => {
+export const createAddress = async (name: string, recipient: string, zipCode: string, baseAddress: string, detailAddress: string): Promise<number> => {
   const requestBody = {
-    name: address.name,
-    recipient: address.recipient,
-    zipCode: address.zipCode,
-    baseAddress: address.baseAddress,
-    detailAddress: address.detailAddress,
+    name: name,
+    recipient: recipient,
+    zipCode: zipCode,
+    baseAddress: baseAddress,
+    detailAddress: detailAddress,
   }
 
   try {
@@ -145,10 +145,10 @@ export const getPayment = async (): Promise<ApiResponse<PaymentInfo[]>> => {
     return response;
 }
 
-export const createPayment = async (payment: PaymentInfo) => {
+export const createPayment = async (cardNumber: number, cardProvider: string) => {
     const requestBody = {
-        cardNumber: payment.cardNumber,
-        cardProvider: payment.cardProvider,
+        cardNumber: cardNumber,
+        cardProvider: cardProvider,
     }
 
     try {
