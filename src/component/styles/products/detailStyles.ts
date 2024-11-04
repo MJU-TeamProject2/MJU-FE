@@ -123,6 +123,7 @@ export const ButtonGroup = styled.div`
 `
 
 export const Button = styled.button`
+  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 10px;
   background-color: transparent;
