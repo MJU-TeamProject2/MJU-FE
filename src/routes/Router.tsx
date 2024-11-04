@@ -15,6 +15,7 @@ import ModelFitting from '@/page/productDetail/ModelFitting'
 import OrderHistoryPage from '@/page/user/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
 import AdminLayout from '@/component/layout/AdminLayout'
+import Order from '@/page/order/Order'
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/fitting" element={<ModelFitting />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/order" element={<Order />} />
           <Route path="/orderHistory" element={<OrderHistoryPage />} />
           <Route path="/chooseAvatar" element={<ChooseAvatar />} />
         </Route>

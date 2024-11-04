@@ -34,17 +34,18 @@ export type Address = {
 export type PaymentInfo = {
   cardNumber: string // 문자열로 수신
   cardProvider: string
+  expiryDate: string
 }
 
 export const createOrder = async (
-  cartId: number, // 단일 장바구니 항목 ID
-  addressId: number, // 주소 ID
-  payment: PaymentInfo // PaymentInfo 객체
+  cartId: number,
+  addressId: number,
+  paymentId: number
 ): Promise<ApiResponse<{}>> => {
   const response: ApiResponse<{}> = await axiosInstance.post('/api/v1/orders', {
     cartId: cartId,
     AddressId: addressId,
-    paymentId: Number(payment.cardNumber), // 문자열을 숫자로 변환하여 전송
+    paymentId: paymentId,
   })
   return response
 }
@@ -70,15 +71,48 @@ export const saveAddress = async (address: Address): Promise<number> => {
     throw error // 오류를 상위로 전달하여 handlePurchase에서 처리되도록 함
   }
 }
+//등록 주소 조회
+export const getAdress = async (): Promise<[]> => {
+  try {
+    const response = await axiosInstance.get('/api/v1/customer/address')
+    console.log('<hojji>  getAdress response ===>>>   ', response.data)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+//카드 조회
+export const getPayment = async (): Promise<[]> => {
+  try {
+    const response = await axiosInstance.get('/api/v1/customer/payment')
+    console.log('<hojji>  getPayment response ===>>>   ', response.data)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
+//카드 등록
+export const savePayment = async (payment: PaymentInfo): Promise<[]> => {
+  const body = {
+    cardNumber: payment.cardNumber,
+    cardProvider: payment.cardProvider,
+    expiryDate: '12/25',
+  }
+  try {
+    const response = await axiosInstance.post('/api/v1/customer/payment', body)
+    console.log('<hojji>   response ===>>>   ', response.data)
+    return response.data
+  } catch (error) {
+    throw error
+  }
+}
 
 // 구매 처리 함수
 export const purchaseCartItems = async (
-  selectedCartIds: number[],
-  address: Address,
-  payment: PaymentInfo
+  selectedCartIds: number[]
 ): Promise<ApiResponse<{}>> => {
   const promises = selectedCartIds.map((cartId) =>
-    createOrder(cartId, address.addressId, payment)
+    createOrder(cartId, 2, 1)
   )
   console.log('123123123')
   const responses = await Promise.all(promises)
