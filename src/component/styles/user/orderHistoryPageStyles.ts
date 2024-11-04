@@ -25,7 +25,7 @@ export const OrderHeader = styled.div`
 
   p {
     font-size: 14px;
-    color: ${colors.gray}; // 글로벌 스타일의 회색 사용
+    color: ${colors.grey}; // 글로벌 스타일의 회색 사용
   }
 `
 

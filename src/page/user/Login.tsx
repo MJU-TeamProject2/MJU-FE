@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/styles/user/loginStyles'
+import {
+  Card,
+  Title,
+  Input,
+  Button,
+  ErrorMessage,
+} from '@/component/styles/user/loginStyles'
 import { LoginContainer } from '@/component/styles/user/LoginContainer'
 import { loginUser } from '@/api/userApi'
 
@@ -59,11 +65,7 @@ const Login = () => {
               onChange={handleEmailChange}
               required
             />
-            {emailError && (
-              <div style={{ color: 'red', fontSize: '0.8rem' }}>
-                {emailError}
-              </div>
-            )}
+            {emailError && <ErrorMessage>{emailError}</ErrorMessage>}
           </div>
           <div>
             <Input

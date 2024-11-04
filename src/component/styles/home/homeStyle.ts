@@ -51,7 +51,7 @@ export const Tab = styled.div<{ active: boolean }>`
 
 export const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px 5%;
 `
@@ -72,7 +72,7 @@ export const GridItem = styled.div`
 
 export const OutfitImage = styled.img`
   width: 100%;
-  height: 250px;
+  height: 300px;
   object-fit: cover;
   border-radius: 8px;
 `
@@ -111,12 +111,12 @@ export const PaginationButton = styled.button`
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: ${colors.gray};
+    background-color: ${colors.grey};
   }
 
   &:disabled {
     background-color: ${colors.lightGray};
-    color: ${colors.gray};
+    color: ${colors.grey};
     cursor: not-allowed;
   }
 `

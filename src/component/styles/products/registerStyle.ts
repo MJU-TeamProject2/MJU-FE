@@ -1,124 +1,180 @@
 import styled from 'styled-components'
 import { colors } from '@/component/styles/globalStyle'
 
+// 컨테이너 관련 스타일
 export const ProductRegisterContainer = styled.div`
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
+  padding: 2rem;
   background: ${colors.adminBackground};
+  font-family: 'Pretendard', sans-serif;
 `
-export const ProductInformationContainer = styled.div`
-  width: 100%;
-  flex: 7;
-  text-align: center;
-`
+
 export const ProductContainer = styled.div`
-  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  padding: 2rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+`
+
+// 이미지 관련 스타일
+export const ProductImageContainer = styled.div`
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: ${colors.white};
+`
+
+export const ProductImage = styled.img`
   width: 100%;
   height: 100%;
-  padding: 5px 180px;
-`
-
-export const ProductInputContainer = styled.div`
-  display: flex;
-  margin: 20px 0;
-`
-export const ProductImageContainer = styled.div`
-  flex: 4;
-  width: 100%;
-  border: solid 2px black;
-  text-align: center;
-  align-content: center;
-`
-
-export const Title = styled.h1`
-  width: 100%;
-  margin: 20px 0;
-  text-align: center;
-  color: ${colors.white};
-`
-
-export const Tag = styled.p`
-  width: 100%;
-  flex: 4;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  font-size: 20px;
-`
-export const ProductImage = styled.img`
-  display: inline-block;
-  max-height: 100%;
-  width: 100%;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 8px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 
   &:hover {
+    transform: scale(1.02);
     cursor: pointer;
   }
-`
-
-export const Input = styled.input`
-  flex: 6;
-`
-
-export const FileInput = styled.p`
-  background-color: white;
-  border: solid 1px darkgray;
-  border-radius: 3px;
-  text-align: center;
-  padding-top: 10px;
-  flex: 6;
-  &:hover {
-    cursor: pointer;
-    background-color: lightgray;
-  }
-`
-export const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  border: 1px solid ${colors.primary};
-  background-color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-  margin-left: 50px;
-  margin-right: 50px;
-  transition: all 0.3s ease;
-`
-
-export const Select = styled.select`
-  flex: 6;
-  font-weight: bold;
-`
-
-export const Option = styled.option`
-  font-size: 14px;
-`
-
-export const HiddenContainer = styled.div`
-  opacity: 0;
 `
 
 export const BlankImage = styled.div`
-  background-color: white;
+  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  background: ${colors.white};
+  transition: background-color 0.3s ease;
 
   &:hover {
+    background: ${colors.primary};
     cursor: pointer;
   }
 `
+
 export const BlankText = styled.p`
-  color: darkgray;
-  font-size: 16px;
-  margin: 0;
+  color: ${colors.grey};
+  font-size: 1rem;
+  font-weight: 500;
 `
+
+// 정보 입력 관련 스타일
+export const ProductInformationContainer = styled.div`
+  background: #8f8f8f;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`
+
+export const ProductInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+`
+
+const baseInputStyles = `
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid ${colors.grey}20;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  font-family: 'Pretendard', sans-serif;
+  &:focus {
+    outline: none;
+    border-color: ${colors.grey}50;
+    box-shadow: 0 0 0 2px ${colors.grey}20;
+  }
+`
+
+export const Input = styled.input`
+  ${baseInputStyles}
+`
+
+export const Select = styled.select`
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='currentColor' viewBox='0 0 12 12'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  ${baseInputStyles}
+`
+
+export const Option = styled.option`
+  padding: 0.5rem;
+`
+
+export const FileInput = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: ${colors.white};
+  cursor: pointer;
+  ${baseInputStyles}
+  &:hover {
+    background: ${colors.primary};
+  }
+`
+export const Title = styled.h1`
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: ${colors.white};
+  text-align: center;
+  margin-bottom: 2rem;
+`
+
+export const Tag = styled.label`
+  min-width: 120px;
+  color: ${colors.grey};
+  font-size: 1rem;
+  font-weight: 500;
+`
+
+export const Button = styled.button`
+  width: 100%;
+  padding: 1rem;
+  margin-top: 2rem;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+`
+
+export const HiddenContainer = styled.div`
+  display: none;
+`
+
 export const ErrorMessage = styled.div`
-  color: #ff6b6b;
-  font-size: 12px;
-  margin-top: -15px;
-  margin-bottom: 10px;
+  color: #ff4d4d;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  margin-left: calc(120px + 1.5rem);
 `

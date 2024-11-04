@@ -9,8 +9,16 @@ import {
   PriceInfo,
   PurchaseButton,
   TotalSection,
-  DeleteButton,
   QuantityButton,
+  TotalLabel,
+  PriceLabel,
+  DiscountPrice,
+  OriginalPrice,
+  CurrentPrice,
+  QuantityContainer,
+  DeleteButton,
+  QuantityDisplay,
+  DeleteProductButton,
 } from '@/component/styles/user/cartStyles'
 import {
   getCartItems,
@@ -18,6 +26,7 @@ import {
   updateCartItemQuantity,
   purchaseCartItems,
 } from '@/api/cartApi'
+import { Plus, Minus, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 interface Product {
@@ -156,7 +165,7 @@ const Cart: React.FC = () => {
           />
           전체 선택
         </div>
-        <DeleteButton onClick={handleDeleteSelected}>전체 삭제</DeleteButton>
+        <DeleteButton onClick={handleDeleteSelected}>선택 삭제</DeleteButton>
       </CartHeader>
 
       {products.map((product) => (
@@ -171,65 +180,61 @@ const Cart: React.FC = () => {
             <p>{product.name}</p>
             <p>{product.quantity}개</p>
             {product.originalPrice !== product.price && (
-              <p style={{ textDecoration: 'line-through', color: '#767676' }}>
+              <OriginalPrice>
                 {(product.originalPrice * product.quantity).toLocaleString()}원
-              </p>
+              </OriginalPrice>
             )}
-            <p style={{ fontWeight: 'bold', color: '#000' }}>
+            <CurrentPrice>
               {(product.price * product.quantity).toLocaleString()}원
-            </p>
-            <QuantityButton
-              onClick={() =>
-                handleQuantityUpdate(product.cartId, product.quantity + 1)
-              }
-            >
-              수량 증가
-            </QuantityButton>
-            <QuantityButton
-              onClick={() =>
-                handleQuantityUpdate(
-                  product.cartId,
-                  product.quantity - 1 >= 1
-                    ? product.quantity - 1
-                    : product.quantity
-                )
-              }
-            >
-              수량 감소
-            </QuantityButton>
+            </CurrentPrice>
+            <QuantityContainer>
+              <QuantityButton
+                onClick={() =>
+                  handleQuantityUpdate(
+                    product.cartId,
+                    product.quantity - 1 >= 1
+                      ? product.quantity - 1
+                      : product.quantity
+                  )
+                }
+              >
+                <Minus size={20} />
+              </QuantityButton>
+              <QuantityDisplay>{product.quantity}</QuantityDisplay>
+              <QuantityButton
+                onClick={() =>
+                  handleQuantityUpdate(product.cartId, product.quantity + 1)
+                }
+              >
+                <Plus size={20} />
+              </QuantityButton>
+            </QuantityContainer>
           </ProductInfo>
           <PriceInfo>
-            <button onClick={() => handleDeleteProduct(product.cartId)}>
-              X
-            </button>
+            <DeleteProductButton
+              onClick={() => handleDeleteProduct(product.cartId)}
+            >
+              <X size={24} />
+            </DeleteProductButton>
           </PriceInfo>
         </ProductContainer>
       ))}
 
-      <PurchaseButton onClick={handlePurchase}>구매하기</PurchaseButton>
-
       <TotalSection>
         <div>
-          <p style={{ color: '#000', fontWeight: 'bold', fontSize: '18px' }}>
-            구매 금액
-          </p>
-          <p style={{ color: '#767676', fontSize: '14px' }}>할인 금액</p>
-          <p style={{ color: '#767676', fontSize: '14px' }}>상품 금액</p>
+          <TotalLabel>구매 금액</TotalLabel>
+          <PriceLabel>할인 금액</PriceLabel>
+          <PriceLabel>상품 금액</PriceLabel>
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <p style={{ color: '#000', fontWeight: 'bold', fontSize: '18px' }}>
-            {totalPrice.toLocaleString()}원
-          </p>
-          <p style={{ color: 'blue', fontSize: '14px' }}>
-            -{totalDiscount.toLocaleString()}원
-          </p>
-          <p style={{ color: '#767676', fontSize: '14px' }}>
-            {finalPrice.toLocaleString()}원
-          </p>
+        <div>
+          <TotalLabel>{totalPrice.toLocaleString()}원</TotalLabel>
+          <DiscountPrice>-{totalDiscount.toLocaleString()}원</DiscountPrice>
+          <PriceLabel>{finalPrice.toLocaleString()}원</PriceLabel>
         </div>
       </TotalSection>
+
+      <PurchaseButton onClick={handlePurchase}>구매하기</PurchaseButton>
     </CartContainer>
   )
 }
-
 export default Cart
