@@ -41,6 +41,7 @@ export const ProductImage = styled.img`
 `
 
 export const ProductInfo = styled.div`
+  font-family: 'Pretendard', sans-serif;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -55,7 +56,7 @@ export const ProductInfo = styled.div`
 
 export const PriceInfo = styled.div`
   margin-left: 20px;
-
+  font-family: 'Pretendard', sans-serif;
   button {
     background: none;
     border: none;
@@ -67,18 +68,20 @@ export const PriceInfo = styled.div`
 `
 
 export const OriginalPrice = styled.p`
+  font-family: 'Pretendard', sans-serif;
   text-decoration: line-through;
   color: #767676;
   font-size: 14px;
 `
 
 export const CurrentPrice = styled.p`
-  font-weight: bold;
+  font-family: 'Pretendard', sans-serif;
   color: #000;
   font-size: 16px;
 `
 
 export const PurchaseButton = styled.button`
+  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 15px 0;
   background-color: #000;
@@ -122,6 +125,7 @@ export const DiscountPrice = styled.p`
   margin-top: 4px;
 `
 export const DeleteButton = styled.button`
+  font-family: 'Pretendard', sans-serif;
   background: none;
   border: none;
   color: #767676;
