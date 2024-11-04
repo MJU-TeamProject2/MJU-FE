@@ -78,6 +78,7 @@ export const GenderButton = styled(Button)`
     margin-right: 0;
   }
 
+
   &.selected {
     background-color: #007bff;
     color: white;
@@ -90,6 +91,7 @@ export const GenderButton = styled(Button)`
       props.className === 'selected' ? '#0056b3' : '#f8f9fa'};
   }
 `
+
 export const ErrorMessage = styled.div`
   font-family: 'Pretendard', sans-serif;
   color: #ff6b6b;
