@@ -14,9 +14,11 @@ export const Title = styled.h2`
   margin-bottom: 39px;
   color: ${colors.white};
   font-size: 21px;
+  font-family: 'Pretendard', sans-serif;
 `
 
 export const Input = styled.input`
+  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 13px;
   margin-bottom: 26px;
@@ -32,6 +34,7 @@ export const Input = styled.input`
 `
 
 export const Button = styled.button`
+  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 13px;
   background-color: transparent;
@@ -64,7 +67,9 @@ export const GenderButton = styled(Button)`
   flex: 1;
   margin: 0 6.5px;
   padding: 10px;
-
+  border: 1px solid #e0e0e0;
+  color: white;
+  transition: all 0.3s ease;
   &:first-child {
     margin-left: 0;
   }
@@ -72,9 +77,23 @@ export const GenderButton = styled(Button)`
   &:last-child {
     margin-right: 0;
   }
+
+
+  &.selected {
+    background-color: #007bff;
+    color: white;
+    border-color: #0056b3;
+  }
+
+  &:hover {
+    color: black;
+    background-color: ${(props) =>
+      props.className === 'selected' ? '#0056b3' : '#f8f9fa'};
+  }
 `
 
 export const ErrorMessage = styled.div`
+  font-family: 'Pretendard', sans-serif;
   color: #ff6b6b;
   font-size: 16px;
   margin-top: -20px;
