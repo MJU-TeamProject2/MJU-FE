@@ -1,11 +1,11 @@
 // AddressForm.tsx
 import React from 'react'
-import { Address } from '@/api/orderApi'
+import { AddressInfo } from '@/api/orderApi'
 import { AddressInputContainer } from '@/component/styles/user/cartStyles'
 
 interface AddressFormProps {
-  address: Address
-  setAddress: React.Dispatch<React.SetStateAction<Address>>
+  address: AddressInfo
+  setAddress: React.Dispatch<React.SetStateAction<AddressInfo>>
 }
 
 const AddressForm: React.FC<AddressFormProps> = ({ address, setAddress }) => {
