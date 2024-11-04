@@ -7,7 +7,7 @@ export const colors = {
   adminForm: '#212336',
   black: '#000000',
   lightGray: '#f0f0f0',
-  gray: '#cccccc',
+  grey: '#cccccc',
   blue: '#187cff',
   darkGray: '#333333',
 }

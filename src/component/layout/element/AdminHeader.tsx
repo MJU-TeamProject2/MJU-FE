@@ -1,5 +1,11 @@
-import { HeaderContainer, IconWrapper, LeftSection } from './Header.styles'
-import { Home, ArrowLeft } from 'lucide-react'
+import {
+  HeaderContainer,
+  IconWrapper,
+  LeftSection,
+  NavLink,
+  RightSection,
+} from './Header.styles'
+import { Home, ArrowLeft, Package, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const AdminHeader = () => {
@@ -26,6 +32,12 @@ const AdminHeader = () => {
           <Home size={24} />
         </IconWrapper>
       </LeftSection>
+      <RightSection>
+        <User size={24} />
+        <NavLink to="/registerCloth">
+          <Package size={24} />
+        </NavLink>
+      </RightSection>
     </HeaderContainer>
   )
 }

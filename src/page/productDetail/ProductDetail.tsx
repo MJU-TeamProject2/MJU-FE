@@ -6,7 +6,6 @@ import {
   ProductInfoSection,
   ProductContentWrapper,
   ImageContainer,
-  ProductImage,
   ProductInfo,
   ProductName,
   Price,
@@ -15,6 +14,8 @@ import {
   BuyButton,
   CartButton,
   SoldOut,
+  Divider,
+  ProductImage,
 } from '@/component/styles/products/detailStyles'
 import { postCartItems } from '@/api/cartApi'
 
@@ -100,6 +101,7 @@ const ProductDetail = () => {
           <ImageContainer>
             <ProductImage src={product.imageUrl} alt={product.name} />
           </ImageContainer>
+          <Divider />
           <ProductInfo>
             <ProductName>{product.name}</ProductName>
             <Price>{product.price.toLocaleString()} 원</Price>

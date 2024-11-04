@@ -3,28 +3,29 @@ import { colors } from '@/component/styles/globalStyle'
 
 export const Card = styled.div`
   background: ${colors.background};
-  padding: 30px;
-  border-radius: 8px;
-  width: 300px;
+  padding: 39px;
+  border-radius: 10px;
+  width: 390px;
   box-sizing: border-box;
 `
 
 export const Title = styled.h2`
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 39px;
   color: ${colors.white};
-  font-size: 16px;
+  font-size: 21px;
 `
 
 export const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
+  padding: 13px;
+  margin-bottom: 26px;
   border: none;
-  border-bottom: 1px solid ${colors.primary};
+  border-bottom: 1.3px solid ${colors.primary};
   background-color: transparent;
   color: ${colors.white};
   outline: none;
+  font-size: 16px;
   &::placeholder {
     color: ${colors.primary};
   }
@@ -32,15 +33,16 @@ export const Input = styled.input`
 
 export const Button = styled.button`
   width: 100%;
-  padding: 10px;
+  padding: 13px;
   background-color: transparent;
   color: ${colors.white};
-  border: 1px solid ${colors.primary};
-  border-radius: 4px;
+  border: 1.3px solid ${colors.primary};
+  border-radius: 5px;
   cursor: pointer;
-  margin-bottom: 10px;
-  margin-top: 10px;
+  margin-bottom: 13px;
+  margin-top: 13px;
   transition: all 0.3s ease;
+  font-size: 16px;
 
   &:hover {
     background-color: ${colors.buttonHover};
@@ -55,13 +57,13 @@ export const Button = styled.button`
 export const GenderContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 26px;
 `
 
 export const GenderButton = styled(Button)`
   flex: 1;
-  margin: 0 5px;
-  padding: 8px;
+  margin: 0 6.5px;
+  padding: 10px;
 
   &:first-child {
     margin-left: 0;
@@ -72,13 +74,12 @@ export const GenderButton = styled(Button)`
   }
 `
 
-export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
-  display: none;
-`
-
 export const ErrorMessage = styled.div`
   color: #ff6b6b;
-  font-size: 12px;
-  margin-top: -15px;
-  margin-bottom: 10px;
+  font-size: 16px;
+  margin-top: -20px;
+  margin-bottom: 13px;
+`
+export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
+  display: none;
 `
