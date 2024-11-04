@@ -8,6 +8,7 @@ import {
   AdminLoginContainer,
 } from '@/component/styles/user/AdminLoginContainer'
 import { loginAdmin } from '@/api/userApi'
+import { ErrorMessage } from '@/component/styles/user/loginStyles.ts'
 
 const AdminLogin = () => {
   const [code, setCode] = useState('')
@@ -49,7 +50,7 @@ const AdminLogin = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <div style={{ color: 'red' }}>{error}</div>}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           <Button
             type="submit"
             disabled={!isFormValid()}

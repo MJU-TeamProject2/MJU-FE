@@ -1,4 +1,5 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+// @ts-ignore
 import { List } from '@effect-ts/core'
 
 // 개별 의류 아이템에 대한 타입

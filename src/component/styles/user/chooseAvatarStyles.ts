@@ -12,6 +12,10 @@ export const AvatarContainer = styled.div`
   padding: 20px;
   box-sizing: border-box;
   background-color: ${colors.white};
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
 
 export const Title = styled.h2`
@@ -37,7 +41,7 @@ export const Avatar = styled.img<{ isSelected: boolean }>`
   border-radius: 8px;
   cursor: pointer;
   border: ${({ isSelected }) =>
-    isSelected ? `2px solid ${colors.blue}` : `1px solid ${colors.gray}`};
+    isSelected ? `2px solid ${colors.blue}` : `1px solid ${colors.grey}`};
   box-shadow: ${({ isSelected }) =>
     isSelected ? `0 0 5px ${colors.blue}` : 'none'};
 `
@@ -67,14 +71,14 @@ export const UploadBox = styled.div`
   justify-content: center;
   width: 140px;
   height: 110px;
-  border: 1px dashed ${colors.gray};
+  border: 1px dashed ${colors.grey};
   border-radius: 8px;
   cursor: pointer;
 
   label {
     cursor: pointer;
     font-size: 14px;
-    color: ${colors.gray};
+    color: ${colors.grey};
   }
 
   input {
