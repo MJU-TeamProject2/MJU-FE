@@ -224,8 +224,6 @@ const Cart: React.FC = () => {
           <PriceLabel>{finalPrice.toLocaleString()}원</PriceLabel>
         </div>
       </TotalSection>
-
-      <PurchaseButton onClick={handlePurchase}>구매하기</PurchaseButton>
     </CartContainer>
   )
 }

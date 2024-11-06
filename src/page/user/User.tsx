@@ -85,6 +85,7 @@ const User: React.FC = () => {
       localStorage.setItem('age', age)
       localStorage.setItem('email', email)
       localStorage.setItem('phoneNumber', phoneNumber)
+    }
   }
 
   const handleEdit = () => {

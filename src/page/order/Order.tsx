@@ -18,6 +18,8 @@ const Order = () => {
   const [newAddress, setNewAddress] = useState<AddressInfo>()
   const [newPayment, setNewPayment] = useState<PaymentInfo>()
   const [loading, setLoading] = useState(true)
+  const [useNewAddress, setUseNewAddress] = useState(false)
+  const [useNewPayment, setUseNewPayment] = useState(false)
 
   useEffect(() => {
     if (!selectedProducts.length) {
@@ -55,17 +57,52 @@ const Order = () => {
     fetchData();
   }, [selectedProducts, navigate]);
 
+  const handleAddressChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (value === 'new') {
+      setUseNewAddress(true)
+      setSelectedAddress(null)
+    } else {
+      setUseNewAddress(false)
+      const selected = addresses.find(addr => addr.addressId === Number(value))
+      if (selected) {
+        setSelectedAddress(selected)
+      }
+    }
+  }
+
+  const handlePaymentChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value
+    if (value === 'new') {
+      setUseNewPayment(true)
+      setSelectedPayment(null)
+    } else {
+      setUseNewPayment(false)
+      const selected = payments.find(payment => payment.paymentId === Number(value))
+      if (selected) {
+        setSelectedPayment(selected)
+      }
+    }
+  }
+
   const handleOrderSubmission = async () => {
-    if (selectedProducts.length === 0 || !selectedAddress || !selectedPayment) {
-      alert('모든 필드를 선택 또는 입력해주세요.')
+    if (selectedProducts.length === 0) {
+      alert('선택된 상품이 없습니다.')
+      return
+    }
+
+    const finalAddress = useNewAddress ? newAddress : selectedAddress
+    const finalPayment = useNewPayment ? newPayment : selectedPayment
+
+    if (!finalAddress || !finalPayment) {
+      alert('배송지와 결제 수단을 모두 선택해주세요.')
       return
     }
 
     try {
-
-      await createOrder(selectedProducts, selectedAddress.addressId, selectedPayment.paymentId)
+      await createOrder(selectedProducts, finalAddress.addressId, finalPayment.paymentId)
       alert('주문이 완료되었습니다!')
-      navigate('/orderHistory'); // 주문 완료 후 주문 내역 페이지로 이동
+      navigate('/orderHistory')
     } catch (error) {
       console.error('주문 중 오류 발생:', error)
       alert('주문에 실패했습니다. 다시 시도해 주세요.')
@@ -76,57 +113,69 @@ const Order = () => {
 
   return (
       <OrderContainer>
-        {/* Existing Address Selection */}
+        {/* Address Selection */}
         <OptionContainer>
-          <h3>기존 주소 선택</h3>
-          {addresses.length === 0 ? (
-              <p>저장된 주소가 없습니다.</p>
-          ) : (
-              addresses.map((address) => (
-                  <div key={address.addressId}>
-                    <input
-                        type="radio"
-                        name="address"
-                        checked={selectedAddress?.addressId === address.addressId}
-                        onChange={() => setSelectedAddress(address)}
-                    />
-                    <label>
-                      {address.recipient}, {address.baseAddress} {address.detailAddress}, {address.zipCode}
-                    </label>
-                  </div>
-              ))
-          )}
+          <h3>배송지 선택</h3>
+          <select
+              value={useNewAddress ? 'new' : selectedAddress?.addressId || ''}
+              onChange={handleAddressChange}
+              style={{
+                width: '100%',
+                padding: '8px',
+                marginBottom: '10px',
+                border: '1px solid #ddd',
+                borderRadius: '4px'
+              }}
+          >
+            <option value="">배송지를 선택해주세요</option>
+            {addresses.map((address) => (
+                <option key={address.addressId} value={address.addressId}>
+                  {address.recipient} - {address.baseAddress} {address.detailAddress}
+                </option>
+            ))}
+            <option value="new">새로운 배송지 입력</option>
+          </select>
         </OptionContainer>
 
         {/* New Address Form */}
-        <h3>새 주소 추가</h3>
-        <AddressForm address={newAddress} setAddress={setNewAddress} />
+        {useNewAddress && (
+            <>
+              <h3>새 배송지 정보</h3>
+              <AddressForm address={newAddress} setAddress={setNewAddress} />
+            </>
+        )}
 
-        {/* Existing Payment Method Selection */}
+        {/* Payment Selection */}
         <OptionContainer>
-          <h3>기존 결제 수단 선택</h3>
-          {payments.length === 0 ? (
-              <p>저장된 결제 수단이 없습니다.</p>
-          ) : (
-              payments.map((payment, index) => (
-                  <div key={index}>
-                    <input
-                        type="radio"
-                        name="payment"
-                        checked={selectedPayment?.paymentId === payment.paymentId}
-                        onChange={() => setSelectedPayment(payment)}
-                    />
-                    <label>
-                      {payment.cardProvider} 카드 끝자리 {payment.cardNumber.slice(-4)}
-                    </label>
-                  </div>
-              ))
-          )}
+          <h3>결제 수단 선택</h3>
+          <select
+              value={useNewPayment ? 'new' : selectedPayment?.paymentId || ''}
+              onChange={handlePaymentChange}
+              style={{
+                width: '100%',
+                padding: '8px',
+                marginBottom: '10px',
+                border: '1px solid #ddd',
+                borderRadius: '4px'
+              }}
+          >
+            <option value="">결제 수단을 선택해주세요</option>
+            {payments.map((payment) => (
+                <option key={payment.paymentId} value={payment.paymentId}>
+                  {payment.cardProvider} 카드 끝자리 {payment.cardNumber.slice(-4)}
+                </option>
+            ))}
+            <option value="new">새로운 결제 수단 입력</option>
+          </select>
         </OptionContainer>
 
-        {/* New Payment Method Form */}
-        <h3>새 결제 수단 추가</h3>
-        <PaymentForm payment={newPayment} setPayment={setNewPayment} />
+        {/* New Payment Form */}
+        {useNewPayment && (
+            <>
+              <h3>새 결제 수단 정보</h3>
+              <PaymentForm payment={newPayment} setPayment={setNewPayment} />
+            </>
+        )}
 
         {/* Order Submission Button */}
         <SelectButton onClick={handleOrderSubmission}>구매하기</SelectButton>
