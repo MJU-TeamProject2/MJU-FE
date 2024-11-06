@@ -1,4 +1,6 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+// @ts-ignore
+import { List } from '@effect-ts/core'
 
 // 개별 의류 아이템에 대한 타입
 export type ClothesItem = {
@@ -102,22 +104,12 @@ export const registerCloth = async (
 }
 
 export const modifyCloth = async (
-  clothesItem: RegisterCloth,
+  changedList: List,
   clothID: string | undefined
 ): Promise<RegisterCloth> => {
-  const formData = new FormData()
-  Object.entries(clothesItem).forEach(([key, value]) => {
-    if (value instanceof File) {
-      formData.append(key, value, value.name)
-    } else if (typeof value === 'string') {
-      formData.append(key, value)
-    } else {
-      formData.append(key, value.toString())
-    }
-  })
   const response: ApiResponse<RegisterCloth> = await axiosInstance.patch(
     `/api/v1/clothes/${clothID}`,
-    formData,
+    changedList,
     {
       headers: {
         'Content-Type': 'multipart/form-data',

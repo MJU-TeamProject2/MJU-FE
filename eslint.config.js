@@ -16,6 +16,9 @@ export default [
       ecmaVersion: 2020,
       globals: globals.browser,
     },
+    linterOptions: {
+      reportUnusedDisableDirectives: true, // 이 부분 추가
+    },
     plugins: {
       '@typescript-eslint': tsPlugin,
       'react-hooks': reactHooks,

@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Card, Title, Input, Button } from '@/component/styles/user/loginStyles'
-import { AdminLoginContainer } from '@/component/styles/user/AdminLoginContainer'
+import {
+  Card,
+  Title,
+  Input,
+  Button,
+  AdminLoginContainer,
+} from '@/component/styles/user/AdminLoginContainer'
 import { loginAdmin } from '@/api/userApi'
+import { ErrorMessage } from '@/component/styles/user/loginStyles.ts'
 
 const AdminLogin = () => {
   const [code, setCode] = useState('')
@@ -12,15 +18,12 @@ const AdminLogin = () => {
 
   const handleAdminLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    const result = await loginAdmin(code, password)
-
-    if (result instanceof Error) {
-      console.error(result.message)
-      setError('로그인에 실패했습니다.')
-    } else {
+    try {
+      await loginAdmin(code, password)
       console.log('어드민 로그인 성공')
       navigate('/adminHome')
+    } catch (error) {
+      setError('로그인에 실패했습니다.')
     }
   }
 
@@ -47,7 +50,7 @@ const AdminLogin = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {error && <div style={{ color: 'red' }}>{error}</div>}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
           <Button
             type="submit"
             disabled={!isFormValid()}

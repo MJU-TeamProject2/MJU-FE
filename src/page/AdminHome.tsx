@@ -12,7 +12,6 @@ import {
   PaginationButton,
   ProductName,
   ProductPrice,
-  RegisterButton,
 } from '@/component/styles/home/adminHomeStyle'
 
 const AdminHome: React.FC = () => {
@@ -52,11 +51,6 @@ const AdminHome: React.FC = () => {
   const handleItemClick = (id: number) => {
     navigate(`/productsModify/${id}`)
   }
-
-  const handleRegisterCloth = () => {
-    navigate('/registerCloth')
-  }
-
   return (
     <AdminHomeContainer>
       <Title> 등록된 의상 목록 </Title>
@@ -71,7 +65,7 @@ const AdminHome: React.FC = () => {
         ))}
       </GridContainer>
       <PaginationContainer>
-        <RegisterButton>회원 정보</RegisterButton>
+        {/*<RegisterButton>회원 정보</RegisterButton>*/}
         <PaginationButton
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 0}
@@ -87,9 +81,6 @@ const AdminHome: React.FC = () => {
         >
           다음
         </PaginationButton>
-        <RegisterButton onClick={() => handleRegisterCloth()}>
-          상품 등록
-        </RegisterButton>
       </PaginationContainer>
     </AdminHomeContainer>
   )
