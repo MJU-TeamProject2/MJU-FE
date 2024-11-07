@@ -30,9 +30,9 @@ export const ModifyButtonContainer = styled.div`
 export const ProductInfoContainer = styled.div`
   flex: 2;
   text-align: center;
-  width: 70%;
+  width: 100%;
   height: 100%;
-  margin: 30px;
+  padding: 10px;
   border-radius: 7px;
   border: 1px solid white;
 `
@@ -51,13 +51,14 @@ export const ProductFixContainer = styled.div`
 export const ProductWrapper = styled.div`
   width: 100%;
   align-items: center;
+  margin-block: 15px;
   display: flex;
   padding: 2%;
 `
 
 export const ProductMainImage = styled.img`
-  max-height: 80%;
-  width: 20%;
+  max-height: 70vh;
+  width: 80%;
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -90,7 +91,6 @@ export const ProductSection = styled.div`
   width: 80%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   align-items: center;
 `
 
@@ -200,21 +200,34 @@ export const SizeButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   flex: 6;
-  width: 100%;
   border-left: 1px solid lightgray;
 `
 export const SizeButton = styled.button`
   border: solid 1px lightblue;
-  border-radius: 2px;
   padding-inline: 30px;
   padding-block: 10px;
+  margin-left: 10px;
   background-color: ${colors.adminBackground};
   color: lightblue;
   font-weight: bold;
-  margin: 2%;
 
   &:hover {
     opacity: 0.8;
     cursor: pointer;
   }
+`
+
+export const ModifyRankContainer = styled.div`
+  border-bottom: solid 2px gray;
+  align-items: center;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  margin-inline: 20px;
+  display: flex;
+`
+export const ModifyRank = styled.p`
+  flex: 2;
+  font-size: 18px;
+  color: lightgray;
+  background-color: ${colors.adminBackground};
 `

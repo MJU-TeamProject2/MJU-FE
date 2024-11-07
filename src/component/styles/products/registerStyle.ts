@@ -91,6 +91,7 @@ export const ProductInputContainer = styled.div`
 const baseInputStyles = `
   width: 100%;
   padding: 0.75rem 1rem;
+  text-align: center;
   border: 1px solid ${colors.grey}20;
   border-radius: 8px;
   font-size: 1rem;

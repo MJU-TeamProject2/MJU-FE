@@ -27,6 +27,8 @@ import {
   SizeButtonContainer,
   SizeButton,
   Form,
+  ModifyRankContainer,
+  ModifyRank,
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
@@ -313,6 +315,11 @@ const ProductModify = () => {
             </ProductWrapper>
           </ProductInfoContainer>
           <ProductFixContainer id="modify">
+            <ModifyRankContainer>
+              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifyRank id="modifyRank2"> 2 </ModifyRank>
+              <ModifyRank id="modifyRank3"> 3 </ModifyRank>
+            </ModifyRankContainer>
             <ProductWrapper>
               <ProductTag> 상품명 </ProductTag>
               <Input
