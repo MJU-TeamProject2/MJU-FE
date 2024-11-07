@@ -33,8 +33,8 @@ export const ProductInfoContainer = styled.div`
   width: 100%;
   height: 100%;
   padding: 10px;
-  border-radius: 7px;
-  border: 1px solid white;
+  border-block: 2px solid;
+  border-color: #9baec8;
 `
 
 export const ProductFixContainer = styled.div`
@@ -42,9 +42,9 @@ export const ProductFixContainer = styled.div`
   flex: 2;
   width: 70%;
   height: 100%;
-  margin: 30px;
-  border-radius: 7px;
-  border: 1px solid white;
+  padding: 30px;
+  border-block: 2px solid;
+  border-color: #9baec8;
   text-align: center;
 `
 
@@ -218,16 +218,30 @@ export const SizeButton = styled.button`
 `
 
 export const ModifyRankContainer = styled.div`
-  border-bottom: solid 2px gray;
   align-items: center;
-  padding-top: 20px;
-  padding-bottom: 5px;
+  padding-bottom: 35px;
+  padding-top: 10px;
   margin-inline: 20px;
   display: flex;
 `
 export const ModifyRank = styled.p`
   flex: 2;
-  font-size: 18px;
+  font-size: 22px;
+  border-bottom: solid 2px;
+  border-color: #d9e1e8;
   color: lightgray;
+  opacity: 15%;
+  padding-bottom: 5px;
+  background-color: ${colors.adminBackground};
+`
+
+export const ModifySelectedRank = styled.p`
+  flex: 2;
+  font-size: 24px;
+  border-bottom: solid 2px;
+  border-color: #d9e1e8;
+  color: #d9e1e8;
+  font-weight: bold;
+  padding-bottom: 5px;
   background-color: ${colors.adminBackground};
 `

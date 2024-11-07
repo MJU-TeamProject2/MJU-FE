@@ -29,6 +29,7 @@ import {
   Form,
   ModifyRankContainer,
   ModifyRank,
+  ModifySelectedRank,
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
@@ -93,34 +94,64 @@ const ProductModify = () => {
   }
 
   const letModify = (time: number) => {
-    const infoWrapper = document.getElementById('nonModify')
-    const modifyWrapper = document.getElementById('modify')
-    const infoButtonGroup = document.getElementById('infoButtonGroup')
-    const modifyButtonGroup = document.getElementById('modifyButtonGroup')
+    setName(product.name)
+    setCategory(product.category)
+    setGenderCategory(product.genderCatetgory)
+    setProductNumber(product.productNumber)
+    setDiscount(product.discount)
+    setPrice(product.price)
+    fillForm()
+  }
+  const controlInfoWrapper = (isVisible: boolean) => {
+    const wrapper = document.getElementById('nonModify')
+    const buttons = document.getElementById('infoButtonGroup')
 
-    if (
-      infoWrapper != null &&
-      modifyWrapper != null &&
-      infoButtonGroup != null &&
-      modifyButtonGroup != null
-    ) {
-      if (time === 1) {
-        setName(product.name)
-        setCategory(product.category)
-        setGenderCategory(product.genderCatetgory)
-        setProductNumber(product.productNumber)
-        setDiscount(product.discount)
-        setPrice(product.price)
-        fillForm()
-        infoWrapper.style.display = 'none'
-        infoButtonGroup.style.display = 'none'
-        modifyWrapper.style.display = 'block'
-        modifyButtonGroup.style.display = 'flex'
-      } else if (time === 3) {
-        modifyWrapper.style.display = 'none'
-        modifyButtonGroup.style.display = 'none'
-        infoWrapper.style.display = 'block'
-        infoButtonGroup.style.display = 'flex'
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
+  const controlModifyBasic = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify01')
+    const buttons = document.getElementById('ModifyButtonGroup01')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
+  const controlModifySize = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify02')
+    const buttons = document.getElementById('ModifyButtonGroup02')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
+  const controlModifyFiles = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify03')
+    const buttons = document.getElementById('ModifyButtonGroup03')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
       }
     }
   }
@@ -314,9 +345,9 @@ const ProductModify = () => {
               <ProductInfo> {quantity} </ProductInfo>
             </ProductWrapper>
           </ProductInfoContainer>
-          <ProductFixContainer id="modify">
+          <ProductFixContainer id="modify01">
             <ModifyRankContainer>
-              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifySelectedRank id="modifyRank1"> 1 </ModifySelectedRank>
               <ModifyRank id="modifyRank2"> 2 </ModifyRank>
               <ModifyRank id="modifyRank3"> 3 </ModifyRank>
             </ModifyRankContainer>
@@ -389,6 +420,20 @@ const ProductModify = () => {
               />
             </ProductWrapper>
           </ProductFixContainer>
+          <ProductFixContainer id="modify02">
+            <ModifyRankContainer>
+              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifySelectedRank id="modifyRank2"> 2 </ModifySelectedRank>
+              <ModifyRank id="modifyRank3"> 3 </ModifyRank>
+            </ModifyRankContainer>
+          </ProductFixContainer>
+          <ProductFixContainer id="modify03">
+            <ModifyRankContainer>
+              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifyRank id="modifyRank2"> 2 </ModifyRank>
+              <ModifySelectedRank id="modifyRank3"> 3 </ModifySelectedRank>
+            </ModifyRankContainer>
+          </ProductFixContainer>
         </ProductSection>
         <HiddenContainer>
           <Input
@@ -423,7 +468,15 @@ const ProductModify = () => {
         <Button onClick={() => letModify(1)}>수정</Button>
         <DeleteButton onClick={deleteItem}>삭제</DeleteButton>
       </ButtonContainer>
-      <ModifyButtonContainer id="modifyButtonGroup">
+      <ModifyButtonContainer id="modifyButtonGroup01">
+        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
+        <Button onClick={() => letModify(3)}>취소</Button>
+      </ModifyButtonContainer>
+      <ModifyButtonContainer id="modifyButtonGroup02">
+        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
+        <Button onClick={() => letModify(3)}>취소</Button>
+      </ModifyButtonContainer>
+      <ModifyButtonContainer id="modifyButtonGroup03">
         <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
         <Button onClick={() => letModify(3)}>취소</Button>
       </ModifyButtonContainer>
