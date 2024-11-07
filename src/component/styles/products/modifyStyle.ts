@@ -6,14 +6,14 @@ export const ProductModifyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 95vh;
   background-color: ${colors.adminBackground};
 `
 
 export const ProductImageContainer = styled.div`
   flex: 2;
   width: 100%;
-  height: 100%;
+  height: 60vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,7 +32,7 @@ export const ProductInfoContainer = styled.div`
   text-align: center;
   width: 100%;
   height: 100%;
-  padding: 10px;
+  margin: 10px;
   border-block: 2px solid;
   border-color: #9baec8;
 `
@@ -42,7 +42,7 @@ export const ProductFixContainer = styled.div`
   flex: 2;
   width: 70%;
   height: 100%;
-  padding: 30px;
+  margin: 10px;
   border-block: 2px solid;
   border-color: #9baec8;
   text-align: center;
@@ -53,7 +53,8 @@ export const ProductWrapper = styled.div`
   align-items: center;
   margin-block: 15px;
   display: flex;
-  padding: 2%;
+  padding-inline: 10px;
+  padding-block: 6px;
 `
 
 export const ProductMainImage = styled.img`
@@ -112,8 +113,7 @@ export const FileInput = styled.p`
   border: solid 1px darkgray;
   border-radius: 3px;
   text-align: center;
-  padding: 1.5%;
-  margin: 1.5%;
+  padding: 7px;
   flex: 5;
   &:hover {
     cursor: pointer;
@@ -136,7 +136,7 @@ export const Button = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: transparent;
+  background-color: blue;
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -145,7 +145,25 @@ export const Button = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    opacity: 60%;
+  }
+`
+
+export const CancelButton = styled.button`
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-inline: 30px;
+  background-color: gray;
+  color: ${colors.white};
+  border: 1px solid ${colors.primary};
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 20px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    opacity: 60%;
   }
 `
 
@@ -163,7 +181,7 @@ export const DeleteButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 60%;
   }
 `
 
@@ -172,7 +190,7 @@ export const ModifyButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: darkgreen;
+  background-color: green;
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -181,7 +199,7 @@ export const ModifyButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    opacity: 0.8;
+    opacity: 60%;
   }
 `
 
@@ -219,8 +237,7 @@ export const SizeButton = styled.button`
 
 export const ModifyRankContainer = styled.div`
   align-items: center;
-  padding-bottom: 35px;
-  padding-top: 10px;
+  padding-top: 40px;
   margin-inline: 20px;
   display: flex;
 `
@@ -244,4 +261,10 @@ export const ModifySelectedRank = styled.p`
   font-weight: bold;
   padding-bottom: 5px;
   background-color: ${colors.adminBackground};
+`
+export const ModifyTitle = styled.p`
+  font-size: 30px;
+  color: white;
+  width: 100%;
+  text-align: center;
 `

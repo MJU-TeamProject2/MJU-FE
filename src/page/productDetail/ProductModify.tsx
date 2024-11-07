@@ -23,6 +23,8 @@ import {
   Button,
   DeleteButton,
   ModifyButtonContainer,
+  ModifyButton,
+  CancelButton,
   HiddenContainer,
   SizeButtonContainer,
   SizeButton,
@@ -30,6 +32,8 @@ import {
   ModifyRankContainer,
   ModifyRank,
   ModifySelectedRank,
+  ModifyTitle,
+  FileInput,
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
@@ -40,16 +44,14 @@ const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
   const { errors, handleChange } = useRegisterClothesForm()
-
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [genderCategory, setGenderCategory] = useState('')
   const [productNumber, setProductNumber] = useState('')
   const [discount, setDiscount] = useState('')
   const [price, setPrice] = useState('')
-  const [, setSize] = useState('')
+  const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
-
   const navigate = useNavigate()
   const isMounted = useRef(false)
 
@@ -68,14 +70,13 @@ const ProductModify = () => {
       setQuantity(details.clothesSizeList[0].quantity)
     }
   }
-
   const selectSizeToSeeQuantity = (value: string) => {
     const sizeList: jsonType = {
-      XS: 0,
       S: 0,
       M: 0,
       L: 0,
       XL: 0,
+      XXL: 0,
     }
     for (const sizeQuantity of product.clothesSizeList) {
       sizeList[sizeQuantity.size] = sizeQuantity.quantity
@@ -92,7 +93,6 @@ const ProductModify = () => {
       }
     }
   }
-
   const letModify = (time: number) => {
     setName(product.name)
     setCategory(product.category)
@@ -101,6 +101,33 @@ const ProductModify = () => {
     setDiscount(product.discount)
     setPrice(product.price)
     fillForm()
+
+    switch (time) {
+      case 1:
+        controlInfoWrapper(false)
+        controlModifyBasic(true)
+        controlModifySize(false)
+        controlModifyFiles(false)
+        break
+      case 2:
+        controlInfoWrapper(false)
+        controlModifyBasic(false)
+        controlModifySize(true)
+        controlModifyFiles(false)
+        break
+      case 3:
+        controlInfoWrapper(false)
+        controlModifyBasic(false)
+        controlModifySize(false)
+        controlModifyFiles(true)
+        break
+      case 0:
+        controlInfoWrapper(true)
+        controlModifyBasic(false)
+        controlModifySize(false)
+        controlModifyFiles(false)
+        break
+    }
   }
   const controlInfoWrapper = (isVisible: boolean) => {
     const wrapper = document.getElementById('nonModify')
@@ -118,7 +145,7 @@ const ProductModify = () => {
   }
   const controlModifyBasic = (isVisible: boolean) => {
     const wrapper = document.getElementById('modify01')
-    const buttons = document.getElementById('ModifyButtonGroup01')
+    const buttons = document.getElementById('modifyButtonGroup01')
     if (wrapper != null && buttons != null) {
       if (isVisible) {
         wrapper.style.display = 'block'
@@ -131,7 +158,7 @@ const ProductModify = () => {
   }
   const controlModifySize = (isVisible: boolean) => {
     const wrapper = document.getElementById('modify02')
-    const buttons = document.getElementById('ModifyButtonGroup02')
+    const buttons = document.getElementById('modifyButtonGroup02')
     if (wrapper != null && buttons != null) {
       if (isVisible) {
         wrapper.style.display = 'block'
@@ -144,7 +171,7 @@ const ProductModify = () => {
   }
   const controlModifyFiles = (isVisible: boolean) => {
     const wrapper = document.getElementById('modify03')
-    const buttons = document.getElementById('ModifyButtonGroup03')
+    const buttons = document.getElementById('modifyButtonGroup03')
     if (wrapper != null && buttons != null) {
       if (isVisible) {
         wrapper.style.display = 'block'
@@ -155,7 +182,6 @@ const ProductModify = () => {
       }
     }
   }
-
   const deleteItem = async () => {
     let select = confirm('해당 상품을 삭제하겠습니까?')
     if (select) {
@@ -164,7 +190,6 @@ const ProductModify = () => {
       navigate('/adminHome')
     }
   }
-
   const fillForm = () => {
     const inputName = document.getElementById('inputName') as HTMLInputElement
     const inputCategory = document.getElementById(
@@ -196,7 +221,6 @@ const ProductModify = () => {
     if (inputSize !== null) handleChange('size', inputSize.value)
     if (inputQuantity !== null) handleChange('quantity', inputQuantity.value)
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (
@@ -209,6 +233,9 @@ const ProductModify = () => {
       return
     }
     const changedList: jsonType = {}
+    console.log(product.name)
+    console.log(name)
+
     if (product.price != price) changedList['price'] = price
     if (product.name != name) changedList['name'] = name
     if (product.category != category) changedList['category'] = category
@@ -218,6 +245,7 @@ const ProductModify = () => {
       changedList['productNumber'] = productNumber
     if (product.discount != discount) changedList['discount'] = discount
 
+    console.log(changedList)
     const result = await modifyCloth(changedList, id)
     if (result instanceof Error) {
       console.error(result.message)
@@ -227,14 +255,6 @@ const ProductModify = () => {
       navigate('/adminHome')
     }
   }
-
-  useEffect(() => {
-    if (!isMounted.current) {
-      loadProductDetails()
-      isMounted.current = true
-    }
-  }, [])
-
   const handleData = (field: string, value: string) => {
     handleChange(field, value)
     switch (field) {
@@ -265,6 +285,12 @@ const ProductModify = () => {
     }
   }
 
+  useEffect(() => {
+    if (!isMounted.current) {
+      loadProductDetails()
+      isMounted.current = true
+    }
+  }, [])
   if (!product) return <div>Loading...</div>
 
   return (
@@ -305,13 +331,6 @@ const ProductModify = () => {
               <SizeButtonContainer>
                 <SizeButton
                   type="button"
-                  id="XS"
-                  onClick={() => selectSizeToSeeQuantity('XS')}
-                >
-                  XS
-                </SizeButton>
-                <SizeButton
-                  type="button"
                   id="S"
                   onClick={() => selectSizeToSeeQuantity('S')}
                 >
@@ -338,6 +357,13 @@ const ProductModify = () => {
                 >
                   XL
                 </SizeButton>
+                <SizeButton
+                  type="button"
+                  id="XXL"
+                  onClick={() => selectSizeToSeeQuantity('XXL')}
+                >
+                  XXL
+                </SizeButton>
               </SizeButtonContainer>
             </ProductWrapper>
             <ProductWrapper>
@@ -351,6 +377,9 @@ const ProductModify = () => {
               <ModifyRank id="modifyRank2"> 2 </ModifyRank>
               <ModifyRank id="modifyRank3"> 3 </ModifyRank>
             </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 기본 정보 수정 </ModifyTitle>
+            </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 상품명 </ProductTag>
               <Input
@@ -426,6 +455,34 @@ const ProductModify = () => {
               <ModifySelectedRank id="modifyRank2"> 2 </ModifySelectedRank>
               <ModifyRank id="modifyRank3"> 3 </ModifyRank>
             </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 사이즈 별 재고 수정 </ModifyTitle>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 사이즈 </ProductTag>
+              <Select
+                name="size"
+                value={size}
+                id="inputSize"
+                onChange={(e) => handleData('size', e.target.value)}
+              >
+                <Option value="S"> S </Option>
+                <Option value="M"> M </Option>
+                <Option value="L"> L </Option>
+                <Option value="XL"> XL </Option>
+                <Option value="XXL"> XXL </Option>
+              </Select>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 재고 </ProductTag>
+              <Input
+                type="number"
+                name="quantity"
+                id="inputQuantity"
+                value={quantity}
+                onChange={(e) => handleData('quantity', e.target.value)}
+              />
+            </ProductWrapper>
           </ProductFixContainer>
           <ProductFixContainer id="modify03">
             <ModifyRankContainer>
@@ -433,6 +490,25 @@ const ProductModify = () => {
               <ModifyRank id="modifyRank2"> 2 </ModifyRank>
               <ModifySelectedRank id="modifyRank3"> 3 </ModifySelectedRank>
             </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 상품 관련 파일 수정 </ModifyTitle>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 3D 파일 </ProductTag>
+              <FileInput> obj 형식의 파일을 선택하세요. </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 재질 파일 </ProductTag>
+              <FileInput> mtl 형식의 파일을 선택하세요. </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 상세 사진 </ProductTag>
+              <FileInput> 이미지 파일을 선택하세요. </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 메인 사진 </ProductTag>
+              <FileInput> 이미지 파일을 선택하세요. </FileInput>
+            </ProductWrapper>
           </ProductFixContainer>
         </ProductSection>
         <HiddenContainer>
@@ -465,20 +541,22 @@ const ProductModify = () => {
         </HiddenContainer>
       </Form>
       <ButtonContainer id="infoButtonGroup">
-        <Button onClick={() => letModify(1)}>수정</Button>
+        <ModifyButton onClick={() => letModify(1)}>수정</ModifyButton>
         <DeleteButton onClick={deleteItem}>삭제</DeleteButton>
       </ButtonContainer>
       <ModifyButtonContainer id="modifyButtonGroup01">
-        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
-        <Button onClick={() => letModify(3)}>취소</Button>
+        <Button onClick={() => letModify(2)}> 다음 </Button>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
       </ModifyButtonContainer>
       <ModifyButtonContainer id="modifyButtonGroup02">
-        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
-        <Button onClick={() => letModify(3)}>취소</Button>
+        <Button onClick={() => letModify(1)}> 이전 </Button>
+        <Button onClick={() => letModify(3)}> 다음 </Button>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
       </ModifyButtonContainer>
       <ModifyButtonContainer id="modifyButtonGroup03">
-        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
-        <Button onClick={() => letModify(3)}>취소</Button>
+        <Button onClick={() => letModify(2)}>이전</Button>
+        <ModifyButton onClick={(e) => handleSubmit(e)}> 수정 </ModifyButton>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
       </ModifyButtonContainer>
     </ProductModifyContainer>
   )
