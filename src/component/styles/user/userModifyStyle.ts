@@ -23,7 +23,7 @@ export const ProfileImage = styled.div`
   width: 180px; // 아바타 크기 조정
   height: 180px; // 아바타 크기 조정
   border-radius: 50%;
-  background-color: ${colors.gray};
+  background-color: ${colors.grey};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,7 +102,7 @@ export const Input = styled.input<InputProps>`
   transition: border-color 0.3s ease;
 
   &::placeholder {
-    color: ${colors.gray};
+    color: ${colors.grey};
   }
 `
 
@@ -138,7 +138,7 @@ export const FooterButtonGroup = styled.div`
 export const FooterButton = styled.button`
   width: 100px;
   padding: 10px;
-  background-color: ${colors.gray};
+  background-color: ${colors.grey};
   color: ${colors.white};
   border: none;
   border-radius: 5px;

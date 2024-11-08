@@ -64,8 +64,19 @@ const User: React.FC = () => {
 
   const modifyUser = async (e: React.FormEvent) => {
     e.preventDefault()
+    const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
+    if (!phoneRegex.test(phoneNumber) || !emailRegex.test(email)) {
+      alert('전화번호 또는 이메일 형식이 올바르지 않습니다.')
+      return
+    }
     const result = await modifyUserInfo(name, nickname, age, email, phoneNumber)
-    if (!(result instanceof Error)) {
+
+    if (result instanceof Error) {
+      console.error(result.message)
+      alert('정보 수정에 실패했습니다.')
+    } else {
       alert('회원 정보가 저장되었습니다.')
       setIsEditing(false)
       setIsSaved(true)
