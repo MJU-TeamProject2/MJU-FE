@@ -268,3 +268,31 @@ export const ModifyTitle = styled.p`
   width: 100%;
   text-align: center;
 `
+export const Table = styled.table`
+  width: 100%;
+  border: solid 1px lightgray;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+`
+export const TableHead = styled.thead`
+  font-weight: bold;
+  font-size: 22px;
+  border-bottom: solid 1px lightgray;
+  color: white;
+`
+export const TableColumn = styled.td`
+  flex: 1;
+  width: 20%;
+  text-align: center;
+  padding: 5px;
+`
+export const TableRow = styled.tbody`
+  font-size: 22px;
+  color: lightgray;
+`
+
+export const DivideLine = styled.hr`
+  width: 100%;
+  border: 1px dotted lightgray;
+  opacity: 30%;
+`

@@ -34,6 +34,11 @@ import {
   ModifySelectedRank,
   ModifyTitle,
   FileInput,
+  Table,
+  TableHead,
+  TableRow,
+  TableColumn,
+  DivideLine,
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
@@ -43,7 +48,8 @@ interface jsonType {
 const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
-  const { errors, handleChange } = useRegisterClothesForm()
+  const { errors, handleChange, handleFileChange } = useRegisterClothesForm()
+
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [genderCategory, setGenderCategory] = useState('')
@@ -52,6 +58,18 @@ const ProductModify = () => {
   const [price, setPrice] = useState('')
   const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
+  const mainImageRef = useRef<HTMLInputElement>(null)
+  const [mainImageName, setMainImageName] =
+    useState('이미지 파일을 선택해주세요.')
+  const detailImageRef = useRef<HTMLInputElement>(null)
+  const [detailImageName, setDetailImageName] =
+    useState('이미지 파일을 선택해주세요.')
+  const objectFileRef = useRef<HTMLInputElement>(null)
+  const [objectFileName, setObjectFileName] =
+    useState('obj 파일을 선택해주세요')
+  const mtlFileRef = useRef<HTMLInputElement>(null)
+  const [mtlFileName, setMtlFileName] = useState('mtl 파일을 선택해주세요')
+
   const navigate = useNavigate()
   const isMounted = useRef(false)
 
@@ -94,16 +112,17 @@ const ProductModify = () => {
     }
   }
   const letModify = (time: number) => {
-    setName(product.name)
-    setCategory(product.category)
-    setGenderCategory(product.genderCatetgory)
-    setProductNumber(product.productNumber)
-    setDiscount(product.discount)
-    setPrice(product.price)
     fillForm()
 
     switch (time) {
       case 1:
+        setName(product.name)
+        setCategory(product.category)
+        setGenderCategory(product.genderCatetgory)
+        setProductNumber(product.productNumber)
+        setDiscount(product.discount)
+        setPrice(product.price)
+
         controlInfoWrapper(false)
         controlModifyBasic(true)
         controlModifySize(false)
@@ -233,9 +252,12 @@ const ProductModify = () => {
       return
     }
     const changedList: jsonType = {}
-    console.log(product.name)
-    console.log(name)
-
+    for (const sizeArray of product.clothesSizeList) {
+      if (sizeArray.size == size && sizeArray.quantity != quantity) {
+        changedList['size'] = size
+        changedList['quantity'] = quantity
+      }
+    }
     if (product.price != price) changedList['price'] = price
     if (product.name != name) changedList['name'] = name
     if (product.category != category) changedList['category'] = category
@@ -244,6 +266,15 @@ const ProductModify = () => {
     if (product.productNumber != productNumber)
       changedList['productNumber'] = productNumber
     if (product.discount != discount) changedList['discount'] = discount
+
+    if (mainImageRef.current != null && mainImageRef.current.files != null)
+      changedList['mainImage'] = mainImageRef.current.files[0]
+    if (detailImageRef.current != null && detailImageRef.current.files != null)
+      changedList['detailImage'] = detailImageRef.current.files[0]
+    if (objectFileRef.current != null && objectFileRef.current.files != null)
+      changedList['objectFile'] = objectFileRef.current.files[0]
+    if (mtlFileRef.current != null && mtlFileRef.current.files != null)
+      changedList['mtlFile'] = mtlFileRef.current.files[0]
 
     console.log(changedList)
     const result = await modifyCloth(changedList, id)
@@ -283,6 +314,79 @@ const ProductModify = () => {
         setQuantity(value)
         break
     }
+  }
+  const handleImage = (type: string) => {
+    const fileInput = document.getElementById(type) as HTMLInputElement | null
+    if (!fileInput) {
+      console.log('File input element not found')
+      return
+    }
+    // File Size Limit: 10MB
+    const fileSizeLimit = 10 * 1024 * 1024
+    const objectFileExtensions = ['obj']
+    const materialFileExtensions = ['mtl']
+
+    fileInput.onchange = (event: Event) => {
+      const target = event.target as HTMLInputElement
+      const file = target.files?.[0]
+      if (!file) {
+        console.log('File is Not Selected')
+        return
+      }
+
+      if (type == 'objectFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !objectFileExtensions.includes(fileExtension)) {
+          alert('3D 파일은 obj 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else if (type == 'mtlFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !materialFileExtensions.includes(fileExtension)) {
+          alert('재질 파일은 mtl 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else {
+        if (!file.type.startsWith('image/')) {
+          alert('이미지 파일만 업로드 가능합니다')
+          target.value = ''
+          return
+        }
+      }
+
+      if (file.size > fileSizeLimit) {
+        alert('파일 크기는 10MB를 초과할 수 없습니다.')
+        target.value = ''
+        return
+      }
+
+      const fileReader = new FileReader()
+      fileReader.onload = (e: ProgressEvent<FileReader>) => {
+        handleFile(type, file, file.name)
+        console.log(e.target)
+      }
+      fileReader.readAsDataURL(file)
+    }
+    fileInput.click()
+  }
+  const handleFile = (field: string, file: File, fileName: string) => {
+    switch (field) {
+      case 'mainImage':
+        setMainImageName(fileName)
+        break
+      case 'detailImage':
+        setDetailImageName(fileName)
+        break
+      case 'objectFile':
+        setObjectFileName(fileName)
+        break
+      case 'mtlFile':
+        setMtlFileName(fileName)
+        break
+    }
+    handleFileChange(field, file)
   }
 
   useEffect(() => {
@@ -458,6 +562,42 @@ const ProductModify = () => {
             <ProductWrapper>
               <ModifyTitle> 사이즈 별 재고 수정 </ModifyTitle>
             </ProductWrapper>
+            <DivideLine />
+            <ProductWrapper>
+              <ProductTag> 현재 사이즈 별 재고</ProductTag>
+            </ProductWrapper>
+            <ProductWrapper>
+              <Table>
+                <TableHead>
+                  <tr>
+                    <TableColumn> S </TableColumn>
+                    <TableColumn> M </TableColumn>
+                    <TableColumn> L </TableColumn>
+                    <TableColumn> XL </TableColumn>
+                    <TableColumn> XXL </TableColumn>
+                  </tr>
+                </TableHead>
+                <TableRow>
+                  <tr>
+                    <TableColumn>
+                      {product.clothesSizeList[0].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[1].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[2].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[3].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[4].quantity}
+                    </TableColumn>
+                  </tr>
+                </TableRow>
+              </Table>
+            </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 사이즈 </ProductTag>
               <Select
@@ -495,19 +635,31 @@ const ProductModify = () => {
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 3D 파일 </ProductTag>
-              <FileInput> obj 형식의 파일을 선택하세요. </FileInput>
+              <FileInput onClick={() => handleImage('objectFile')}>
+                {' '}
+                {objectFileName}{' '}
+              </FileInput>
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 재질 파일 </ProductTag>
-              <FileInput> mtl 형식의 파일을 선택하세요. </FileInput>
+              <FileInput onClick={() => handleImage('mtlFile')}>
+                {' '}
+                {mtlFileName}{' '}
+              </FileInput>
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 상세 사진 </ProductTag>
-              <FileInput> 이미지 파일을 선택하세요. </FileInput>
+              <FileInput onClick={() => handleImage('detailImage')}>
+                {' '}
+                {detailImageName}{' '}
+              </FileInput>
             </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 메인 사진 </ProductTag>
-              <FileInput> 이미지 파일을 선택하세요. </FileInput>
+              <FileInput onClick={() => handleImage('mainImage')}>
+                {' '}
+                {mainImageName}{' '}
+              </FileInput>
             </ProductWrapper>
           </ProductFixContainer>
         </ProductSection>
@@ -516,6 +668,7 @@ const ProductModify = () => {
             type="file"
             id="mainImage"
             name="mainImage"
+            ref={mainImageRef}
             accept="image/*"
             onChange={() => console.log('')}
           />
