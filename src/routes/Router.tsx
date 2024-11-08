@@ -12,11 +12,12 @@ import ProductModify from '@/page/productDetail/ProductModify'
 import Cart from '@/page/user/Cart'
 import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFitting from '@/page/productDetail/ModelFitting'
-import OrderHistoryPage from '@/page/order/OrderHistoryPage.tsx'
+import OrderHistoryPage from '@/page/order/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
 import AdminLayout from '@/component/layout/AdminLayout'
 import Order from '@/page/order/Order'
 
+// Router 컴포넌트 정의
 const Router = () => {
   return (
     <BrowserRouter>
