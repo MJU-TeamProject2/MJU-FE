@@ -81,20 +81,3 @@ export const updateCartItemQuantity = async (
     console.log('상품 수량이 성공적으로 업데이트되었습니다.')
   }
 }
-
-// 장바구니 상품 구매 미완성, api 아직 구현 안 됨.
-export const purchaseCartItems = async (
-  selectedItems: string[]
-): Promise<void> => {
-  if (selectedItems.length === 0) {
-    console.log('선택된 상품이 없습니다.')
-    return
-  }
-
-  try {
-    console.log('구매할 상품 IDs:', selectedItems.join(', '))
-    console.log('구매 처리가 완료되었습니다.')
-  } catch (error) {
-    console.error('구매 처리 중 오류가 발생했습니다.', error)
-  }
-}

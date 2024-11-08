@@ -1,97 +1,233 @@
-import axiosInstance from './axiosInstance'
+import axiosInstance from '@/api/axiosInstance'
 
-// API 응답 타입 정의
-export type ApiResponse<T> = {
-  success: boolean
-  data: T
-  message?: string // 선택적 메시지 필드
+// 상품 인터페이스 정의
+interface Product {
+  id: string
+  cartId: string
+  name: string
+  size: string
+  price: number
+  originalPrice: number
+  imageUrl: string
+  quantity: number
+  availableQuantity: number
 }
 
-// 주문 항목 타입 정의
-export type OrderItem = {
+// 주문 인터페이스 정의
+interface Order {
   orderId: number
   clothesId: number
   imageUrl: string
   name: string
   quantity: number
   price: number
+  detailUrl: string
   discount: number
   size: string
   orderStatus: string
-  createdAt: string // 생성 일자 추가
+  createdAt: string
 }
 
-// 주소 타입 정의
-export type Address = {
-  addressId: number
+// 장바구니 상품 구매 함수
+export const purchaseCartItems = async (
+  selectedItems: Product[],
+  addressId: number,
+  paymentId: number
+): Promise<void> => {
+  if (selectedItems.length === 0) {
+    console.log('선택된 상품이 없습니다.')
+    return
+  }
+
+  try {
+    const productIds = selectedItems.map((product) => Number(product.cartId))
+    console.log('구매할 상품 IDs:', productIds.join(', '))
+
+    await Promise.all(
+      selectedItems.map((product: Product) =>
+        axiosInstance.post('/api/v1/orders', {
+          cartId: product.cartId,
+          addressId,
+          paymentId,
+        })
+      )
+    )
+
+    console.log('구매 처리가 완료되었습니다.')
+  } catch (error) {
+    console.error('구매 처리 중 오류가 발생했습니다.', error)
+    throw error
+  }
+}
+
+// 주소 추가 함수
+export const postAddress = async ({
+  name,
+  recipient,
+  zipCode,
+  baseAddress,
+  detailAddress,
+}: {
+  name: string
   recipient: string
   zipCode: string
   baseAddress: string
   detailAddress: string
-}
-
-// 결제 정보 타입 정의
-export type PaymentInfo = {
-  cardNumber: string // 문자열로 수신
-  cardProvider: string
-}
-
-export const createOrder = async (
-  cartId: number, // 단일 장바구니 항목 ID
-  addressId: number, // 주소 ID
-  payment: PaymentInfo // PaymentInfo 객체
-): Promise<ApiResponse<{}>> => {
-  const response: ApiResponse<{}> = await axiosInstance.post('/api/v1/orders', {
-    cartId: cartId,
-    AddressId: addressId,
-    paymentId: Number(payment.cardNumber), // 문자열을 숫자로 변환하여 전송
-  })
-  return response
-}
-
-export const saveAddress = async (address: Address): Promise<number> => {
-  const requestBody = {
-    name: '회사', // 예시로 고정된 이름
-    recipient: address.recipient,
-    zipCode: address.zipCode,
-    baseAddress: address.baseAddress,
-    detailAddress: address.detailAddress,
-  }
-
+}): Promise<void> => {
   try {
-    const response = await axiosInstance.post(
-      '/api/v1/customer/address',
-      requestBody
-    )
-    console.log('Address saved successfully:', response.data)
-    return Number(address.zipCode) // 정상적으로 저장되었을 경우 addressId 반환
+    await axiosInstance.post('/api/v1/customer/address', {
+      name,
+      recipient,
+      zipCode,
+      baseAddress,
+      detailAddress,
+    })
+    console.log('주소 추가가 완료되었습니다.')
   } catch (error) {
-    console.error('Error saving address:', error)
-    throw error // 오류를 상위로 전달하여 handlePurchase에서 처리되도록 함
+    console.error('주소 추가 중 오류가 발생했습니다.', error)
   }
 }
 
-// 구매 처리 함수
-export const purchaseCartItems = async (
-  selectedCartIds: number[],
-  address: Address,
-  payment: PaymentInfo
-): Promise<ApiResponse<{}>> => {
-  const promises = selectedCartIds.map((cartId) =>
-    createOrder(cartId, address.addressId, payment)
-  )
-  console.log('123123123')
-  const responses = await Promise.all(promises)
+// 주소 조회 함수
+export const getAddresses = async (): Promise<
+  {
+    addressId: number
+    name: string
+    recipient: string
+    baseAddress: string
+  }[]
+> => {
+  try {
+    const { data } = await axiosInstance.get('/api/v1/customer/address')
+    console.log('주소 불러오기가 완료되었습니다.')
+    return data
+  } catch (error) {
+    console.error('주소 불러오기 중 오류가 발생했습니다.', error)
+    return []
+  }
+}
 
-  if (responses.every((res) => res.success)) {
-    return {
-      success: true,
-      data: {},
+// 결제 수단 추가 함수
+export const postPayment = async ({
+  cardNumber,
+  cardProvider,
+  expiryDate,
+}: {
+  cardNumber: string
+  cardProvider: string
+  expiryDate: string
+}): Promise<void> => {
+  try {
+    // 서버에 전송되는 데이터 확인
+    console.log('전송할 데이터:', {
+      cardNumber,
+      cardProvider,
+      expiryDate,
+    })
+
+    await axiosInstance.post('/api/v1/customer/payment', {
+      cardNumber,
+      cardProvider,
+      expiryDate,
+    })
+    console.log('결제수단 추가가 완료되었습니다.')
+  } catch (error: any) {
+    // 오류 메시지를 구체적으로 출력
+    if (error.response) {
+      console.error('서버에서 반환된 오류:', error.response.data)
+    } else {
+      console.error('결제수단 추가 중 오류가 발생했습니다:', error.message)
     }
-  } else {
-    return {
-      success: false,
-      data: {},
+  }
+}
+
+// 결제 수단 조회 함수
+export const getPayments = async (): Promise<
+  {
+    paymentId: number
+    cardNumber: string
+    cardProvider: string
+  }[]
+> => {
+  try {
+    const { data } = await axiosInstance.get('/api/v1/customer/payment')
+    console.log('결제수단 불러오기가 완료되었습니다.')
+    return data
+  } catch (error) {
+    console.error('결제수단 불러오기 중 오류가 발생했습니다.', error)
+    return []
+  }
+}
+
+// 주소 삭제 함수
+export const deleteAddress = async (addressId: number): Promise<void> => {
+  try {
+    await axiosInstance.delete(`/api/v1/customer/address/${addressId}`)
+    console.log('주소 삭제가 완료되었습니다.')
+  } catch (error) {
+    console.error('주소 삭제 중 오류가 발생했습니다.', error)
+  }
+}
+
+// 결제 수단 삭제 함수
+export const deletePayment = async (paymentId: number): Promise<void> => {
+  try {
+    await axiosInstance.delete(`/api/v1/customer/payment/${paymentId}`)
+    console.log('결제수단 삭제가 완료되었습니다.')
+  } catch (error) {
+    console.error('결제수단 삭제 중 오류가 발생했습니다.', error)
+  }
+}
+
+// 주문 목록 조회 함수
+export const getOrders = async (): Promise<Order[]> => {
+  try {
+    const { data } = await axiosInstance.get('/api/v1/orders')
+
+    if (data.success) {
+      console.log('주문 목록을 성공적으로 가져왔습니다.', data.data)
+      return data.data.map((order: any) => ({
+        orderId: order.orderId,
+        clothesId: order.clothesId,
+        imageUrl: order.imageUrl,
+        name: order.name,
+        quantity: order.quantity,
+        price: order.price,
+        detailUrl: order.detailUrl,
+        discount: order.discount,
+        size: order.size,
+        orderStatus: order.orderStatus,
+        createdAt: order.createdAt,
+      }))
+    } else {
+      console.error('주문 목록을 가져오는 중 오류가 발생했습니다.', data)
+      return []
     }
+  } catch (error) {
+    console.error('주문 목록을 가져오는 중 오류가 발생했습니다.', error)
+    return []
+  }
+}
+
+// 주문 수정 함수
+export const updateOrder = async (
+  orderId: number,
+  updatedData: Partial<Order>
+): Promise<void> => {
+  try {
+    await axiosInstance.put(`/api/v1/orders/${orderId}`, updatedData)
+    console.log('주문이 수정되었습니다.')
+  } catch (error) {
+    console.error('주문 수정 중 오류가 발생했습니다.', error)
+  }
+}
+
+// 주문 삭제 함수
+export const deleteOrder = async (orderId: number): Promise<void> => {
+  try {
+    await axiosInstance.delete(`/api/v1/orders/${orderId}`)
+    console.log('주문이 삭제되었습니다.')
+  } catch (error) {
+    console.error('주문 삭제 중 오류가 발생했습니다.', error)
   }
 }

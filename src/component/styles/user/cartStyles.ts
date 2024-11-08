@@ -3,11 +3,10 @@ import { colors } from '@/component/styles/globalStyle'
 
 export const CartContainer = styled.div`
   width: 100%;
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   background-color: ${colors.white};
-  border-radius: 8px;
 `
 
 export const CartHeader = styled.div`
@@ -15,129 +14,185 @@ export const CartHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 10px 0;
-  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+  font-size: 14px;
 `
 
 export const Checkbox = styled.input`
-  margin-right: 10px;
+  margin-right: 8px;
+  cursor: pointer;
 `
 
 export const ProductContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 20px 0;
-  border-bottom: 1px solid #e0e0e0;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: white;
 `
 
 export const ProductImage = styled.img`
-  width: 100px;
-  height: auto;
+  width: 80px;
+  height: 80px;
   margin-right: 20px;
+  object-fit: cover;
 `
 
 export const ProductInfo = styled.div`
+  font-family: 'Pretendard', sans-serif;
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  p:first-child {
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 4px;
+  }
 `
 
 export const PriceInfo = styled.div`
-  text-align: right;
+  margin-left: 20px;
+  font-family: 'Pretendard', sans-serif;
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #767676;
+    padding: 4px;
+  }
+`
+
+export const OriginalPrice = styled.p`
+  font-family: 'Pretendard', sans-serif;
+  text-decoration: line-through;
+  color: #767676;
+  font-size: 14px;
+`
+
+export const CurrentPrice = styled.p`
+  font-family: 'Pretendard', sans-serif;
+  color: #000;
+  font-size: 16px;
 `
 
 export const PurchaseButton = styled.button`
+  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 15px 0;
   background-color: #000;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   margin: 20px 0;
 
   &:hover {
     background-color: #333;
   }
-
-  &:active {
-    background-color: #000;
-  }
 `
 
 export const TotalSection = styled.div`
-  padding: 20px 0;
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
+  padding: 20px;
+  background-color: #f8f8f8;
+  border-radius: 4px;
+  margin-top: 20px;
 `
 
+export const TotalLabel = styled.p`
+  font-weight: bold;
+  font-size: 18px;
+  color: #000;
+  margin-bottom: 8px;
+`
+
+export const PriceLabel = styled.p`
+  color: #767676;
+  font-size: 14px;
+  margin-top: 4px;
+`
+
+export const DiscountPrice = styled.p`
+  color: #2f80ed;
+  font-size: 14px;
+  margin-top: 4px;
+`
 export const DeleteButton = styled.button`
-  background-color: #ff4d4f;
-  color: white;
+  font-family: 'Pretendard', sans-serif;
+  background: none;
   border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
+  color: #767676;
   cursor: pointer;
+  padding: 4px 8px;
+  font-size: 14px;
+
   &:hover {
-    background-color: #d32f2f;
+    text-decoration: underline;
+  }
+`
+export const DeleteProductButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  color: #767676;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f0f0f0;
+    color: #ff4d4f;
   }
 `
 
 export const QuantityButton = styled.button`
-  background-color: #e0e0e0;
+  background: white;
+  border: 1px solid #e0e0e0;
   color: #333;
-  border: 1px solid #bbb;
-  padding: 5px 10px;
-  border-radius: 5px;
+  padding: 8px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  margin: 5px;
+  font-size: 16px;
+  margin-right: 8px;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
 
   &:hover {
-    background-color: #d0d0d0;
+    background-color: #f8f8f8;
   }
 
   &:active {
-    background-color: #ccc;
+    background-color: #e8e8e8;
   }
 `
 
-export const AddressInputContainer = styled.div`
-  margin-top: 20px;
-  padding: 15px;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  background-color: ${colors.lightGray};
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-`
-
-export const PaymentMethodContainer = styled(AddressInputContainer)`
-  margin-top: 20px;
-`
-
-export const InputGroup = styled.div`
+export const QuantityContainer = styled.div`
+  margin-top: 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 4px;
 `
 
-export const InputLabel = styled.label`
-  font-weight: bold;
+export const QuantityDisplay = styled.span`
+  margin: 0 12px;
   font-size: 16px;
-  min-width: 100px; /* 레이블 폭 고정 */
-  white-space: nowrap;
-`
-
-export const InputField = styled.input`
-  padding: 15px 10px;
-  border: 1px solid #cccccc;
-  border-radius: 4px;
-  font-size: 16px;
-  width: 100%;
-  height: 50px; /* 세로 길이 추가 */
-`
-
-export const SectionTitle = styled.p`
-  font-weight: bold;
-  margin-bottom: 10px;
-  font-size: 18px;
+  min-width: 40px;
+  text-align: center;
 `
