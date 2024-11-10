@@ -23,10 +23,22 @@ import {
   Button,
   DeleteButton,
   ModifyButtonContainer,
+  ModifyButton,
+  CancelButton,
   HiddenContainer,
   SizeButtonContainer,
   SizeButton,
   Form,
+  ModifyRankContainer,
+  ModifyRank,
+  ModifySelectedRank,
+  ModifyTitle,
+  FileInput,
+  Table,
+  TableHead,
+  TableRow,
+  TableColumn,
+  DivideLine,
 } from '@/component/styles/products/modifyStyle'
 import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 
@@ -36,7 +48,7 @@ interface jsonType {
 const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
-  const { errors, handleChange } = useRegisterClothesForm()
+  const { errors, handleChange, handleFileChange } = useRegisterClothesForm()
 
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
@@ -44,8 +56,19 @@ const ProductModify = () => {
   const [productNumber, setProductNumber] = useState('')
   const [discount, setDiscount] = useState('')
   const [price, setPrice] = useState('')
-  const [, setSize] = useState('')
+  const [size, setSize] = useState('')
   const [quantity, setQuantity] = useState('')
+  const mainImageRef = useRef<HTMLInputElement>(null)
+  const [mainImageName, setMainImageName] =
+    useState('이미지 파일을 선택해주세요.')
+  const detailImageRef = useRef<HTMLInputElement>(null)
+  const [detailImageName, setDetailImageName] =
+    useState('이미지 파일을 선택해주세요.')
+  const objectFileRef = useRef<HTMLInputElement>(null)
+  const [objectFileName, setObjectFileName] =
+    useState('obj 파일을 선택해주세요')
+  const mtlFileRef = useRef<HTMLInputElement>(null)
+  const [mtlFileName, setMtlFileName] = useState('mtl 파일을 선택해주세요')
 
   const navigate = useNavigate()
   const isMounted = useRef(false)
@@ -65,14 +88,13 @@ const ProductModify = () => {
       setQuantity(details.clothesSizeList[0].quantity)
     }
   }
-
   const selectSizeToSeeQuantity = (value: string) => {
     const sizeList: jsonType = {
-      XS: 0,
       S: 0,
       M: 0,
       L: 0,
       XL: 0,
+      XXL: 0,
     }
     for (const sizeQuantity of product.clothesSizeList) {
       sizeList[sizeQuantity.size] = sizeQuantity.quantity
@@ -89,40 +111,96 @@ const ProductModify = () => {
       }
     }
   }
-
   const letModify = (time: number) => {
-    const infoWrapper = document.getElementById('nonModify')
-    const modifyWrapper = document.getElementById('modify')
-    const infoButtonGroup = document.getElementById('infoButtonGroup')
-    const modifyButtonGroup = document.getElementById('modifyButtonGroup')
+    fillForm()
 
-    if (
-      infoWrapper != null &&
-      modifyWrapper != null &&
-      infoButtonGroup != null &&
-      modifyButtonGroup != null
-    ) {
-      if (time === 1) {
+    switch (time) {
+      case 1:
         setName(product.name)
         setCategory(product.category)
         setGenderCategory(product.genderCatetgory)
         setProductNumber(product.productNumber)
         setDiscount(product.discount)
         setPrice(product.price)
-        fillForm()
-        infoWrapper.style.display = 'none'
-        infoButtonGroup.style.display = 'none'
-        modifyWrapper.style.display = 'block'
-        modifyButtonGroup.style.display = 'flex'
-      } else if (time === 3) {
-        modifyWrapper.style.display = 'none'
-        modifyButtonGroup.style.display = 'none'
-        infoWrapper.style.display = 'block'
-        infoButtonGroup.style.display = 'flex'
+
+        controlInfoWrapper(false)
+        controlModifyBasic(true)
+        controlModifySize(false)
+        controlModifyFiles(false)
+        break
+      case 2:
+        controlInfoWrapper(false)
+        controlModifyBasic(false)
+        controlModifySize(true)
+        controlModifyFiles(false)
+        break
+      case 3:
+        controlInfoWrapper(false)
+        controlModifyBasic(false)
+        controlModifySize(false)
+        controlModifyFiles(true)
+        break
+      case 0:
+        controlInfoWrapper(true)
+        controlModifyBasic(false)
+        controlModifySize(false)
+        controlModifyFiles(false)
+        break
+    }
+  }
+  const controlInfoWrapper = (isVisible: boolean) => {
+    const wrapper = document.getElementById('nonModify')
+    const buttons = document.getElementById('infoButtonGroup')
+
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
       }
     }
   }
-
+  const controlModifyBasic = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify01')
+    const buttons = document.getElementById('modifyButtonGroup01')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
+  const controlModifySize = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify02')
+    const buttons = document.getElementById('modifyButtonGroup02')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
+  const controlModifyFiles = (isVisible: boolean) => {
+    const wrapper = document.getElementById('modify03')
+    const buttons = document.getElementById('modifyButtonGroup03')
+    if (wrapper != null && buttons != null) {
+      if (isVisible) {
+        wrapper.style.display = 'block'
+        buttons.style.display = 'flex'
+      } else {
+        wrapper.style.display = 'none'
+        buttons.style.display = 'none'
+      }
+    }
+  }
   const deleteItem = async () => {
     let select = confirm('해당 상품을 삭제하겠습니까?')
     if (select) {
@@ -131,7 +209,6 @@ const ProductModify = () => {
       navigate('/adminHome')
     }
   }
-
   const fillForm = () => {
     const inputName = document.getElementById('inputName') as HTMLInputElement
     const inputCategory = document.getElementById(
@@ -163,7 +240,6 @@ const ProductModify = () => {
     if (inputSize !== null) handleChange('size', inputSize.value)
     if (inputQuantity !== null) handleChange('quantity', inputQuantity.value)
   }
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (
@@ -176,6 +252,12 @@ const ProductModify = () => {
       return
     }
     const changedList: jsonType = {}
+    for (const sizeArray of product.clothesSizeList) {
+      if (sizeArray.size == size && sizeArray.quantity != quantity) {
+        changedList['size'] = size
+        changedList['quantity'] = quantity
+      }
+    }
     if (product.price != price) changedList['price'] = price
     if (product.name != name) changedList['name'] = name
     if (product.category != category) changedList['category'] = category
@@ -185,6 +267,16 @@ const ProductModify = () => {
       changedList['productNumber'] = productNumber
     if (product.discount != discount) changedList['discount'] = discount
 
+    if (mainImageRef.current != null && mainImageRef.current.files != null)
+      changedList['mainImage'] = mainImageRef.current.files[0]
+    if (detailImageRef.current != null && detailImageRef.current.files != null)
+      changedList['detailImage'] = detailImageRef.current.files[0]
+    if (objectFileRef.current != null && objectFileRef.current.files != null)
+      changedList['objectFile'] = objectFileRef.current.files[0]
+    if (mtlFileRef.current != null && mtlFileRef.current.files != null)
+      changedList['mtlFile'] = mtlFileRef.current.files[0]
+
+    console.log(changedList)
     const result = await modifyCloth(changedList, id)
     if (result instanceof Error) {
       console.error(result.message)
@@ -194,14 +286,6 @@ const ProductModify = () => {
       navigate('/adminHome')
     }
   }
-
-  useEffect(() => {
-    if (!isMounted.current) {
-      loadProductDetails()
-      isMounted.current = true
-    }
-  }, [])
-
   const handleData = (field: string, value: string) => {
     handleChange(field, value)
     switch (field) {
@@ -231,7 +315,86 @@ const ProductModify = () => {
         break
     }
   }
+  const handleImage = (type: string) => {
+    const fileInput = document.getElementById(type) as HTMLInputElement | null
+    if (!fileInput) {
+      console.log('File input element not found')
+      return
+    }
+    // File Size Limit: 10MB
+    const fileSizeLimit = 10 * 1024 * 1024
+    const objectFileExtensions = ['obj']
+    const materialFileExtensions = ['mtl']
 
+    fileInput.onchange = (event: Event) => {
+      const target = event.target as HTMLInputElement
+      const file = target.files?.[0]
+      if (!file) {
+        console.log('File is Not Selected')
+        return
+      }
+
+      if (type == 'objectFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !objectFileExtensions.includes(fileExtension)) {
+          alert('3D 파일은 obj 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else if (type == 'mtlFile') {
+        const fileExtension = file.name.split('.').pop()?.toLocaleLowerCase()
+        if (!fileExtension || !materialFileExtensions.includes(fileExtension)) {
+          alert('재질 파일은 mtl 파일만 업로드 가능합니다.')
+          target.value = ''
+          return
+        }
+      } else {
+        if (!file.type.startsWith('image/')) {
+          alert('이미지 파일만 업로드 가능합니다')
+          target.value = ''
+          return
+        }
+      }
+
+      if (file.size > fileSizeLimit) {
+        alert('파일 크기는 10MB를 초과할 수 없습니다.')
+        target.value = ''
+        return
+      }
+
+      const fileReader = new FileReader()
+      fileReader.onload = (e: ProgressEvent<FileReader>) => {
+        handleFile(type, file, file.name)
+        console.log(e.target)
+      }
+      fileReader.readAsDataURL(file)
+    }
+    fileInput.click()
+  }
+  const handleFile = (field: string, file: File, fileName: string) => {
+    switch (field) {
+      case 'mainImage':
+        setMainImageName(fileName)
+        break
+      case 'detailImage':
+        setDetailImageName(fileName)
+        break
+      case 'objectFile':
+        setObjectFileName(fileName)
+        break
+      case 'mtlFile':
+        setMtlFileName(fileName)
+        break
+    }
+    handleFileChange(field, file)
+  }
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      loadProductDetails()
+      isMounted.current = true
+    }
+  }, [])
   if (!product) return <div>Loading...</div>
 
   return (
@@ -272,13 +435,6 @@ const ProductModify = () => {
               <SizeButtonContainer>
                 <SizeButton
                   type="button"
-                  id="XS"
-                  onClick={() => selectSizeToSeeQuantity('XS')}
-                >
-                  XS
-                </SizeButton>
-                <SizeButton
-                  type="button"
                   id="S"
                   onClick={() => selectSizeToSeeQuantity('S')}
                 >
@@ -305,6 +461,13 @@ const ProductModify = () => {
                 >
                   XL
                 </SizeButton>
+                <SizeButton
+                  type="button"
+                  id="XXL"
+                  onClick={() => selectSizeToSeeQuantity('XXL')}
+                >
+                  XXL
+                </SizeButton>
               </SizeButtonContainer>
             </ProductWrapper>
             <ProductWrapper>
@@ -312,7 +475,15 @@ const ProductModify = () => {
               <ProductInfo> {quantity} </ProductInfo>
             </ProductWrapper>
           </ProductInfoContainer>
-          <ProductFixContainer id="modify">
+          <ProductFixContainer id="modify01">
+            <ModifyRankContainer>
+              <ModifySelectedRank id="modifyRank1"> 1 </ModifySelectedRank>
+              <ModifyRank id="modifyRank2"> 2 </ModifyRank>
+              <ModifyRank id="modifyRank3"> 3 </ModifyRank>
+            </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 기본 정보 수정 </ModifyTitle>
+            </ProductWrapper>
             <ProductWrapper>
               <ProductTag> 상품명 </ProductTag>
               <Input
@@ -382,12 +553,122 @@ const ProductModify = () => {
               />
             </ProductWrapper>
           </ProductFixContainer>
+          <ProductFixContainer id="modify02">
+            <ModifyRankContainer>
+              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifySelectedRank id="modifyRank2"> 2 </ModifySelectedRank>
+              <ModifyRank id="modifyRank3"> 3 </ModifyRank>
+            </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 사이즈 별 재고 수정 </ModifyTitle>
+            </ProductWrapper>
+            <DivideLine />
+            <ProductWrapper>
+              <ProductTag> 현재 사이즈 별 재고</ProductTag>
+            </ProductWrapper>
+            <ProductWrapper>
+              <Table>
+                <TableHead>
+                  <tr>
+                    <TableColumn> S </TableColumn>
+                    <TableColumn> M </TableColumn>
+                    <TableColumn> L </TableColumn>
+                    <TableColumn> XL </TableColumn>
+                    <TableColumn> XXL </TableColumn>
+                  </tr>
+                </TableHead>
+                <TableRow>
+                  <tr>
+                    <TableColumn>
+                      {product.clothesSizeList[0].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[1].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[2].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[3].quantity}
+                    </TableColumn>
+                    <TableColumn>
+                      {product.clothesSizeList[4].quantity}
+                    </TableColumn>
+                  </tr>
+                </TableRow>
+              </Table>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 사이즈 </ProductTag>
+              <Select
+                name="size"
+                value={size}
+                id="inputSize"
+                onChange={(e) => handleData('size', e.target.value)}
+              >
+                <Option value="S"> S </Option>
+                <Option value="M"> M </Option>
+                <Option value="L"> L </Option>
+                <Option value="XL"> XL </Option>
+                <Option value="XXL"> XXL </Option>
+              </Select>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 재고 </ProductTag>
+              <Input
+                type="number"
+                name="quantity"
+                id="inputQuantity"
+                value={quantity}
+                onChange={(e) => handleData('quantity', e.target.value)}
+              />
+            </ProductWrapper>
+          </ProductFixContainer>
+          <ProductFixContainer id="modify03">
+            <ModifyRankContainer>
+              <ModifyRank id="modifyRank1"> 1 </ModifyRank>
+              <ModifyRank id="modifyRank2"> 2 </ModifyRank>
+              <ModifySelectedRank id="modifyRank3"> 3 </ModifySelectedRank>
+            </ModifyRankContainer>
+            <ProductWrapper>
+              <ModifyTitle> 상품 관련 파일 수정 </ModifyTitle>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 3D 파일 </ProductTag>
+              <FileInput onClick={() => handleImage('objectFile')}>
+                {' '}
+                {objectFileName}{' '}
+              </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 재질 파일 </ProductTag>
+              <FileInput onClick={() => handleImage('mtlFile')}>
+                {' '}
+                {mtlFileName}{' '}
+              </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 상세 사진 </ProductTag>
+              <FileInput onClick={() => handleImage('detailImage')}>
+                {' '}
+                {detailImageName}{' '}
+              </FileInput>
+            </ProductWrapper>
+            <ProductWrapper>
+              <ProductTag> 메인 사진 </ProductTag>
+              <FileInput onClick={() => handleImage('mainImage')}>
+                {' '}
+                {mainImageName}{' '}
+              </FileInput>
+            </ProductWrapper>
+          </ProductFixContainer>
         </ProductSection>
         <HiddenContainer>
           <Input
             type="file"
             id="mainImage"
             name="mainImage"
+            ref={mainImageRef}
             accept="image/*"
             onChange={() => console.log('')}
           />
@@ -413,12 +694,22 @@ const ProductModify = () => {
         </HiddenContainer>
       </Form>
       <ButtonContainer id="infoButtonGroup">
-        <Button onClick={() => letModify(1)}>수정</Button>
+        <ModifyButton onClick={() => letModify(1)}>수정</ModifyButton>
         <DeleteButton onClick={deleteItem}>삭제</DeleteButton>
       </ButtonContainer>
-      <ModifyButtonContainer id="modifyButtonGroup">
-        <Button onClick={(e) => handleSubmit(e)}> 확인 </Button>
-        <Button onClick={() => letModify(3)}>취소</Button>
+      <ModifyButtonContainer id="modifyButtonGroup01">
+        <Button onClick={() => letModify(2)}> 다음 </Button>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
+      </ModifyButtonContainer>
+      <ModifyButtonContainer id="modifyButtonGroup02">
+        <Button onClick={() => letModify(1)}> 이전 </Button>
+        <Button onClick={() => letModify(3)}> 다음 </Button>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
+      </ModifyButtonContainer>
+      <ModifyButtonContainer id="modifyButtonGroup03">
+        <Button onClick={() => letModify(2)}>이전</Button>
+        <ModifyButton onClick={(e) => handleSubmit(e)}> 수정 </ModifyButton>
+        <CancelButton onClick={() => letModify(0)}>취소</CancelButton>
       </ModifyButtonContainer>
     </ProductModifyContainer>
   )
