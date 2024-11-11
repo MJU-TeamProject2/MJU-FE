@@ -24,7 +24,6 @@ import {
   getCartItems,
   deleteCartItem,
   updateCartItemQuantity,
-  purchaseCartItems,
 } from '@/api/cartApi'
 import { Plus, Minus, X } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
@@ -48,20 +47,25 @@ const Cart: React.FC = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-      const cartItems = await getCartItems()
-      const formattedProducts = cartItems.map((item) => ({
-        cartId: item.cartId.toString(),
-        id: item.clothesId.toString(),
-        name: item.name,
-        size: item.size,
-        price:
-          item.price * (item.discount === 0 ? 1 : (100 - item.discount) / 100),
-        originalPrice: item.price,
-        imageUrl: item.imageUrl,
-        quantity: item.quantity,
-        availableQuantity: item.availableQuantity,
-      }))
-      setProducts(formattedProducts)
+      try {
+        const cartItems = await getCartItems()
+        const formattedProducts = cartItems.map((item) => ({
+          cartId: item.cartId.toString(),
+          id: item.clothesId.toString(),
+          name: item.name,
+          size: item.size,
+          price:
+            item.price *
+            (item.discount === 0 ? 1 : (100 - item.discount) / 100),
+          originalPrice: item.price,
+          imageUrl: item.imageUrl,
+          quantity: item.quantity,
+          availableQuantity: item.availableQuantity,
+        }))
+        setProducts(formattedProducts)
+      } catch (error) {
+        console.error('장바구니 상품 불러오기 중 오류 발생:', error)
+      }
     }
     fetchCartItems()
   }, [])
@@ -111,37 +115,36 @@ const Cart: React.FC = () => {
     setProducts(updatedProducts)
   }
 
-  const handlePurchase = async () => {
+  const handlePurchase = () => {
     if (selectedProducts.length === 0) {
       alert('선택된 상품이 없습니다.')
       return
     }
-
-    try {
-      await purchaseCartItems(selectedProducts)
-      await Promise.all(
-        products.map((product) => deleteCartItem(Number(product.cartId)))
-      )
-      setProducts([])
-      setSelectedProducts([])
-
-      alert('구매가 완료되었습니다!')
-      navigate('/')
-    } catch (error) {
-      console.error('구매 중 오류가 발생했습니다:', error)
-      alert('구매에 실패했습니다. 다시 시도해 주세요.')
-    }
+    navigate('/order', {
+      state: {
+        products: products.filter((product) =>
+          selectedProducts.includes(product.cartId)
+        ),
+        finalPrice: calculateTotalPrice(),
+      },
+    })
   }
 
   const calculateTotalPrice = () => {
-    return products.reduce(
+    const selectedProductsList = products.filter((product) =>
+      selectedProducts.includes(product.cartId)
+    )
+    return selectedProductsList.reduce(
       (acc, product) => acc + product.price * product.quantity,
       0
     )
   }
 
   const calculateTotalDiscount = () => {
-    return products.reduce(
+    const selectedProductsList = products.filter((product) =>
+      selectedProducts.includes(product.cartId)
+    )
+    return selectedProductsList.reduce(
       (acc, product) =>
         acc + (product.originalPrice - product.price) * product.quantity,
       0
@@ -233,8 +236,9 @@ const Cart: React.FC = () => {
         </div>
       </TotalSection>
 
-      <PurchaseButton onClick={handlePurchase}>구매하기</PurchaseButton>
+      <PurchaseButton onClick={handlePurchase}>주문하기</PurchaseButton>
     </CartContainer>
   )
 }
+
 export default Cart

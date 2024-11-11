@@ -72,6 +72,7 @@ const User: React.FC = () => {
       return
     }
     const result = await modifyUserInfo(name, nickname, age, email, phoneNumber)
+
     if (result instanceof Error) {
       console.error(result.message)
       alert('정보 수정에 실패했습니다.')
