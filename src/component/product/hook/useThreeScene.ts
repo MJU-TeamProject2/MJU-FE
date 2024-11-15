@@ -28,7 +28,7 @@ export const useThreeScene = (
     if (!containerRef.current) return
     if (!objClothesItem || !mtlClothesItem) return
 
-    setLoadingProgress(0) // 로딩 시작 시 0으로 초기화
+    setLoadingProgress(0)
 
     const container = containerRef.current
     const renderWidth = container.clientWidth
@@ -36,9 +36,8 @@ export const useThreeScene = (
 
     // Scene 설정
     const scene = new THREE.Scene()
-    scene.background = new THREE.Color('#333333')
+    scene.background = new THREE.Color('#4a4a4a')
 
-    // Camera 설정
     const camera = new THREE.PerspectiveCamera(
       75,
       renderWidth / renderHeight,
@@ -46,71 +45,85 @@ export const useThreeScene = (
       1000
     )
 
-    // Renderer 설정
     if (!rendererRef.current) {
-      rendererRef.current = new THREE.WebGLRenderer({ antialias: true })
+      rendererRef.current = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+      })
     }
     const renderer = rendererRef.current
     renderer.setSize(renderWidth, renderHeight)
 
-    // renderer DOM 요소 추가
+    // 개선된 렌더링 설정
+    renderer.toneMapping = THREE.ACESFilmicToneMapping
+    renderer.toneMappingExposure = 1.0
+    renderer.outputColorSpace = THREE.SRGBColorSpace
+
     if (!container.querySelector('canvas')) {
       container.appendChild(renderer.domElement)
     }
 
-    // Controls 설정
     const controls = new OrbitControls(camera, renderer.domElement)
     controls.enableDamping = true
     controls.dampingFactor = 0.25
     controls.screenSpacePanning = false
     controls.maxPolarAngle = Math.PI / 2
 
-    // Lighting 설정
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5)
-    directionalLight.position.set(1, 1, 1).normalize()
-    scene.add(ambientLight, directionalLight)
+    // 조명 설정
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.6)
 
-    // MTL 로딩
-    console.log('Loading MTL from:', mtlClothesItem.mtlUrl) // mtlUrl이 맞는지 확인
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8)
+    directionalLight.position.set(1, 1, 1).normalize()
+
+    const fillLight = new THREE.DirectionalLight(0xffffff, 0.4)
+    fillLight.position.set(-1, 0.5, -1).normalize()
+
+    const backLight = new THREE.DirectionalLight(0xffffff, 0.3)
+    backLight.position.set(0, -1, -1).normalize()
+
+    scene.add(ambientLight, directionalLight, fillLight, backLight)
+
     const mtlLoader = new MTLLoader()
     mtlLoader.load(
-      mtlClothesItem.mtlUrl, // objectUrl이 아닌 mtlUrl 사용
+      mtlClothesItem.mtlUrl,
       (materials) => {
         materials.preload()
-        setLoadingProgress(30) // MTL 로딩 완료
+        setLoadingProgress(30)
 
-        // OBJ 로딩
-        console.log('Loading OBJ from:', objClothesItem.objectUrl)
         const objLoader = new OBJLoader()
         objLoader.setMaterials(materials)
 
         objLoader.load(
           objClothesItem.objectUrl,
           (object) => {
-            // 기존 모델 제거
             if (modelRef.current) {
               scene.remove(modelRef.current)
             }
 
+            // 재질 설정
             object.traverse((child) => {
               if (child instanceof THREE.Mesh) {
-                child.material = materials.create('material0')
-                if ('specular' in child.material) {
-                  child.material.specular.setRGB(1.0, 0.9, 0.9)
-                  child.material.shininess = 100
-                }
+                // MeshStandardMaterial 사용 (더 물리적으로 정확한 렌더링)
+                const material = new THREE.MeshStandardMaterial({
+                  color: 0xdddddd,
+                  roughness: 0.7, // 거칠기 (높을수록 덜 반짝임)
+                  metalness: 0.1, // 금속성 (0에 가까울수록 비금속)
+                  transparent: true,
+                  opacity: 0.95,
+                })
+
+                child.material = material
+                child.castShadow = true
+                child.receiveShadow = true
               }
             })
 
-            // 스케일 및 위치 조정
             const widthScale = sizeScales[size]
             const heightScale = heightScales[height]
             object.scale.set(widthScale, heightScale, widthScale)
             object.position.set(0, 0, 0)
             object.rotation.y = (Math.PI / 180) * -25
 
-            // 모델 중앙 정렬
             const box = new THREE.Box3().setFromObject(object)
             const center = box.getCenter(new THREE.Vector3())
             object.position.sub(center)
@@ -118,19 +131,16 @@ export const useThreeScene = (
             modelRef.current = object
             scene.add(object)
 
-            // 카메라 위치 설정
-            camera.position.set(0, 0, 0.3)
-            camera.lookAt(new THREE.Vector3(0, 0, 0))
+            camera.position.set(0, 15, 20)
+            camera.lookAt(new THREE.Vector3(0, 30, 0))
 
-            setLoadingProgress(100) // 로딩 완료
+            setLoadingProgress(100)
             setError(null)
           },
-          // OBJ 로딩 진행률
           (xhr) => {
-            const objProgress = (xhr.loaded / xhr.total) * 70 // OBJ 로딩은 30-100%
-            setLoadingProgress(30 + objProgress) // MTL 30% + OBJ 진행률
+            const objProgress = (xhr.loaded / xhr.total) * 70
+            setLoadingProgress(30 + objProgress)
           },
-          // OBJ 로딩 에러
           (err) => {
             console.error('OBJ loading error:', err)
             // @ts-ignore
@@ -139,12 +149,10 @@ export const useThreeScene = (
           }
         )
       },
-      // MTL 로딩 진행률
       (xhr) => {
-        const mtlProgress = (xhr.loaded / xhr.total) * 30 // MTL 로딩은 0-30%
+        const mtlProgress = (xhr.loaded / xhr.total) * 30
         setLoadingProgress(mtlProgress)
       },
-      // MTL 로딩 에러
       (err) => {
         console.error('MTL loading error:', err)
         // @ts-ignore
@@ -153,7 +161,6 @@ export const useThreeScene = (
       }
     )
 
-    // 애니메이션 루프
     let animationFrameId: number
     const animate = () => {
       animationFrameId = requestAnimationFrame(animate)
@@ -162,7 +169,6 @@ export const useThreeScene = (
     }
     animate()
 
-    // 윈도우 리사이즈 핸들러
     const handleResize = () => {
       const width = container.clientWidth
       const height = container.clientHeight
@@ -172,7 +178,6 @@ export const useThreeScene = (
     }
     window.addEventListener('resize', handleResize, false)
 
-    // 클린업
     return () => {
       window.removeEventListener('resize', handleResize)
       cancelAnimationFrame(animationFrameId)

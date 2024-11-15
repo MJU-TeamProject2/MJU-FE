@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const ControlSection = styled.div`
   width: 50%;
-  background-color: #242424;
+  background-color: #4a4a4a;
   display: flex;
   justify-content: center;
   align-items: center;

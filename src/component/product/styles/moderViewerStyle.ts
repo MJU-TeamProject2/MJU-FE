@@ -3,13 +3,13 @@ import styled from 'styled-components'
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: 94vh;
 `
 
 export const PreviewContainer = styled.div`
   width: 50%;
   height: 100%;
-  background-color: #333;
+  background-color: #454545;
   position: relative;
 `
 
