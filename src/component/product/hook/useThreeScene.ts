@@ -3,7 +3,7 @@ import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { HeightType, SizeType } from '../types'
+import { GenderType, HeightType, SizeType } from '../types'
 import { sizeScales, heightScales } from '../constants/scales'
 import { ClothesItem } from '@/api/clothesApi'
 
@@ -18,7 +18,8 @@ export const useThreeScene = (
   mtlClothesItem: ClothesItem | null,
   modelRef: React.MutableRefObject<THREE.Object3D | null>,
   size: SizeType,
-  height: HeightType
+  height: HeightType,
+  gender: GenderType
 ): UseThreeSceneReturn => {
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [error, setError] = useState<Error | null>(null)
@@ -92,9 +93,12 @@ export const useThreeScene = (
 
         const objLoader = new OBJLoader()
         objLoader.setMaterials(materials)
-
+        const modelUrl =
+          gender === '남자'
+            ? objClothesItem.objectUrl
+            : objClothesItem.objectFemaleUrl
         objLoader.load(
-          objClothesItem.objectUrl,
+          modelUrl,
           (object) => {
             if (modelRef.current) {
               scene.remove(modelRef.current)
@@ -103,16 +107,29 @@ export const useThreeScene = (
             // 재질 설정
             object.traverse((child) => {
               if (child instanceof THREE.Mesh) {
-                // MeshStandardMaterial 사용 (더 물리적으로 정확한 렌더링)
-                const material = new THREE.MeshStandardMaterial({
-                  color: 0xdddddd,
-                  roughness: 0.7, // 거칠기 (높을수록 덜 반짝임)
-                  metalness: 0.1, // 금속성 (0에 가까울수록 비금속)
-                  transparent: true,
-                  opacity: 0.95,
-                })
-
-                child.material = material
+                if (
+                  child.name.includes('Group7196') ||
+                  child.name.includes('Group24890')
+                ) {
+                  const material = new THREE.MeshStandardMaterial({
+                    color: 0x3d9af5, // 파란색
+                    roughness: 0.7,
+                    metalness: 0.3,
+                    transparent: true,
+                    opacity: 0.95,
+                  })
+                  child.material = material
+                } else {
+                  // 다른 부위는 기존 material 유지 또는 기본 색상 설정
+                  const material = new THREE.MeshStandardMaterial({
+                    color: 0xd1c4ab,
+                    roughness: 0.7,
+                    metalness: 0.1,
+                    transparent: true,
+                    opacity: 0.95,
+                  })
+                  child.material = material
+                }
                 child.castShadow = true
                 child.receiveShadow = true
               }
@@ -130,9 +147,13 @@ export const useThreeScene = (
 
             modelRef.current = object
             scene.add(object)
-
-            camera.position.set(0, 15, 20)
-            camera.lookAt(new THREE.Vector3(0, 30, 0))
+            if (gender == '여자') {
+              camera.position.set(0, 15, 20)
+              camera.lookAt(new THREE.Vector3(0, 30, 0))
+            } else {
+              camera.position.set(0, 3, 10)
+              camera.lookAt(new THREE.Vector3(0, 0, 0))
+            }
 
             setLoadingProgress(100)
             setError(null)

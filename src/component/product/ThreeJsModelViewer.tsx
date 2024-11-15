@@ -53,30 +53,9 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
     mtlClothesItem,
     modelRef,
     size,
-    height
+    height,
+    gender
   )
-
-  // 모델 색상 업데이트
-  const updateModelColor = (selectedGender: GenderType) => {
-    if (modelRef.current) {
-      modelRef.current.traverse((child) => {
-        if (child instanceof THREE.Mesh) {
-          // 성별에 따른 색상 설정 로직
-          if (selectedGender === '남자') {
-            // 남성용 색상 설정
-          } else {
-            // 여성용 색상 설정
-          }
-        }
-      })
-    }
-  }
-
-  // 성별 변경 핸들러
-  const handleGenderChange = (newGender: GenderType) => {
-    setGender(newGender)
-    updateModelColor(newGender)
-  }
 
   return (
     <Container>
@@ -96,7 +75,7 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
         gender={gender}
         size={size}
         height={height}
-        onGenderChange={handleGenderChange}
+        onGenderChange={setGender}
         onSizeChange={setSize}
         onHeightChange={setHeight}
       />
