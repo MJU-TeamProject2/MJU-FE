@@ -11,22 +11,15 @@ import {
   Title,
 } from '@/component/product/styles/controlPanelStyles'
 
-interface ControlPanelProps {
-  gender: GenderType
-  size: SizeType
-  height: HeightType
-  onGenderChange: (gender: GenderType) => void
-  onSizeChange: (size: SizeType) => void
-  onHeightChange: (height: HeightType) => void
-}
-
 export const ControlPanel: React.FC<ControlPanelProps> = ({
   gender,
   size,
   height,
+  color,
   onGenderChange,
   onSizeChange,
   onHeightChange,
+  onColorChange,
 }) => (
   <ControlSection>
     <Container>
@@ -49,7 +42,23 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
           </SelectionButton>
         </ButtonGroup>
       </Section>
-
+      <Section>
+        <SectionTitle>색상 선택</SectionTitle>
+        <ButtonGroup>
+          <SelectionButton
+            selected={color === '#3d9af5'}
+            onClick={() => onColorChange('#3d9af5')}
+          >
+            스카이블루
+          </SelectionButton>
+          <SelectionButton
+            selected={color === '#ff9999'}
+            onClick={() => onColorChange('#ff9999')}
+          >
+            도플라밍고
+          </SelectionButton>
+        </ButtonGroup>
+      </Section>
       <Section>
         <SectionTitle>사이즈 선택</SectionTitle>
         <ButtonGroup>
@@ -82,3 +91,14 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
     </Container>
   </ControlSection>
 )
+
+interface ControlPanelProps {
+  gender: GenderType
+  size: SizeType
+  height: HeightType
+  color: string
+  onGenderChange: (gender: GenderType) => void
+  onSizeChange: (size: SizeType) => void
+  onHeightChange: (height: HeightType) => void
+  onColorChange: (color: string) => void
+}

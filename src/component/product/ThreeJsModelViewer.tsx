@@ -17,6 +17,11 @@ interface ThreeJsModelViewerProps {
   mtlId: string
 }
 
+interface ThreeJsModelViewerProps {
+  objId: string
+  mtlId: string
+}
+
 const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
   objId,
   mtlId,
@@ -29,8 +34,8 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
   const [gender, setGender] = useState<GenderType>('남자')
   const [size, setSize] = useState<SizeType>('M')
   const [height, setHeight] = useState<HeightType>('170~')
+  const [color, setColor] = useState<string>('#3d9af5') // 파스텔 연빨강색 추가
 
-  // API로부터 의류 데이터 불러오기
   useEffect(() => {
     const fetchClothesItems = async () => {
       try {
@@ -54,7 +59,8 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
     modelRef,
     size,
     height,
-    gender
+    gender,
+    color
   )
 
   return (
@@ -75,11 +81,14 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
         gender={gender}
         size={size}
         height={height}
+        color={color}
         onGenderChange={setGender}
         onSizeChange={setSize}
         onHeightChange={setHeight}
+        onColorChange={setColor}
       />
     </Container>
   )
 }
+
 export default ThreeJsModelViewer

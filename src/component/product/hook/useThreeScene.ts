@@ -19,7 +19,8 @@ export const useThreeScene = (
   modelRef: React.MutableRefObject<THREE.Object3D | null>,
   size: SizeType,
   height: HeightType,
-  gender: GenderType
+  gender: GenderType,
+  color: string = '#3d9af5' // 기본 색상 추가
 ): UseThreeSceneReturn => {
   const [loadingProgress, setLoadingProgress] = useState(0)
   const [error, setError] = useState<Error | null>(null)
@@ -112,19 +113,18 @@ export const useThreeScene = (
                   child.name.includes('Group24890')
                 ) {
                   const material = new THREE.MeshStandardMaterial({
-                    color: 0x3d9af5, // 파란색
-                    roughness: 0.7,
-                    metalness: 0.3,
+                    color: new THREE.Color(color), // 색상 파라미터 사용
+                    roughness: 0.65,
+                    metalness: 0.2,
                     transparent: true,
-                    opacity: 0.95,
+                    opacity: 0.9,
                   })
                   child.material = material
                 } else {
-                  // 다른 부위는 기존 material 유지 또는 기본 색상 설정
                   const material = new THREE.MeshStandardMaterial({
                     color: 0xd1c4ab,
                     roughness: 0.7,
-                    metalness: 0.1,
+                    metalness: 0.2,
                     transparent: true,
                     opacity: 0.95,
                   })
@@ -147,7 +147,7 @@ export const useThreeScene = (
 
             modelRef.current = object
             scene.add(object)
-            if (gender == '여자') {
+            if (gender == '남자') {
               camera.position.set(0, 15, 20)
               camera.lookAt(new THREE.Vector3(0, 30, 0))
             } else {
@@ -216,7 +216,7 @@ export const useThreeScene = (
         })
       }
     }
-  }, [objClothesItem, mtlClothesItem, size, height])
+  }, [objClothesItem, mtlClothesItem, size, height, color]) // color 의존성 추가
 
   return {
     loadingProgress,
