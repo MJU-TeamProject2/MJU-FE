@@ -57,7 +57,7 @@ const ProductModify = () => {
   const [discount, setDiscount] = useState('')
   const [price, setPrice] = useState('')
   const [size, setSize] = useState('')
-  const [quantity, setQuantity] = useState('')
+  const [quantity, setQuantity] = useState(0)
   const mainImageRef = useRef<HTMLInputElement>(null)
   const [mainImageName, setMainImageName] =
     useState('이미지 파일을 선택해주세요.')
@@ -311,7 +311,7 @@ const ProductModify = () => {
         setSize(value)
         break
       case 'quantity':
-        setQuantity(value)
+        setQuantity(Number(value))
         break
     }
   }
