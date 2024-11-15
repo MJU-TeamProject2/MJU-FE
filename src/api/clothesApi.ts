@@ -1,21 +1,27 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
-// @ts-ignore
-import { List } from '@effect-ts/core'
 
-// 개별 의류 아이템에 대한 타입
-export type ClothesItem = {
-  id: number
-  category: string
+export type ClothesCategory = 'SHOES' | 'TOP' | 'BOTTOM' | 'OUTER' | 'ACCESSORY'
+export type GenderCategory = 'MALE' | 'FEMALE' | 'UNISEX'
+export type ClothesSize = 'XS' | 'S' | 'M' | 'L' | 'XL'
+export interface ClothesSizeQuantity {
+  size: ClothesSize
+  quantity: number
+}
+
+export interface ClothesItem {
+  clothesId: number
+  category: ClothesCategory
   imageUrl: string
   name: string
   price: number
-  genderCategory: string | null
-  productNumber: string | null
-  discount: number | null
+  genderCategory: GenderCategory
+  productNumber: string
+  discount: number
   detailUrl: string
+  clothesSizeList: ClothesSizeQuantity[]
   objectUrl: string
+  objectFemaleUrl: string
   mtlUrl: string
-  clothesSizeList: any[]
 }
 
 export type PaginatedResponse<T> = {
@@ -104,7 +110,7 @@ export const registerCloth = async (
 }
 
 export const modifyCloth = async (
-  changedList: List,
+  changedList: ClothesItem,
   clothID: string | undefined
 ): Promise<RegisterCloth> => {
   const response: ApiResponse<RegisterCloth> = await axiosInstance.patch(
