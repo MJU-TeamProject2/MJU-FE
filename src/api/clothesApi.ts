@@ -1,4 +1,6 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
+// @ts-ignore
+import { List } from '@effect-ts/core'
 
 export type ClothesCategory = 'SHOES' | 'TOP' | 'BOTTOM' | 'OUTER' | 'ACCESSORY'
 export type GenderCategory = 'MALE' | 'FEMALE' | 'UNISEX'
@@ -9,7 +11,7 @@ export interface ClothesSizeQuantity {
 }
 
 export interface ClothesItem {
-  clothesId: number
+  id: number
   category: ClothesCategory
   imageUrl: string
   name: string
@@ -110,7 +112,7 @@ export const registerCloth = async (
 }
 
 export const modifyCloth = async (
-  changedList: ClothesItem,
+  changedList: List,
   clothID: string | undefined
 ): Promise<RegisterCloth> => {
   const response: ApiResponse<RegisterCloth> = await axiosInstance.patch(
