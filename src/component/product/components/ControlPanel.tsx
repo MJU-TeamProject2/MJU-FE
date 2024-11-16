@@ -46,16 +46,16 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         <SectionTitle>색상 선택</SectionTitle>
         <ButtonGroup>
           <SelectionButton
-            selected={color === '#3d9af5'}
-            onClick={() => onColorChange('#3d9af5')}
+            selected={color === '#71BFFF'}
+            onClick={() => onColorChange('#71BFFF')}
           >
             스카이블루
           </SelectionButton>
           <SelectionButton
-            selected={color === '#ff9999'}
-            onClick={() => onColorChange('#ff9999')}
+            selected={color === '#FFB6A0'}
+            onClick={() => onColorChange('#FFB6A0')}
           >
-            도플라밍고
+            피치핑크
           </SelectionButton>
         </ButtonGroup>
       </Section>
@@ -74,7 +74,7 @@ export const ControlPanel: React.FC<ControlPanelProps> = ({
         </ButtonGroup>
       </Section>
 
-      <Section noMargin>
+      <Section $noMargin>
         <SectionTitle>모델키 선택</SectionTitle>
         <ButtonGroup>
           {(Object.keys(heightScales) as HeightType[]).map((h) => (

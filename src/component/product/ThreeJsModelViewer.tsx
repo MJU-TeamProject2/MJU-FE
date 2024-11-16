@@ -34,7 +34,7 @@ const ThreeJsModelViewer: React.FC<ThreeJsModelViewerProps> = ({
   const [gender, setGender] = useState<GenderType>('남자')
   const [size, setSize] = useState<SizeType>('M')
   const [height, setHeight] = useState<HeightType>('170~')
-  const [color, setColor] = useState<string>('#3d9af5') // 파스텔 연빨강색 추가
+  const [color, setColor] = useState<string>('#71BFFF')
 
   useEffect(() => {
     const fetchClothesItems = async () => {

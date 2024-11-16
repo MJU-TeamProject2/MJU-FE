@@ -20,12 +20,11 @@ export const Container = styled.div`
 
 export const Title = styled.h2`
   font-size: 24px;
-  font-weight: bold;
   margin-bottom: 40px;
 `
 
-export const Section = styled.div<{ noMargin?: boolean }>`
-  margin-bottom: ${({ noMargin }) => (noMargin ? '0' : '30px')};
+export const Section = styled.div<{ $noMargin?: boolean }>`
+  margin-bottom: ${({ $noMargin }) => ($noMargin ? '0' : '30px')};
 `
 
 export const SectionTitle = styled.h3`
