@@ -1,5 +1,5 @@
 import Router from '@/routes/Router'
-import GlobalStyle from '@/component/common/globalStyle'
+import FontStyle from '@/component/common/fontStyle.ts'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
@@ -7,7 +7,7 @@ const queryClient = new QueryClient()
 function App() {
   return (
     <>
-      <GlobalStyle />
+      <FontStyle />
       <QueryClientProvider client={queryClient}>
         <Router />
       </QueryClientProvider>
