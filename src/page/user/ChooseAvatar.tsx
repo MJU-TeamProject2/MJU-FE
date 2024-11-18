@@ -10,16 +10,7 @@ import {
   AvatarItem,
   AvatarName,
 } from '@/component/styles/user/chooseAvatarStyles'
-
-import RECTANGLE from '@/assets/avatars/RECTANGLE.png'
-import SMALL_INVERTED_TRIANGLE from '@/assets/avatars/SMALL_INVERTED_TRIANGLE.png'
-import LARGE_TRIANGLE from '@/assets/avatars/LARGE_TRIANGLE.png'
-
-const mockAvatars = [
-  { id: 1, src: SMALL_INVERTED_TRIANGLE, name: '역삼각형' },
-  { id: 2, src: RECTANGLE, name: '직사각형' },
-  { id: 3, src: LARGE_TRIANGLE, name: '사각형' },
-]
+import { BODY_TYPE_AVATARS } from '@/component/common/constants.ts'
 
 const ChooseAvatar: React.FC = () => {
   const navigate = useNavigate()
@@ -38,7 +29,7 @@ const ChooseAvatar: React.FC = () => {
   const handleSelectClick = () => {
     const avatarToSave =
       customAvatar ||
-      (selectedAvatar ? mockAvatars[selectedAvatar - 1].src : null)
+      (selectedAvatar ? BODY_TYPE_AVATARS[selectedAvatar - 1].src : null)
     localStorage.setItem(
       'selectedAvatar',
       JSON.stringify({ customAvatar: avatarToSave })
@@ -56,7 +47,7 @@ const ChooseAvatar: React.FC = () => {
         <span className="bold">체형</span> 선택하기
       </Title>
       <AvatarGrid>
-        {mockAvatars.map((avatar) => (
+        {BODY_TYPE_AVATARS.map((avatar) => (
           <AvatarItem key={avatar.id}>
             <Avatar
               src={avatar.src}
