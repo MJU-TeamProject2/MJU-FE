@@ -125,7 +125,8 @@ export const DiscountPrice = styled.p`
   margin-top: 4px;
 `
 export const DeleteButton = styled.button`
-  font-family: 'Pretendard', sans-serif;
+  font-family: 'Pretendard';
+  font-weight: 700;
   background: none;
   border: none;
   color: #767676;

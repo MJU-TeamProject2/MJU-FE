@@ -14,11 +14,9 @@ export const Title = styled.h2`
   margin-bottom: 39px;
   color: ${colors.white};
   font-size: 21px;
-  font-family: 'Pretendard', sans-serif;
 `
 
 export const Input = styled.input`
-  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 13px;
   margin-bottom: 26px;
@@ -34,7 +32,6 @@ export const Input = styled.input`
 `
 
 export const Button = styled.button`
-  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 13px;
   background-color: transparent;
@@ -78,7 +75,6 @@ export const GenderButton = styled(Button)`
     margin-right: 0;
   }
 
-
   &.selected {
     background-color: #007bff;
     color: white;
@@ -93,7 +89,6 @@ export const GenderButton = styled(Button)`
 `
 
 export const ErrorMessage = styled.div`
-  font-family: 'Pretendard', sans-serif;
   color: #ff6b6b;
   font-size: 16px;
   margin-top: -20px;

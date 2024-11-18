@@ -1,9 +1,7 @@
-import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer.tsx'
+import ThreeJsModelViewer from '@/component/product/ThreeJsModelViewer'
 
 const ModelFitting = () => {
-  return <ThreeJsModelViewer
-    objId={'1'}
-    mtlId={'1'} />
+  return <ThreeJsModelViewer objId={'1'} mtlId={'1'} />
 }
 
 export default ModelFitting
