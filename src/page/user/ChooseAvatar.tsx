@@ -7,21 +7,18 @@ import {
   Title,
   ButtonGroup,
   Button,
-  UploadBox,
+  AvatarItem,
+  AvatarName,
 } from '@/component/styles/user/chooseAvatarStyles'
 
-import avatar1 from '@/assets/avatars/avatar1.png'
-import avatar2 from '@/assets/avatars/avatar2.png'
-import avatar3 from '@/assets/avatars/avatar3.png'
-import avatar4 from '@/assets/avatars/avatar4.png'
-import avatar5 from '@/assets/avatars/avatar5.png'
+import RECTANGLE from '@/assets/avatars/RECTANGLE.png'
+import SMALL_INVERTED_TRIANGLE from '@/assets/avatars/SMALL_INVERTED_TRIANGLE.png'
+import LARGE_TRIANGLE from '@/assets/avatars/LARGE_TRIANGLE.png'
 
 const mockAvatars = [
-  { id: 1, src: avatar1 },
-  { id: 2, src: avatar2 },
-  { id: 3, src: avatar3 },
-  { id: 4, src: avatar4 },
-  { id: 5, src: avatar5 },
+  { id: 1, src: SMALL_INVERTED_TRIANGLE, name: '역삼각형' },
+  { id: 2, src: RECTANGLE, name: '직사각형' },
+  { id: 3, src: LARGE_TRIANGLE, name: '사각형' },
 ]
 
 const ChooseAvatar: React.FC = () => {
@@ -35,18 +32,6 @@ const ChooseAvatar: React.FC = () => {
     } else {
       setSelectedAvatar(id)
       setCustomAvatar(null)
-    }
-  }
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = () => {
-        setCustomAvatar(reader.result as string)
-        setSelectedAvatar(null)
-      }
-      reader.readAsDataURL(file)
     }
   }
 
@@ -68,29 +53,25 @@ const ChooseAvatar: React.FC = () => {
   return (
     <AvatarContainer>
       <Title>
-        <span className="bold">아바타</span> 선택하기
+        <span className="bold">체형</span> 선택하기
       </Title>
       <AvatarGrid>
         {mockAvatars.map((avatar) => (
-          <Avatar
-            key={avatar.id}
-            src={avatar.src}
-            alt={`아바타 ${avatar.id}`}
-            isSelected={selectedAvatar === avatar.id}
-            onClick={() => handleAvatarClick(avatar.id)}
-          />
+          <AvatarItem key={avatar.id}>
+            <Avatar
+              src={avatar.src}
+              alt={avatar.name}
+              isSelected={selectedAvatar === avatar.id}
+              onClick={() => handleAvatarClick(avatar.id)}
+            />
+            <AvatarName>{avatar.name}</AvatarName>
+          </AvatarItem>
         ))}
-        <UploadBox>
-          <label htmlFor="upload-input">파일 입력</label>
-          <input
-            id="upload-input"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </UploadBox>
         {customAvatar && (
-          <Avatar src={customAvatar} alt="Custom Avatar" isSelected={true} />
+          <AvatarItem>
+            <Avatar src={customAvatar} alt="Custom Avatar" isSelected={true} />
+            <AvatarName>커스텀</AvatarName>
+          </AvatarItem>
         )}
       </AvatarGrid>
       <ButtonGroup>
