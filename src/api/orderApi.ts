@@ -62,12 +62,12 @@ export const purchaseCartItems = async (
 
 // 주소 추가 함수
 export const postAddress = async ({
-  name,
-  recipient,
-  zipCode,
-  baseAddress,
-  detailAddress,
-}: {
+                                    name,
+                                    recipient,
+                                    zipCode,
+                                    baseAddress,
+                                    detailAddress,
+                                  }: {
   name: string
   recipient: string
   zipCode: string
@@ -109,16 +109,15 @@ export const getAddresses = async (): Promise<
 
 // 결제 수단 추가 함수
 export const postPayment = async ({
-  cardNumber,
-  cardProvider,
-  expiryDate,
-}: {
+                                    cardNumber,
+                                    cardProvider,
+                                    expiryDate,
+                                  }: {
   cardNumber: string
   cardProvider: string
   expiryDate: string
 }): Promise<void> => {
   try {
-    // 서버에 전송되는 데이터 확인
     console.log('전송할 데이터:', {
       cardNumber,
       cardProvider,
@@ -132,7 +131,6 @@ export const postPayment = async ({
     })
     console.log('결제수단 추가가 완료되었습니다.')
   } catch (error: any) {
-    // 오류 메시지를 구체적으로 출력
     if (error.response) {
       console.error('서버에서 반환된 오류:', error.response.data)
     } else {
@@ -229,5 +227,68 @@ export const deleteOrder = async (orderId: number): Promise<void> => {
     console.log('주문이 삭제되었습니다.')
   } catch (error) {
     console.error('주문 삭제 중 오류가 발생했습니다.', error)
+  }
+}
+// 개선된 getAdminOrders 함수
+// getAdminOrders 함수에서 오류를 안전하게 처리
+export const getAdminOrders = async (): Promise<Order[]> => {
+  try {
+    const { data } = await axiosInstance.get('/api/v1/admin/orders');
+
+    if (data && data.success) {
+      console.log('관리자용 주문 목록을 성공적으로 가져왔습니다.', data.data);
+      return data.data.map((order: any) => ({
+        orderId: order.orderId,
+        clothesId: order.clothesId,
+        imageUrl: order.imageUrl,
+        name: order.name,
+        quantity: order.quantity,
+        price: order.price,
+        size: order.size,
+        orderStatus: order.orderStatus,
+        createdAt: order.createdAt,
+      }));
+    } else {
+      console.error('관리자용 주문 목록을 가져오는 중 오류가 발생했습니다.', data);
+      return [];
+    }
+  } catch (error: any) {
+    // 오류 메시지를 안전하게 처리
+    const statusCode = error?.response?.status;
+    const errorData = error?.response?.data;
+    const errorMessage = errorData?.message || error?.message || '알 수 없는 오류가 발생했습니다.';
+
+    // HTTP 상태 코드와 오류 메시지를 출력
+    console.error(`HTTP ${statusCode || 'undefined'}: 관리자용 주문 목록을 가져오는 중 오류가 발생했습니다. ${errorMessage}`);
+    return [];
+  }
+};
+
+
+
+
+
+
+
+// 관리자용 주문 수정 함수
+export const updateAdminOrder = async (
+  orderId: number,
+  updatedData: Partial<Order>
+): Promise<void> => {
+  try {
+    await axiosInstance.put(`/api/v1/admin/orders/${orderId}`, updatedData)
+    console.log('관리자용 주문이 수정되었습니다.')
+  } catch (error) {
+    console.error('관리자용 주문 수정 중 오류가 발생했습니다.', error)
+  }
+}
+
+// 관리자용 주문 삭제 함수
+export const deleteAdminOrder = async (orderId: number): Promise<void> => {
+  try {
+    await axiosInstance.delete(`/api/v1/admin/orders/${orderId}`)
+    console.log('관리자용 주문이 삭제되었습니다.')
+  } catch (error) {
+    console.error('관리자용 주문 삭제 중 오류가 발생했습니다.', error)
   }
 }

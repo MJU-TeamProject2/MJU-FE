@@ -51,6 +51,7 @@ const AdminHome: React.FC = () => {
   const handleItemClick = (id: number) => {
     navigate(`/productsModify/${id}`)
   }
+
   return (
     <AdminHomeContainer>
       <Title> 등록된 의상 목록 </Title>
@@ -65,7 +66,6 @@ const AdminHome: React.FC = () => {
         ))}
       </GridContainer>
       <PaginationContainer>
-        {/*<RegisterButton>회원 정보</RegisterButton>*/}
         <PaginationButton
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 0}

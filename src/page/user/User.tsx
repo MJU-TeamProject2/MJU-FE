@@ -16,32 +16,23 @@ import {
 } from '@/component/styles/user/userModifyStyle'
 import { inquiryUser, logout, modifyUserInfo } from '@/api/userApi'
 
-const User: React.FC = () => {
+interface UserProps {
+  selectedAvatar: string | null
+}
+
+const User: React.FC<UserProps> = ({ selectedAvatar }) => {
   const navigate = useNavigate()
-  const [name, setName] = useState(localStorage.getItem('name') || '')
-  const [nickname, setNickname] = useState(
-    localStorage.getItem('nickname') || ''
-  )
-  const [age, setAge] = useState(localStorage.getItem('age') || '')
-  const [gender, setGender] = useState(localStorage.getItem('gender') || '')
-  const [email, setEmail] = useState(localStorage.getItem('email') || '')
-  const [phoneNumber, setPhoneNumber] = useState(
-    localStorage.getItem('phoneNumber') || ''
-  )
-  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null)
+  const [name, setName] = useState('')
+  const [nickname, setNickname] = useState('')
+  const [age, setAge] = useState('')
+  const [gender, setGender] = useState('')
+  const [email, setEmail] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
   const [isEditing, setIsEditing] = useState(false)
   const [isSaved, setIsSaved] = useState(false)
 
   useEffect(() => {
-    if (!localStorage.getItem('dataLoaded')) {
-      getUser()
-      localStorage.setItem('dataLoaded', 'true')
-    }
-    const avatarData = localStorage.getItem('selectedAvatar')
-    if (avatarData) {
-      const { customAvatar } = JSON.parse(avatarData)
-      setSelectedAvatar(customAvatar || null)
-    }
+    getUser()
   }, [])
 
   const getUser = async () => {
@@ -53,12 +44,6 @@ const User: React.FC = () => {
       setGender(result.gender)
       setNickname(result.nickName)
       setPhoneNumber(result.phoneNumber)
-      localStorage.setItem('name', result.name)
-      localStorage.setItem('nickname', result.nickName)
-      localStorage.setItem('age', result.age)
-      localStorage.setItem('gender', result.gender)
-      localStorage.setItem('email', result.email)
-      localStorage.setItem('phoneNumber', result.phoneNumber)
     }
   }
 
@@ -80,11 +65,6 @@ const User: React.FC = () => {
       alert('회원 정보가 저장되었습니다.')
       setIsEditing(false)
       setIsSaved(true)
-      localStorage.setItem('name', name)
-      localStorage.setItem('nickname', nickname)
-      localStorage.setItem('age', age)
-      localStorage.setItem('email', email)
-      localStorage.setItem('phoneNumber', phoneNumber)
     }
   }
 

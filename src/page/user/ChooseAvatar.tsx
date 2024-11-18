@@ -24,7 +24,9 @@ const mockAvatars = [
   { id: 5, src: avatar5 },
 ]
 
-const ChooseAvatar: React.FC = () => {
+const ChooseAvatar: React.FC<{
+  onSelectAvatar: (avatar: string | null) => void
+}> = ({ onSelectAvatar }) => {
   const navigate = useNavigate()
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null)
   const [customAvatar, setCustomAvatar] = useState<string | null>(null)
@@ -54,10 +56,7 @@ const ChooseAvatar: React.FC = () => {
     const avatarToSave =
       customAvatar ||
       (selectedAvatar ? mockAvatars[selectedAvatar - 1].src : null)
-    localStorage.setItem(
-      'selectedAvatar',
-      JSON.stringify({ customAvatar: avatarToSave })
-    )
+    onSelectAvatar(avatarToSave)
     navigate('/') // 홈으로 이동
   }
 
