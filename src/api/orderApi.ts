@@ -1,31 +1,31 @@
-import axiosInstance from '@/api/axiosInstance';
+import axiosInstance from '@/api/axiosInstance'
 
 // 상품 인터페이스 정의
 interface Product {
-  id: string;
-  cartId: string;
-  name: string;
-  size: string;
-  price: number;
-  originalPrice: number;
-  imageUrl: string;
-  quantity: number;
-  availableQuantity: number;
+  id: string
+  cartId: string
+  name: string
+  size: string
+  price: number
+  originalPrice: number
+  imageUrl: string
+  quantity: number
+  availableQuantity: number
 }
 
 // 주문 인터페이스 정의
 interface Order {
-  orderId: number;
-  clothesId: number;
-  imageUrl: string;
-  detailUrl: string;
-  name: string;
-  quantity: number;
-  price: number;
-  discount: number;
-  size: string;
-  orderStatus: string;
-  createdAt: string;
+  orderId: number
+  clothesId: number
+  imageUrl: string
+  detailUrl: string
+  name: string
+  quantity: number
+  price: number
+  discount: number
+  size: string
+  orderStatus: string
+  createdAt: string
 }
 
 // 장바구니 상품 구매 함수
@@ -35,8 +35,8 @@ export const purchaseCartItems = async (
   paymentId: number
 ): Promise<void> => {
   if (selectedItems.length === 0) {
-    console.log('선택된 상품이 없습니다.');
-    return;
+    console.log('선택된 상품이 없습니다.')
+    return
   }
 
   try {
@@ -48,28 +48,28 @@ export const purchaseCartItems = async (
           paymentId,
         })
       )
-    );
-    console.log('구매 처리가 완료되었습니다.');
+    )
+    console.log('구매 처리가 완료되었습니다.')
   } catch (error: any) {
-    console.error('구매 처리 중 오류:', error);
-    handleApiError(error);
-    throw error;
+    console.error('구매 처리 중 오류:', error)
+    handleApiError(error)
+    throw error
   }
-};
+}
 
 // 주소 추가 함수
 export const postAddress = async ({
-                                    name,
-                                    recipient,
-                                    zipCode,
-                                    baseAddress,
-                                    detailAddress,
-                                  }: {
-  name: string;
-  recipient: string;
-  zipCode: string;
-  baseAddress: string;
-  detailAddress: string;
+  name,
+  recipient,
+  zipCode,
+  baseAddress,
+  detailAddress,
+}: {
+  name: string
+  recipient: string
+  zipCode: string
+  baseAddress: string
+  detailAddress: string
 }): Promise<void> => {
   try {
     await axiosInstance.post('/api/v1/customer/address', {
@@ -78,101 +78,101 @@ export const postAddress = async ({
       zipCode,
       baseAddress,
       detailAddress,
-    });
-    console.log('주소 추가가 완료되었습니다.');
+    })
+    console.log('주소 추가가 완료되었습니다.')
   } catch (error: any) {
-    console.error('주소 추가 중 오류:', error);
-    handleApiError(error);
+    console.error('주소 추가 중 오류:', error)
+    handleApiError(error)
   }
-};
+}
 
 // 주소 조회 함수
 export const getAddresses = async (): Promise<
   {
-    addressId: number;
-    name: string;
-    recipient: string;
-    baseAddress: string;
+    addressId: number
+    name: string
+    recipient: string
+    baseAddress: string
   }[]
 > => {
   try {
-    const response = await axiosInstance.get('/api/v1/customer/address');
-    console.log('주소 조회 응답 상태:', response.status);
-    console.log('주소 조회 응답 데이터:', response.data);
+    const response = await axiosInstance.get('/api/v1/customer/address')
+    console.log('주소 조회 응답 상태:', response.status)
+    console.log('주소 조회 응답 데이터:', response.data)
 
-    return response.data;
+    return response.data
   } catch (error: any) {
-    console.error('주소 불러오기 중 오류:', error);
-    handleApiError(error);
-    return [];
+    console.error('주소 불러오기 중 오류:', error)
+    handleApiError(error)
+    return []
   }
-};
+}
 
 // 결제 수단 추가 함수
 export const postPayment = async ({
-                                    cardNumber,
-                                    cardProvider,
-                                    expiryDate,
-                                  }: {
-  cardNumber: string;
-  cardProvider: string;
-  expiryDate: string;
+  cardNumber,
+  cardProvider,
+  expiryDate,
+}: {
+  cardNumber: string
+  cardProvider: string
+  expiryDate: string
 }): Promise<void> => {
   try {
     await axiosInstance.post('/api/v1/customer/payment', {
       cardNumber,
       cardProvider,
       expiryDate,
-    });
-    console.log('결제수단 추가가 완료되었습니다.');
+    })
+    console.log('결제수단 추가가 완료되었습니다.')
   } catch (error: any) {
-    console.error('결제수단 추가 중 오류:', error);
-    handleApiError(error);
+    console.error('결제수단 추가 중 오류:', error)
+    handleApiError(error)
   }
-};
+}
 
 // 결제 수단 조회 함수
 export const getPayments = async (): Promise<
   {
-    paymentId: number;
-    cardNumber: string;
-    cardProvider: string;
+    paymentId: number
+    cardNumber: string
+    cardProvider: string
   }[]
 > => {
   try {
-    const response = await axiosInstance.get('/api/v1/customer/payment');
-    console.log('결제 수단 조회 응답 상태:', response.status);
-    console.log('결제 수단 조회 응답 데이터:', response.data);
+    const response = await axiosInstance.get('/api/v1/customer/payment')
+    console.log('결제 수단 조회 응답 상태:', response.status)
+    console.log('결제 수단 조회 응답 데이터:', response.data)
 
-    return response.data;
+    return response.data
   } catch (error: any) {
-    console.error('결제수단 불러오기 중 오류:', error);
-    handleApiError(error);
-    return [];
+    console.error('결제수단 불러오기 중 오류:', error)
+    handleApiError(error)
+    return []
   }
-};
+}
 
 // 주소 삭제 함수
 export const deleteAddress = async (addressId: number): Promise<void> => {
   try {
-    await axiosInstance.delete(`/api/v1/customer/address/${addressId}`);
-    console.log('주소 삭제가 완료되었습니다.');
+    await axiosInstance.delete(`/api/v1/customer/address/${addressId}`)
+    console.log('주소 삭제가 완료되었습니다.')
   } catch (error: any) {
-    console.error('주소 삭제 중 오류:', error);
-    handleApiError(error);
+    console.error('주소 삭제 중 오류:', error)
+    handleApiError(error)
   }
-};
+}
 
 // 결제 수단 삭제 함수
 export const deletePayment = async (paymentId: number): Promise<void> => {
   try {
-    await axiosInstance.delete(`/api/v1/customer/payment/${paymentId}`);
-    console.log('결제수단 삭제가 완료되었습니다.');
+    await axiosInstance.delete(`/api/v1/customer/payment/${paymentId}`)
+    console.log('결제수단 삭제가 완료되었습니다.')
   } catch (error: any) {
-    console.error('결제수단 삭제 중 오류:', error);
-    handleApiError(error);
+    console.error('결제수단 삭제 중 오류:', error)
+    handleApiError(error)
   }
-};
+}
 
 // 관리자용 주문 목록 조회 함수 (pagination 포함)
 export const getAdminOrders = async (
@@ -181,13 +181,13 @@ export const getAdminOrders = async (
   size: number = 20
 ): Promise<Order[]> => {
   try {
-    const params = { memberId, page, size };
-    const response = await axiosInstance.get('/api/v1/admin/orders', { params });
+    const params = { memberId, page, size }
+    const response = await axiosInstance.get('/api/v1/admin/orders', { params })
 
-    console.log('관리자 주문 목록 조회 응답 상태:', response.status);
-    console.log('관리자 주문 목록 조회 응답 데이터:', response.data);
+    console.log('관리자 주문 목록 조회 응답 상태:', response.status)
+    console.log('관리자 주문 목록 조회 응답 데이터:', response.data)
 
-    const data = response.data;
+    const data = response.data
     if (data && Array.isArray(data)) {
       return data.map((order: any) => ({
         orderId: order.orderId,
@@ -201,17 +201,17 @@ export const getAdminOrders = async (
         size: order.size,
         orderStatus: order.orderStatus,
         createdAt: order.createdAt,
-      }));
+      }))
     } else {
-      console.error('API Error: 데이터 형식 불일치', data);
-      return [];
+      console.error('API Error: 데이터 형식 불일치', data)
+      return []
     }
   } catch (error: any) {
-    console.error('API 호출 중 오류:', error);
-    handleApiError(error);
-    return [];
+    console.error('API 호출 중 오류:', error)
+    handleApiError(error)
+    return []
   }
-};
+}
 
 // 관리자용 주문 상태 수정 함수
 export const updateAdminOrder = async (
@@ -222,26 +222,28 @@ export const updateAdminOrder = async (
     const response = await axiosInstance.patch('/api/v1/admin/orders', {
       orderId,
       ...updatedData,
-    });
-    console.log('관리자용 주문 상태 수정 응답 상태:', response.status);
-    console.log('관리자용 주문 상태 수정 응답 데이터:', response.data);
+    })
+    console.log('관리자용 주문 상태 수정 응답 상태:', response.status)
+    console.log('관리자용 주문 상태 수정 응답 데이터:', response.data)
   } catch (error: any) {
-    console.error('관리자용 주문 상태 수정 중 오류가 발생했습니다.', error);
-    handleApiError(error);
+    console.error('관리자용 주문 상태 수정 중 오류가 발생했습니다.', error)
+    handleApiError(error)
   }
-};
+}
 
 // 관리자용 주문 삭제 함수
 export const deleteAdminOrder = async (orderId: number): Promise<void> => {
   try {
-    const response = await axiosInstance.delete(`/api/v1/admin/orders/${orderId}`);
-    console.log('관리자용 주문 삭제 응답 상태:', response.status);
-    console.log('관리자용 주문 삭제 응답 데이터:', response.data);
+    const response = await axiosInstance.delete(
+      `/api/v1/admin/orders/${orderId}`
+    )
+    console.log('관리자용 주문 삭제 응답 상태:', response.status)
+    console.log('관리자용 주문 삭제 응답 데이터:', response.data)
   } catch (error: any) {
-    console.error('관리자용 주문 삭제 중 오류가 발생했습니다.', error);
-    handleApiError(error);
+    console.error('관리자용 주문 삭제 중 오류가 발생했습니다.', error)
+    handleApiError(error)
   }
-};
+}
 
 // 공통 오류 처리 함수
 const handleApiError = (error: any) => {
@@ -251,10 +253,10 @@ const handleApiError = (error: any) => {
       `Status: ${error.response.status}`,
       `Data: ${JSON.stringify(error.response.data)}`,
       `Headers: ${JSON.stringify(error.response.headers)}`
-    );
+    )
   } else if (error.request) {
-    console.error('요청이 전송되었지만 응답을 받지 못했습니다:', error.request);
+    console.error('요청이 전송되었지만 응답을 받지 못했습니다:', error.request)
   } else {
-    console.error('요청 설정 중 오류:', error.message);
+    console.error('요청 설정 중 오류:', error.message)
   }
-};
+}

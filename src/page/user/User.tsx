@@ -18,20 +18,14 @@ import { logout } from '@/api/userApi'
 import { BODY_TYPE_AVATARS, FORM_FIELDS } from '@/component/common/constants'
 import { useUserForm } from '@/component/hook/useUserForm'
 
-interface UserProps {
-  selectedAvatar: string | null
-}
-
-const User: React.FC<UserProps> = ({ selectedAvatar }) => {
+const User: React.FC = () => {
   const navigate = useNavigate()
-
   const { formData, isEditing, setIsEditing, handleInputChange, handleSubmit } =
     useUserForm()
 
   const getAvatarSrc = (bodyType: string) => {
     const avatar = BODY_TYPE_AVATARS.find((avatar) => avatar.name === bodyType)
     return avatar ? avatar.src : ''
-
   }
 
   const handleEditSave = async (e: React.FormEvent) => {

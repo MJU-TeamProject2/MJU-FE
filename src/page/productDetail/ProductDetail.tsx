@@ -140,4 +140,5 @@ interface SizeInfo {
   size: string
   quantity: number
 }
+
 export default ProductDetail

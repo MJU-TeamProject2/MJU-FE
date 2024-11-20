@@ -5,6 +5,7 @@ import { List } from '@effect-ts/core'
 export type ClothesCategory = 'SHOES' | 'TOP' | 'BOTTOM' | 'OUTER' | 'ACCESSORY'
 export type GenderCategory = 'MALE' | 'FEMALE' | 'UNISEX'
 export type ClothesSize = 'XS' | 'S' | 'M' | 'L' | 'XL'
+
 export interface ClothesSizeQuantity {
   size: ClothesSize
   quantity: number
