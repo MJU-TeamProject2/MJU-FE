@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   UserModifyContainer,
@@ -14,7 +14,9 @@ import {
   SaveButton,
   Input,
 } from '@/component/styles/user/userModifyStyle'
-import { inquiryUser, logout, modifyUserInfo } from '@/api/userApi'
+import { logout } from '@/api/userApi'
+import { BODY_TYPE_AVATARS, FORM_FIELDS } from '@/component/common/constants'
+import { useUserForm } from '@/component/hook/useUserForm'
 
 interface UserProps {
   selectedAvatar: string | null
@@ -22,55 +24,23 @@ interface UserProps {
 
 const User: React.FC<UserProps> = ({ selectedAvatar }) => {
   const navigate = useNavigate()
-  const [name, setName] = useState('')
-  const [nickname, setNickname] = useState('')
-  const [age, setAge] = useState('')
-  const [gender, setGender] = useState('')
-  const [email, setEmail] = useState('')
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [isEditing, setIsEditing] = useState(false)
-  const [isSaved, setIsSaved] = useState(false)
 
-  useEffect(() => {
-    getUser()
-  }, [])
+  const { formData, isEditing, setIsEditing, handleInputChange, handleSubmit } =
+    useUserForm()
 
-  const getUser = async () => {
-    const result = await inquiryUser()
-    if (!(result instanceof Error)) {
-      setName(result.name)
-      setAge(result.age)
-      setEmail(result.email)
-      setGender(result.gender)
-      setNickname(result.nickName)
-      setPhoneNumber(result.phoneNumber)
-    }
+  const getAvatarSrc = (bodyType: string) => {
+    const avatar = BODY_TYPE_AVATARS.find((avatar) => avatar.name === bodyType)
+    return avatar ? avatar.src : ''
+
   }
 
-  const modifyUser = async (e: React.FormEvent) => {
+  const handleEditSave = async (e: React.FormEvent) => {
     e.preventDefault()
-    const phoneRegex = /^[0-9]{3}-[0-9]{4}-[0-9]{4}$/
-    const emailRegex =
-      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-    if (!phoneRegex.test(phoneNumber) || !emailRegex.test(email)) {
-      alert('전화번호 또는 이메일 형식이 올바르지 않습니다.')
-      return
-    }
-    const result = await modifyUserInfo(name, nickname, age, email, phoneNumber)
-
-    if (result instanceof Error) {
-      console.error(result.message)
-      alert('정보 수정에 실패했습니다.')
+    if (isEditing) {
+      await handleSubmit()
     } else {
-      alert('회원 정보가 저장되었습니다.')
-      setIsEditing(false)
-      setIsSaved(true)
+      setIsEditing(true)
     }
-  }
-
-  const handleEdit = () => {
-    setIsEditing(true)
-    setIsSaved(false)
   }
 
   const handleLogout = () => {
@@ -78,102 +48,55 @@ const User: React.FC<UserProps> = ({ selectedAvatar }) => {
     navigate('/')
   }
 
-  const handleClose = (e: React.MouseEvent) => {
-    e.preventDefault()
-    navigate(-1)
-  }
-
   return (
     <UserModifyContainer>
       <ProfileSection>
         <ProfileImage>
-          {selectedAvatar && (
-            <img
-              src={selectedAvatar}
-              alt="Profile"
-              style={{ width: '100%', height: '100%', borderRadius: '50%' }}
-            />
-          )}
+          <img
+            src={getAvatarSrc(formData.bodyType)}
+            alt="Avatar"
+            style={{ width: '100%', height: '100%' }}
+          />
         </ProfileImage>
-        <ActionButton onClick={handleEdit}>수정하기</ActionButton>
         <ActionButton onClick={() => navigate('/orderHistory')}>
           결제 내역 조회
         </ActionButton>
       </ProfileSection>
       <Card>
         <Title>회원 정보 조회 및 수정</Title>
-        <form onSubmit={modifyUser}>
-          <InputGroup>
-            <Tag>이름</Tag>
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              isEditing={isEditing}
-              disabled={!isEditing}
-            />
-          </InputGroup>
-          <InputGroup>
-            <Tag>성별</Tag>
-            <Input type="text" value={gender} disabled isEditing={false} />
-            {isEditing && (
-              <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>
-                성별은 수정할 수 없습니다.
-              </p>
-            )}
-          </InputGroup>
-          <InputGroup>
-            <Tag>별명</Tag>
-            <Input
-              type="text"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
-              required
-              isEditing={isEditing}
-              disabled={!isEditing}
-            />
-          </InputGroup>
-          <InputGroup>
-            <Tag>나이</Tag>
-            <Input
-              type="number"
-              value={age}
-              onChange={(e) => setAge(e.target.value)}
-              required
-              isEditing={isEditing}
-              disabled={!isEditing}
-            />
-          </InputGroup>
-          <InputGroup>
-            <Tag>전화번호</Tag>
-            <Input
-              type="text"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              required
-              isEditing={isEditing}
-              disabled={!isEditing}
-            />
-          </InputGroup>
-          <InputGroup>
-            <Tag>이메일</Tag>
-            <Input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              isEditing={isEditing}
-              disabled={!isEditing}
-            />
-          </InputGroup>
+        <form onSubmit={isEditing ? handleEditSave : (e) => e.preventDefault()}>
+          {FORM_FIELDS.map((field) => (
+            <InputGroup key={field.id}>
+              <Tag>{field.label}</Tag>
+              <Input
+                type={field.type}
+                value={formData[field.id as keyof typeof formData]}
+                onChange={(e) =>
+                  handleInputChange(
+                    field.id as keyof typeof formData,
+                    field.type === 'number'
+                      ? Number(e.target.value)
+                      : e.target.value
+                  )
+                }
+                required
+                $isEditing={isEditing && field.editable}
+                disabled={!isEditing || !field.editable}
+              />
+              {!field.editable && isEditing && (
+                <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>
+                  {field.label}은 수정할 수 없습니다.
+                </p>
+              )}
+            </InputGroup>
+          ))}
         </form>
       </Card>
       <FooterButtonGroup>
-        <FooterButton onClick={handleClose}>닫기</FooterButton>
+        <FooterButton onClick={() => navigate(-1)}>닫기</FooterButton>
         <FooterButton onClick={handleLogout}>로그아웃</FooterButton>
-        <SaveButton type="submit" isSaved={isSaved} onClick={modifyUser}>
-          저장
+        <SaveButton type="submit" onClick={handleEditSave}>
+          {isEditing ? '저장' : '수정'}
         </SaveButton>
       </FooterButtonGroup>
     </UserModifyContainer>

@@ -7,22 +7,10 @@ import {
   Title,
   ButtonGroup,
   Button,
-  UploadBox,
+  AvatarItem,
+  AvatarName,
 } from '@/component/styles/user/chooseAvatarStyles'
-
-import avatar1 from '@/assets/avatars/avatar1.png'
-import avatar2 from '@/assets/avatars/avatar2.png'
-import avatar3 from '@/assets/avatars/avatar3.png'
-import avatar4 from '@/assets/avatars/avatar4.png'
-import avatar5 from '@/assets/avatars/avatar5.png'
-
-const mockAvatars = [
-  { id: 1, src: avatar1 },
-  { id: 2, src: avatar2 },
-  { id: 3, src: avatar3 },
-  { id: 4, src: avatar4 },
-  { id: 5, src: avatar5 },
-]
+import { BODY_TYPE_AVATARS } from '@/component/common/constants.ts'
 
 const ChooseAvatar: React.FC<{
   onSelectAvatar: (avatar: string | null) => void
@@ -40,24 +28,15 @@ const ChooseAvatar: React.FC<{
     }
   }
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = () => {
-        setCustomAvatar(reader.result as string)
-        setSelectedAvatar(null)
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-
   const handleSelectClick = () => {
     const avatarToSave =
       customAvatar ||
-      (selectedAvatar ? mockAvatars[selectedAvatar - 1].src : null)
-    onSelectAvatar(avatarToSave)
-    navigate('/') // 홈으로 이동
+      (selectedAvatar ? BODY_TYPE_AVATARS[selectedAvatar - 1].src : null)
+    localStorage.setItem(
+      'selectedAvatar',
+      JSON.stringify({ customAvatar: avatarToSave })
+    )
+    navigate('/')
   }
 
   const handleCloseClick = () => {
@@ -67,29 +46,25 @@ const ChooseAvatar: React.FC<{
   return (
     <AvatarContainer>
       <Title>
-        <span className="bold">아바타</span> 선택하기
+        <span className="bold">체형</span> 선택하기
       </Title>
       <AvatarGrid>
-        {mockAvatars.map((avatar) => (
-          <Avatar
-            key={avatar.id}
-            src={avatar.src}
-            alt={`아바타 ${avatar.id}`}
-            isSelected={selectedAvatar === avatar.id}
-            onClick={() => handleAvatarClick(avatar.id)}
-          />
+        {BODY_TYPE_AVATARS.map((avatar) => (
+          <AvatarItem key={avatar.id}>
+            <Avatar
+              src={avatar.src}
+              alt={avatar.name}
+              isSelected={selectedAvatar === avatar.id}
+              onClick={() => handleAvatarClick(avatar.id)}
+            />
+            <AvatarName>{avatar.name}</AvatarName>
+          </AvatarItem>
         ))}
-        <UploadBox>
-          <label htmlFor="upload-input">파일 입력</label>
-          <input
-            id="upload-input"
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
-        </UploadBox>
         {customAvatar && (
-          <Avatar src={customAvatar} alt="Custom Avatar" isSelected={true} />
+          <AvatarItem>
+            <Avatar src={customAvatar} alt="Custom Avatar" isSelected={true} />
+            <AvatarName>커스텀</AvatarName>
+          </AvatarItem>
         )}
       </AvatarGrid>
       <ButtonGroup>

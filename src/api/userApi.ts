@@ -62,7 +62,6 @@ export const loginAdmin = async (
     }
     throw new Error('로그인 중 오류가 발생했습니다.')
   }
-
 }
 
 // 회원 정보를 불러오는 함수
@@ -85,9 +84,12 @@ export const inquiryUser = async (): Promise<User> => {
 export const modifyUserInfo = async (
   name: string,
   nickName: string,
-  age: string,
+  age: number,
   email: string,
-  phoneNumber: string
+  phoneNumber: string,
+  height: number,
+  weight: number,
+  bodyType: string
 ): Promise<ModifyUserResponse> => {
   const response: ApiResponse<ModifyUserResponse> = await axiosInstance.patch(
     '/api/v1/customer/profile',
@@ -97,29 +99,36 @@ export const modifyUserInfo = async (
       age,
       email,
       phoneNumber,
+      height,
+      weight,
+      bodyType,
     }
   )
   return response.data
 }
 
 export type User = {
-  name: string
-  age: string
-  gender: string
   email: string
+  name: string
   nickName: string
-  password: string
+  age: number
+  gender: string
   phoneNumber: string
+  height: number
+  weight: number
+  bodyType: string
+  bodyObjUrl: string
 }
 
 export type ModifyUserResponse = {
   name: string
   nickName: string
-  gender: string
   age: number
-  password: string
-  phoneNumber: string
   email: string
+  phoneNumber: string
+  height: number
+  weight: number
+  bodyType: string
 }
 
 export type AdminLoginResponse = {

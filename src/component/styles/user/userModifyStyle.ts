@@ -4,12 +4,13 @@ import { colors } from '@/component/styles/globalStyle'
 export const UserModifyContainer = styled.div`
   display: flex;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   background-color: ${colors.white};
-  padding: 20px;
-  position: relative; /* FooterButtonGroup을 하단에 고정하기 위해 추가 */
+  padding: 20px 20px 80px;
+  position: relative;
+  overflow-y: auto;
 `
 
 export const ProfileSection = styled.div`
@@ -17,12 +18,36 @@ export const ProfileSection = styled.div`
   flex-direction: column;
   align-items: center;
   margin-right: 40px;
+  position: sticky;
+  top: 50px;
+`
+
+export const Card = styled.div`
+  background: ${colors.white};
+  padding: 30px;
+  border-radius: 8px;
+  width: 400px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+`
+
+export const FooterButtonGroup = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  gap: 10px;
+  background-color: ${colors.white};
+  padding: 20px 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 `
 
 export const ProfileImage = styled.div`
-  width: 180px; // 아바타 크기 조정
-  height: 180px; // 아바타 크기 조정
-  border-radius: 50%;
+  width: 300px;
+  height: 400px;
   background-color: ${colors.grey};
   display: flex;
   justify-content: center;
@@ -55,16 +80,6 @@ export const ActionButton = styled.button`
   }
 `
 
-export const Card = styled.div`
-  background: ${colors.white};
-  padding: 30px;
-  border-radius: 8px;
-  width: 400px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-`
-
 export const Title = styled.h2`
   text-align: center;
   color: ${colors.black};
@@ -86,7 +101,7 @@ export const Tag = styled.p`
 `
 
 interface InputProps {
-  isEditing: boolean
+  $isEditing?: boolean
 }
 
 export const Input = styled.input<InputProps>`
@@ -94,7 +109,7 @@ export const Input = styled.input<InputProps>`
   padding: 10px;
   margin-bottom: 10px;
   font-size: 16px;
-  border: 1px solid ${({ isEditing }) => (isEditing ? 'red' : '#ccc')};
+  border: 1px solid ${({ $isEditing }) => ($isEditing ? 'red' : '#ccc')};
   border-radius: 5px;
   background-color: ${colors.white};
   color: ${colors.black};
@@ -106,15 +121,10 @@ export const Input = styled.input<InputProps>`
   }
 `
 
-interface SaveButtonProps {
-  isSaved: boolean
-}
-
-export const SaveButton = styled.button<SaveButtonProps>`
+export const SaveButton = styled.button`
   width: 100px;
   padding: 10px;
-  background-color: ${({ isSaved }) =>
-    isSaved ? colors.buttonHover : '#007bff'};
+  background-color: ${colors.buttonHover};
   color: ${colors.white};
   border: none;
   border-radius: 5px;
@@ -124,15 +134,6 @@ export const SaveButton = styled.button<SaveButtonProps>`
   &:hover {
     background-color: #0056b3;
   }
-`
-
-export const FooterButtonGroup = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  position: absolute;
-  bottom: 20px; /* 화면 하단에 고정 */
-  gap: 10px;
 `
 
 export const FooterButton = styled.button`
