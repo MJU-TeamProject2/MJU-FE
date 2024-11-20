@@ -109,7 +109,7 @@ const Order: React.FC = () => {
     setAddressForm({ ...addressForm, zipCode: value })
 
     // 유효성 검사: 5자리 숫자가 아니면 오류 메시지 설정
-    if (!/^\d{5}$/.test(value)) {
+    if (!/^\d5}$/.test(value)) {
       setZipCodeError('우편번호는 5자리 숫자여야 합니다.')
     } else {
       setZipCodeError('')

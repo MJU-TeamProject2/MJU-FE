@@ -1,8 +1,10 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { useState } from 'react'
+import React, { useState } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MainLayout from '@/component/layout/MainLayout'
+import AdminLayout from '@/component/layout/AdminLayout'
 import Home from '@/page/Home'
 import AdminHome from '@/page/AdminHome'
+import AdminOrderHistoryPage from '@/page/order/AdminOrderHistoryPage'
 import NotFound from '@/page/NotFound'
 import User from '@/page/user/User'
 import Login from '@/page/user/Login'
@@ -15,15 +17,11 @@ import ClothesRegister from '@/page/productDetail/ProductRegister'
 import ModelFitting from '@/page/productDetail/ModelFitting'
 import OrderHistoryPage from '@/page/order/OrderHistoryPage'
 import ChooseAvatar from '@/page/user/ChooseAvatar'
-import AdminLayout from '@/component/layout/AdminLayout'
 import Order from '@/page/order/Order'
 
-// Router 컴포넌트 정의
-const Router = () => {
-  // 아바타 상태 관리
+const Router: React.FC = () => {
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null)
 
-  // 아바타 선택 핸들러
   const handleSelectAvatar = (avatar: string | null) => {
     setSelectedAvatar(avatar)
   }
@@ -31,12 +29,15 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* MainLayout을 사용하는 경로 */}
+        {/* MainLayout routes */}
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
-          <Route path="users" element={<User selectedAvatar={selectedAvatar} />} />
+          <Route
+            path="users"
+            element={<User selectedAvatar={selectedAvatar} />}
+          />
           <Route path="products/:id" element={<ProductDetail />} />
           <Route path="fitting" element={<ModelFitting />} />
           <Route path="cart" element={<Cart />} />
@@ -48,15 +49,16 @@ const Router = () => {
           />
         </Route>
 
-        {/* AdminLayout을 사용하는 경로 */}
+        {/* AdminLayout routes */}
         <Route path="/" element={<AdminLayout />}>
+          <Route path="adminHome" element={<AdminHome />} />
+          <Route path="adminOrderHistory" element={<AdminOrderHistoryPage />} />
           <Route path="registerCloth" element={<ClothesRegister />} />
           <Route path="adminLogin" element={<AdminLogin />} />
-          <Route path="adminHome" element={<AdminHome />} />
           <Route path="productsModify/:id" element={<ProductModify />} />
         </Route>
 
-        {/* 404 페이지 */}
+        {/* 404 Page */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
