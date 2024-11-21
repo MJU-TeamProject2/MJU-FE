@@ -1,5 +1,5 @@
 export const colors = {
-  primary: '#767676', // 입력칸 밑줄 색상
+  primary: '#767676',
   background: '#1e1e1e',
   white: 'white',
   buttonHover: '#555555',

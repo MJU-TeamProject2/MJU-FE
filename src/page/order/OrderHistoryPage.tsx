@@ -8,9 +8,8 @@ import {
   Divider,
   DeleteButton,
   Header,
-} from '@/component/styles/order/orderHistoryPageStyles' // 스타일 컴포넌트 import
+} from '@/component/styles/order/orderHistoryPageStyles'
 
-// 주문 인터페이스 정의
 interface Order {
   orderId: number
   clothesId: string
@@ -26,7 +25,6 @@ interface Order {
 const OrderHistoryPage: React.FC = () => {
   const [orderHistory, setOrderHistory] = useState<Order[]>([])
 
-  // 주문 내역 가져오기 함수
   const fetchOrderHistory = async () => {
     try {
       const { data } = await axiosInstance.get('/api/v1/orders')
@@ -37,7 +35,6 @@ const OrderHistoryPage: React.FC = () => {
     }
   }
 
-  // 주문 삭제 함수
   const handleDeleteOrder = async (orderId: number) => {
     try {
       await axiosInstance.delete(`/api/v1/orders/${orderId}`)

@@ -39,11 +39,9 @@ export const useThreeScene = (
 
     const sceneManager = sceneManagerRef.current
 
-    // Add lights
     const lights = createLights()
     lights.forEach((light) => sceneManager.addToScene(light))
 
-    // Load model
     loadModel({
       sceneManager,
       mtlClothesItem,

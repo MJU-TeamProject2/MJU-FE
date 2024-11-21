@@ -64,8 +64,6 @@ export const loginAdmin = async (
   }
 }
 
-// 회원 정보를 불러오는 함수
-
 export const inquiryUser = async (): Promise<User> => {
   const token = localStorage.getItem('accessToken')
   if (!token) console.log('Invalid Access')

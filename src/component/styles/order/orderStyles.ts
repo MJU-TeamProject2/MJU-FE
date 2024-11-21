@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 
-// 주문 컨테이너 스타일
 export const OrderContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,7 +13,6 @@ export const OrderContainer = styled.div`
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 `
 
-// 제품 정보 스타일
 export const ProductContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -41,7 +39,6 @@ export const ProductDetails = styled.div`
   text-align: left;
 `
 
-// 배송지 선택 스타일
 export const AddressContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -79,7 +76,6 @@ export const AddressDetails = styled.div`
   margin-left: 10px;
 `
 
-// 삭제 버튼 스타일
 export const DeleteButton = styled.button`
   background-color: #ff6b6b;
   color: white;
@@ -94,7 +90,6 @@ export const DeleteButton = styled.button`
   }
 `
 
-// 새 주소 및 결제수단 추가 섹션
 export const NewEntryContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -123,10 +118,8 @@ export const InputField = styled.input`
   }
 `
 
-// 결제수단 추가 섹션
 export const PaymentContainer = styled(NewEntryContainer)``
 
-// 구매 버튼 스타일
 export const PurchaseButton = styled.button`
   background-color: #22b2e4;
   color: white;
@@ -148,9 +141,8 @@ export const PurchaseButton = styled.button`
   }
 `
 
-// 추가하기 버튼 스타일
 export const AddButton = styled.button`
-  background-color: #4caf50; // 초록색으로 변경
+  background-color: #4caf50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -161,6 +153,6 @@ export const AddButton = styled.button`
   margin-top: 10px;
 
   &:hover {
-    background-color: #45a049; // 호버 시 더 진한 초록색
+    background-color: #45a049;
   }
 `
