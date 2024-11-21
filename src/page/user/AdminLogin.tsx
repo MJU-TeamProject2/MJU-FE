@@ -8,7 +8,7 @@ import {
   AdminLoginContainer,
 } from '@/component/styles/user/AdminLoginContainer'
 import { loginAdmin } from '@/api/userApi'
-import { ErrorMessage } from '@/component/styles/user/loginStyles.ts'
+import { ErrorMessage } from '@/component/styles/user/loginStyles'
 
 const AdminLogin = () => {
   const [code, setCode] = useState('')

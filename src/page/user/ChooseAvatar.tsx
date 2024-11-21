@@ -34,7 +34,7 @@ const ChooseAvatar: React.FC = () => {
       'selectedAvatar',
       JSON.stringify({ customAvatar: avatarToSave })
     )
-    navigate('/') // 홈으로 이동
+    navigate('/')
   }
 
   const handleCloseClick = () => {

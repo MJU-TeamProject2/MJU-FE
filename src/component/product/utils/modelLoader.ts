@@ -42,7 +42,8 @@ export const loadModel = ({
     (materials) => {
       materials.preload()
       onProgress(30)
-
+      console.log(mtlClothesItem.mtlUrl)
+      console.log(mtlClothesItem.objectUrl)
       const objLoader = new OBJLoader()
       objLoader.setMaterials(materials)
 
@@ -58,38 +59,35 @@ export const loadModel = ({
             sceneManager.removeFromScene(modelRef.current)
           }
 
-          const materials = createMaterials(color)
+          const materials = {
+            ...createMaterials(color),
+          }
+
           const baseScale = 1
           const sizeScale = sizeScales[size]
           const heightScale = heightScales[height]
 
           object.traverse((child) => {
             if (child instanceof THREE.Mesh) {
-              const isClothGroup =
-                child.name.includes('Group7196') ||
-                child.name.includes('Group24890')
-
-              child.material = isClothGroup
-                ? materials.cloth
-                : materials.mannequin
-              const scale = isClothGroup ? sizeScale : heightScale
+              let material
+              let scale = heightScale
+              if (child.name == 'cloth') {
+                material = materials.cloth
+                scale = sizeScale
+                if (gender === '여자') {
+                  const yOffset = Math.abs(heightScale - sizeScale) * 50
+                  child.position.set(0, yOffset, 0)
+                } else {
+                  const yOffset = Math.abs(heightScale - sizeScale) * 110
+                  child.position.set(0, yOffset, 0)
+                }
+                child.material = material
+              }
               child.scale.set(
                 baseScale * scale,
                 baseScale * scale,
                 baseScale * scale
               )
-
-              if (isClothGroup) {
-                const value = gender === '여자' ? 150 : 110
-
-                const yOffset = (heightScale - sizeScale) * value
-                if (heightScale != sizeScale) {
-                  const zOffset = 0.1
-                  child.position.set(0, yOffset, zOffset)
-                } else {
-                  child.position.set(0, yOffset, 0)
-                }
-              }
 
               child.castShadow = true
               child.receiveShadow = true

@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { BODY_TYPE_AVATARS } from '@/component/common/constants.ts'
-import { validators } from '@/component/common/validators.ts'
+
+import { BODY_TYPE_AVATARS } from '@/component/common/constants'
+import { validators } from '@/component/common/validators'
 
 const validateEmail = (email: string): string | undefined => {
   return validators.email(email)
