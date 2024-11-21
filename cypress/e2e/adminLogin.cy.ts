@@ -25,8 +25,8 @@ describe('어드민 로그인 페이지', () => {
   })
 
   it('유효한 입력값이 있을 때만 로그인 버튼이 활성화되어야 한다', () => {
-    const adminCode = 'admin123'
-    const password = 'password123'
+    const adminCode = 'Admin001'
+    const password = 'admin1'
 
     // 초기에는 버튼이 비활성화
     cy.get('button[type="submit"]').should('be.disabled')
