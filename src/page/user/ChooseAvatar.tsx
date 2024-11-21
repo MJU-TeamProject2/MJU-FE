@@ -12,7 +12,6 @@ import {
 } from '@/component/styles/user/chooseAvatarStyles'
 import { BODY_TYPE_AVATARS } from '@/component/common/constants'
 
-
 const ChooseAvatar: React.FC = () => {
   const navigate = useNavigate()
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null)

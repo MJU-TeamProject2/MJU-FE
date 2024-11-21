@@ -45,6 +45,7 @@ import { useRegisterClothesForm } from '@/component/hook/useRegisterClothesForm'
 interface jsonType {
   [key: string]: any
 }
+
 const ProductModify = () => {
   const { id } = useParams<{ id: string }>()
   const [product, setProduct] = useState<any>(null)
