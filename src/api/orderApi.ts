@@ -1,6 +1,5 @@
 import axiosInstance from '@/api/axiosInstance'
 
-// 상품 인터페이스 정의
 interface Product {
   id: string
   cartId: string
@@ -13,7 +12,6 @@ interface Product {
   availableQuantity: number
 }
 
-// 주문 인터페이스 정의
 interface Order {
   orderId: number
   clothesId: number
@@ -28,7 +26,6 @@ interface Order {
   createdAt: string
 }
 
-// 장바구니 상품 구매 함수
 export const purchaseCartItems = async (
   selectedItems: Product[],
   addressId: number,
@@ -60,7 +57,6 @@ export const purchaseCartItems = async (
   }
 }
 
-// 주소 추가 함수
 export const postAddress = async ({
   name,
   recipient,
@@ -88,7 +84,6 @@ export const postAddress = async ({
   }
 }
 
-// 주소 조회 함수
 export const getAddresses = async (): Promise<
   {
     addressId: number
@@ -107,7 +102,6 @@ export const getAddresses = async (): Promise<
   }
 }
 
-// 결제 수단 추가 함수
 export const postPayment = async ({
   cardNumber,
   cardProvider,
@@ -118,7 +112,6 @@ export const postPayment = async ({
   expiryDate: string
 }): Promise<void> => {
   try {
-    // 서버에 전송되는 데이터 확인
     console.log('전송할 데이터:', {
       cardNumber,
       cardProvider,
@@ -132,7 +125,6 @@ export const postPayment = async ({
     })
     console.log('결제수단 추가가 완료되었습니다.')
   } catch (error: any) {
-    // 오류 메시지를 구체적으로 출력
     if (error.response) {
       console.error('서버에서 반환된 오류:', error.response.data)
     } else {
@@ -141,7 +133,6 @@ export const postPayment = async ({
   }
 }
 
-// 결제 수단 조회 함수
 export const getPayments = async (): Promise<
   {
     paymentId: number
@@ -159,7 +150,6 @@ export const getPayments = async (): Promise<
   }
 }
 
-// 주소 삭제 함수
 export const deleteAddress = async (addressId: number): Promise<void> => {
   try {
     await axiosInstance.delete(`/api/v1/customer/address/${addressId}`)
@@ -169,7 +159,6 @@ export const deleteAddress = async (addressId: number): Promise<void> => {
   }
 }
 
-// 결제 수단 삭제 함수
 export const deletePayment = async (paymentId: number): Promise<void> => {
   try {
     await axiosInstance.delete(`/api/v1/customer/payment/${paymentId}`)
@@ -179,7 +168,6 @@ export const deletePayment = async (paymentId: number): Promise<void> => {
   }
 }
 
-// 주문 목록 조회 함수
 export const getOrders = async (): Promise<Order[]> => {
   try {
     const { data } = await axiosInstance.get('/api/v1/orders')
@@ -209,7 +197,6 @@ export const getOrders = async (): Promise<Order[]> => {
   }
 }
 
-// 주문 수정 함수
 export const updateOrder = async (
   orderId: number,
   updatedData: Partial<Order>
@@ -222,7 +209,6 @@ export const updateOrder = async (
   }
 }
 
-// 주문 삭제 함수
 export const deleteOrder = async (orderId: number): Promise<void> => {
   try {
     await axiosInstance.delete(`/api/v1/orders/${orderId}`)

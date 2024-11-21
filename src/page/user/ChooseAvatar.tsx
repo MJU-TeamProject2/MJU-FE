@@ -10,7 +10,8 @@ import {
   AvatarItem,
   AvatarName,
 } from '@/component/styles/user/chooseAvatarStyles'
-import { BODY_TYPE_AVATARS } from '@/component/common/constants.ts'
+import { BODY_TYPE_AVATARS } from '@/component/common/constants'
+
 
 const ChooseAvatar: React.FC = () => {
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ const ChooseAvatar: React.FC = () => {
       'selectedAvatar',
       JSON.stringify({ customAvatar: avatarToSave })
     )
-    navigate('/') // 홈으로 이동
+    navigate('/')
   }
 
   const handleCloseClick = () => {

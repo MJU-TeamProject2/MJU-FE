@@ -72,7 +72,7 @@ const Order: React.FC = () => {
     baseAddress: '',
     detailAddress: '',
   })
-  const [zipCodeError, setZipCodeError] = useState<string>('') // 오류 메시지 상태 추가
+  const [zipCodeError, setZipCodeError] = useState<string>('')
 
   const [paymentForm, setPaymentForm] = useState({
     cardNumber: '',
@@ -108,7 +108,6 @@ const Order: React.FC = () => {
     const value = e.target.value
     setAddressForm({ ...addressForm, zipCode: value })
 
-    // 유효성 검사: 5자리 숫자가 아니면 오류 메시지 설정
     if (!/^\d{5}$/.test(value)) {
       setZipCodeError('우편번호는 5자리 숫자여야 합니다.')
     } else {
@@ -140,7 +139,6 @@ const Order: React.FC = () => {
   }
 
   const handleAddPayment = async () => {
-    // 유효성 검사 추가
     if (
       !paymentForm.cardNumber ||
       !paymentForm.cardProvider ||
@@ -151,13 +149,11 @@ const Order: React.FC = () => {
     }
 
     try {
-      // 카드 번호 형식 검사
       if (!/^\d{4}-\d{4}-\d{4}-\d{4}$/.test(paymentForm.cardNumber)) {
         alert('카드 번호는 "XXXX-XXXX-XXXX-XXXX" 형식이어야 합니다.')
         return
       }
 
-      // 유효 기간 형식 검사
       if (!/^\d{2}\/\d{2}$/.test(paymentForm.expiryDate)) {
         alert('유효 기간은 "MM/YY" 형식이어야 합니다.')
         return
@@ -282,10 +278,9 @@ const Order: React.FC = () => {
         <InputField
           placeholder="우편번호"
           value={addressForm.zipCode}
-          onChange={handleZipCodeChange} // 유효성 검사 함수 적용
+          onChange={handleZipCodeChange}
         />
         {zipCodeError && <p style={{ color: 'red' }}>{zipCodeError}</p>}{' '}
-        {/* 오류 메시지 출력 */}
         <Label>기본 주소</Label>
         <InputField
           placeholder="기본 주소"

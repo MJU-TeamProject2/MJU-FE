@@ -10,8 +10,8 @@ import {
   RegisterContainer,
   FormSection,
   Select,
-} from '@/component/styles/user/registerStyles.ts'
-import { LoginContainer } from '@/component/styles/user/LoginContainer'
+} from '@/component/styles/user/registerStyles'
+
 
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '@/api/userApi'

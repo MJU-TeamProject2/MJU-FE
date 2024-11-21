@@ -9,14 +9,6 @@ export const createMaterials = (color: string) => {
       transparent: true,
       opacity: 0.9,
     }),
-    mannequin: new THREE.MeshStandardMaterial({
-      color: 0xfff6e0,
-      roughness: 0.7,
-      metalness: 0.2,
-      transparent: true,
-      opacity: 0.95,
-    }),
   }
-
   return materials
 }

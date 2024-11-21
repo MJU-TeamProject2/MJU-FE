@@ -19,7 +19,7 @@ export const ModelSection = styled.div`
 export const ModelFrame = styled.div`
   width: 80%;
   height: 80%;
-  background-color: #000; // Changed to black to match the image
+  background-color: #000;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;

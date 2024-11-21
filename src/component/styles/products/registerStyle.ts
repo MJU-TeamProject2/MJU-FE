@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 import { colors } from '@/component/styles/globalStyle'
 
-// 컨테이너 관련 스타일
 export const ProductRegisterContainer = styled.div`
   width: 100%;
   min-height: 100vh;
@@ -24,7 +23,6 @@ export const ProductContainer = styled.div`
   }
 `
 
-// 이미지 관련 스타일
 export const ProductImageContainer = styled.div`
   width: 100%;
   aspect-ratio: 1;
@@ -67,7 +65,6 @@ export const BlankText = styled.p`
   font-weight: 500;
 `
 
-// 정보 입력 관련 스타일
 export const ProductInformationContainer = styled.div`
   background: #8f8f8f;
   border-radius: 12px;

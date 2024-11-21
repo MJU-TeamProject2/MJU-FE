@@ -14,7 +14,6 @@ export type CartItem = {
   clothesSizeList: { size: string; quantity: number }[]
 }
 
-// 장바구니 목록 조회
 export const getCartItems = async (): Promise<CartItem[]> => {
   const response: ApiResponse<{ data: CartItem[] }> =
     await axiosInstance.get('/api/v1/carts')
@@ -47,7 +46,6 @@ export const postCartItems = async (
   }
 }
 
-// 장바구니 상품 삭제
 export const deleteCartItem = async (cartId: number): Promise<void> => {
   const response: ApiResponse<void | { code: string; message: string }> =
     await axiosInstance.delete(`/api/v1/carts/${cartId}`)
@@ -63,7 +61,6 @@ export const deleteCartItem = async (cartId: number): Promise<void> => {
   }
 }
 
-// 장바구니 상품 수량 업데이트
 export const updateCartItemQuantity = async (
   cartId: number,
   quantity: number
