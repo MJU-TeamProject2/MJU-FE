@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 import { BODY_TYPE_AVATARS } from '@/component/common/constants'
 import { validators } from '@/component/common/validators'
 

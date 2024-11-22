@@ -11,11 +11,11 @@ import {
   FormSection,
   Select,
 } from '@/component/styles/user/registerStyles'
+import { LoginContainer } from '@/component/styles/user/LoginContainer'
 
 import { useNavigate } from 'react-router-dom'
 import { registerUser } from '@/api/userApi'
 import { useRegisterForm } from '@/component/hook/useRegisterForm'
-import { LoginContainer } from '@/component/styles/user/LoginContainer'
 
 const Register = () => {
   const navigate = useNavigate()
