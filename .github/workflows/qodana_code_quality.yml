@@ -23,7 +23,7 @@ jobs:
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@v2024.1
         with:
-          args: --baseline,qodana.sarif.json
+          args: --baseline qodana.sarif.json
           pr-mode: true
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN_489541164 }}
@@ -32,4 +32,4 @@ jobs:
         if: failure()
         run: |
           echo "Qodana logs:"
-          cat /home/runner/work/_temp/qodana/results/qodana.sarif.json
+          cat /home/runner/work/_temp/qodana/results/qodana.sarif.json || true
