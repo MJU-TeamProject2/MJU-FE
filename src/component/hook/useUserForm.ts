@@ -24,17 +24,22 @@ export const useUserForm = () => {
   }, [])
 
   const fetchUserData = async () => {
-    const result = await inquiryUser()
-    if (!(result instanceof Error)) {
-      const avatarInfo = BODY_TYPE_AVATARS.find(
-        (avatar) => avatar.type === result.bodyType
-      )
+    try {
+      const result = await inquiryUser()
+      if (!(result instanceof Error)) {
+        const avatarInfo = BODY_TYPE_AVATARS.find(
+          (avatar) => avatar.type === result.bodyType
+        )
 
-      setFormData({
-        ...result,
-        bodyType: avatarInfo?.name || '',
-        bodyObjUrl: result.bodyObjUrl,
-      })
+        setFormData({
+          ...result,
+          bodyType: avatarInfo?.name || '',
+          bodyObjUrl: result.bodyObjUrl,
+        })
+      }
+    } catch (error) {
+      console.error('Failed to fetch user data:', error)
+      alert('사용자 정보를 불러오는데 실패했습니다.')
     }
   }
 
@@ -55,9 +60,24 @@ export const useUserForm = () => {
     setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
+  const convertBodyTypeNameToType = (bodyTypeName: string): string => {
+    const avatarInfo = BODY_TYPE_AVATARS.find(
+      (avatar) => avatar.name === bodyTypeName
+    )
+    return avatarInfo?.type || ''
+  }
+
   const handleSubmit = async () => {
     try {
       validateForm()
+
+      // bodyType을 name에서 type으로 변환
+      const bodyTypeValue = convertBodyTypeNameToType(formData.bodyType)
+
+      console.log('Converting bodyType:', {
+        from: formData.bodyType,
+        to: bodyTypeValue,
+      })
 
       const result = await modifyUserInfo(
         formData.name,
@@ -67,7 +87,7 @@ export const useUserForm = () => {
         formData.phoneNumber,
         formData.height,
         formData.weight,
-        formData.bodyObjUrl
+        bodyTypeValue // 변환된 type 값을 사용
       )
 
       if (result instanceof Error) {
@@ -77,9 +97,18 @@ export const useUserForm = () => {
       setIsEditing(false)
       alert('회원 정보가 저장되었습니다.')
     } catch (error) {
-      alert(
-        error instanceof Error ? error.message : '정보 수정에 실패했습니다.'
-      )
+      let errorMessage = '정보 수정에 실패했습니다.'
+
+      if (error instanceof Error) {
+        errorMessage = error.message || errorMessage
+      } else if (typeof error === 'string') {
+        errorMessage = error
+      } else if (error && typeof error === 'object' && 'message' in error) {
+        errorMessage = (error as { message: string }).message || errorMessage
+      }
+
+      alert(errorMessage)
+      console.error('Error during form submission:', error)
     }
   }
 

@@ -9,59 +9,98 @@ import {
   ErrorMessage,
   RegisterContainer,
   FormSection,
-  Select,
 } from '@/component/styles/user/registerStyles'
-
-import { useNavigate } from 'react-router-dom'
-import { registerUser } from '@/api/userApi'
-import { useRegisterForm } from '@/component/hook/useRegisterForm'
 import { LoginContainer } from '@/component/styles/user/LoginContainer'
+import { useNavigate } from 'react-router-dom'
+import { useRegisterForm } from '@/component/hook/useRegisterForm'
 
 const Register = () => {
   const navigate = useNavigate()
   const { formData, errors, handleChange, isFormValid } = useRegisterForm()
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!isFormValid()) return
-    try {
-      await registerUser(formData)
-      console.log('회원가입 성공')
-      navigate('/login')
-    } catch (e) {
-      console.error(e)
-      alert(e)
+  const handleContinue = () => {
+    if (!isFormValid()) {
+      alert('모든 필수 정보를 올바르게 입력해주세요.')
+      return
     }
+    sessionStorage.setItem('registerFormData', JSON.stringify(formData))
+    navigate('/choose-avatar')
   }
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    handleChange(name, value)
+  }
+
+  const isValidFormData = (data: unknown): data is FormData => {
+    if (!data || typeof data !== 'object') return false
+
+    const requiredKeys = [
+      'name',
+      'age',
+      'gender',
+      'email',
+      'password',
+      'phoneNumber',
+      'nickName',
+      'height',
+      'weight',
+      'bodyType',
+      'bodyObjUrl',
+    ]
+
+    return requiredKeys.every((key) => key in data)
+  }
+
+  React.useEffect(() => {
+    const savedFormData = sessionStorage.getItem('registerFormData')
+    if (savedFormData) {
+      try {
+        const parsedData = JSON.parse(savedFormData)
+
+        if (isValidFormData(parsedData)) {
+          Object.entries(parsedData).forEach(([key, value]) => {
+            handleChange(key, value?.toString() ?? '')
+          })
+        } else {
+          console.error('Invalid form data structure in sessionStorage')
+          sessionStorage.removeItem('registerFormData')
+        }
+      } catch (error) {
+        console.error('Error parsing form data from sessionStorage:', error)
+        sessionStorage.removeItem('registerFormData')
+      }
+    }
+  }, [])
 
   return (
     <LoginContainer>
       <RegisterContainer>
         <Title>회원가입</Title>
         <FormSection>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <Input
               type="text"
               name="name"
               placeholder="이름"
-              value={formData.name}
-              onChange={(e) => handleChange('name', e.target.value)}
+              value={formData.name || ''}
+              onChange={handleInputChange}
               required
             />
             <Input
               type="text"
               name="nickName"
               placeholder="닉네임"
-              value={formData.nickName}
-              onChange={(e) => handleChange('nickName', e.target.value)}
+              value={formData.nickName || ''}
+              onChange={handleInputChange}
               required
             />
             <Input
               type="number"
               name="age"
               placeholder="나이"
-              value={formData.age}
-              onChange={(e) => handleChange('age', e.target.value)}
+              value={formData.age || ''}
+              onChange={handleInputChange}
               required
               min="0"
             />
@@ -74,10 +113,11 @@ const Register = () => {
                   onClick={() => handleChange('gender', gender)}
                 >
                   <HiddenRadio
+                    type="radio"
                     name="gender"
                     value={gender}
                     checked={formData.gender === gender}
-                    onChange={() => {}}
+                    onChange={() => handleChange('gender', gender)}
                   />
                   {gender === 'M' ? '남자' : '여자'}
                 </GenderButton>
@@ -87,8 +127,8 @@ const Register = () => {
               type="email"
               name="email"
               placeholder="이메일"
-              value={formData.email}
-              onChange={(e) => handleChange('email', e.target.value)}
+              value={formData.email || ''}
+              onChange={handleInputChange}
               required
             />
             {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
@@ -96,16 +136,16 @@ const Register = () => {
               type="password"
               name="password"
               placeholder="비밀번호"
-              value={formData.password}
-              onChange={(e) => handleChange('password', e.target.value)}
+              value={formData.password || ''}
+              onChange={handleInputChange}
               required
             />
             <Input
               type="text"
               name="phoneNumber"
               placeholder="전화번호 (예: 010-1234-5678)"
-              value={formData.phoneNumber}
-              onChange={(e) => handleChange('phoneNumber', e.target.value)}
+              value={formData.phoneNumber || ''}
+              onChange={handleInputChange}
               required
             />
             {errors.phoneNumber && (
@@ -115,8 +155,8 @@ const Register = () => {
               type="number"
               name="height"
               placeholder="키 (cm)"
-              value={formData.height}
-              onChange={(e) => handleChange('height', e.target.value)}
+              value={formData.height || ''}
+              onChange={handleInputChange}
               required
               min="0"
               max="300"
@@ -125,27 +165,14 @@ const Register = () => {
               type="number"
               name="weight"
               placeholder="몸무게 (kg)"
-              value={formData.weight}
-              onChange={(e) => handleChange('weight', e.target.value)}
+              value={formData.weight || ''}
+              onChange={handleInputChange}
               required
               min="0"
               max="300"
             />
-            <Select
-              name="bodyType"
-              value={formData.bodyType}
-              onChange={(e) => handleChange('bodyType', e.target.value)}
-              required
-            >
-              <option value="">체형 선택</option>
-              <option value="RECTANGLE">RECTANGLE</option>
-              <option value="TRIANGLE">TRIANGLE</option>
-              <option value="INVERTED_TRIANGLE">INVERTED_TRIANGLE</option>
-              <option value="OVAL">OVAL</option>
-              <option value="HOURGLASS">HOURGLASS</option>
-            </Select>
-            <Button type="submit" disabled={!isFormValid()}>
-              회원가입
+            <Button type="button" onClick={handleContinue}>
+              다음
             </Button>
           </form>
         </FormSection>

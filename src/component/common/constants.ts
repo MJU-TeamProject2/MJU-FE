@@ -14,13 +14,13 @@ export const BODY_TYPE_AVATARS = [
 ] as const
 
 export const FORM_FIELDS = [
-  { id: 'name', label: '이름', type: 'text', editable: true },
+  { id: 'email', label: '이메일', type: 'text', editable: false },
+  { id: 'name', label: '이름', type: 'text', editable: false },
   { id: 'gender', label: '성별', type: 'text', editable: false },
+  { id: 'bodyType', label: '체형', type: 'text', editable: false },
   { id: 'nickName', label: '별명', type: 'text', editable: true },
   { id: 'age', label: '나이', type: 'number', editable: true },
   { id: 'height', label: '키', type: 'number', editable: true },
   { id: 'weight', label: '몸무게', type: 'number', editable: true },
-  { id: 'bodyType', label: '체형', type: 'text', editable: false },
   { id: 'phoneNumber', label: '전화번호', type: 'text', editable: true },
-  { id: 'email', label: '이메일', type: 'text', editable: true },
 ] as const
