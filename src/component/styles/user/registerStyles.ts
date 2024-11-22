@@ -3,7 +3,7 @@ import { colors } from '@/component/styles/globalStyle'
 
 export const RegisterContainer = styled.div`
   padding: 20px;
-  margin-top: 60px; // 헤더 높이만큼 여백
+  margin-top: 60px;
   display: flex;
   flex-direction: column;
   align-items: center;

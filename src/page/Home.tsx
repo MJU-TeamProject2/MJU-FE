@@ -43,7 +43,6 @@ const Home = () => {
           ? await retrieveAllClothes(currentPage, pageSize)
           : await retrieveClothesByCategory(currentPage, pageSize, activeTab)
 
-      // const response = await retrieveAllClothes(currentPage, pageSize)
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {

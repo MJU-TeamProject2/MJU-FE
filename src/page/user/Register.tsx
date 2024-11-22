@@ -141,8 +141,6 @@ const Register = () => {
               <option value="RECTANGLE">RECTANGLE</option>
               <option value="TRIANGLE">TRIANGLE</option>
               <option value="INVERTED_TRIANGLE">INVERTED_TRIANGLE</option>
-              <option value="OVAL">OVAL</option>
-              <option value="HOURGLASS">HOURGLASS</option>
             </Select>
             <Button type="submit" disabled={!isFormValid()}>
               회원가입
