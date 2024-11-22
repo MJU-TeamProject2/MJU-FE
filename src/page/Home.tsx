@@ -42,7 +42,6 @@ const Home = () => {
         activeTab == 'ALL'
           ? await retrieveAllClothes(currentPage, pageSize)
           : await retrieveClothesByCategory(currentPage, pageSize, activeTab)
-
       setClothes(response.content)
       setTotalPages(Math.ceil(response.total / pageSize))
     } catch (err) {
@@ -76,7 +75,7 @@ const Home = () => {
             >
               {tab}
             </Tab>
-          )
+          ),
         )}
       </TabContainer>
       <GridContainer>

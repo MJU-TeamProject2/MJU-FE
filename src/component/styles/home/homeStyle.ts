@@ -49,7 +49,9 @@ export const Tab = styled.div<{ active: boolean }>`
   }
 `
 
-export const GridContainer = styled.div`
+export const GridContainer = styled.div.attrs({
+  'data-cy': 'product-grid',
+})`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
