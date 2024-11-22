@@ -91,12 +91,11 @@ export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
 export const ErrorMessage = styled.div`
   color: #ff6b6b;
   font-size: 14px;
-  margin-top: -8px;
 `
 
 export const Button = styled.button`
   width: 100%;
-  padding: 13px;
+  padding: 10px;
   background-color: transparent;
   color: ${colors.white};
   border: 1.3px solid ${colors.primary};
