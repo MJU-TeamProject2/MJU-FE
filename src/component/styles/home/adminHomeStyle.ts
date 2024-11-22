@@ -76,17 +76,19 @@ export const PaginationButton = styled.button`
   }
 `
 
-export const RegisterButton = styled.button`
+export const OrderHistoryButton = styled.button`
   background-color: #4a90e2;
   color: white;
+  border: none;
   border-radius: 4px;
-  padding: 8px 16px;
-  margin: 0px 100px;
+  padding: 10px 20px;
+  margin: 20px auto;
+  display: block;
   cursor: pointer;
   transition: background-color 0.2s;
 
   &:hover {
-    background-color: #838383;
+    background-color: #357abd;
   }
 `
 

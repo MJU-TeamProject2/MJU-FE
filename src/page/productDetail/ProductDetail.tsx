@@ -43,7 +43,6 @@ const ProductDetail = () => {
     if (id) {
       const details = await retrieveClothesDetail(id)
       setProduct(details)
-      // 상품 정보를 받아온 후 첫 번째 사용 가능한 사이즈를 기본값으로 설정
       const filteredSizes =
         details?.clothesSizeList?.filter(
           (sizeInfo: SizeInfo) => sizeInfo.quantity > 0
@@ -140,4 +139,5 @@ interface SizeInfo {
   size: string
   quantity: number
 }
+
 export default ProductDetail

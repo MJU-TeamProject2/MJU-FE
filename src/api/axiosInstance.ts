@@ -9,7 +9,6 @@ export type ApiResponse<T> = {
   data: T
 }
 
-// 백엔드 에러 응답 구조에 맞게 수정
 export type ErrorResponse = {
   success: boolean
   data: {
@@ -37,7 +36,6 @@ axiosInstance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => response.data,
   (error: AxiosError<ErrorResponse>) => {
-    // 백엔드에서 보낸 에러 응답 구조에 맞게 처리
     if (error.response?.data) {
       return Promise.reject(new Error(error.response.data.data.message))
     }

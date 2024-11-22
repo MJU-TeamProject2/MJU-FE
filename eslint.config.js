@@ -17,7 +17,7 @@ export default [
       globals: globals.browser,
     },
     linterOptions: {
-      reportUnusedDisableDirectives: true, // 이 부분 추가
+      reportUnusedDisableDirectives: true,
     },
     plugins: {
       '@typescript-eslint': tsPlugin,

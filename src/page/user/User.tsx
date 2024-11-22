@@ -77,11 +77,6 @@ const User: React.FC = () => {
                 $isEditing={isEditing && field.editable}
                 disabled={!isEditing || !field.editable}
               />
-              {!field.editable && isEditing && (
-                <p style={{ color: 'red', fontSize: '12px', marginTop: '5px' }}>
-                  {field.label}은 수정할 수 없습니다.
-                </p>
-              )}
             </InputGroup>
           ))}
         </form>

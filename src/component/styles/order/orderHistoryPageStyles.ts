@@ -6,8 +6,8 @@ const colors = {
   blue: '#187cff',
   lightGray: '#f0f0f0',
   darkGray: '#333333',
-  red: '#ff4d4f', // 삭제 버튼 색상
-  darkRed: '#b22222', // 마우스 오버 시 색상
+  red: '#ff4d4f',
+  darkRed: '#b22222',
 }
 
 export const OrderHistoryContainer = styled.div`
@@ -38,7 +38,7 @@ export const ProductContainer = styled.div`
   padding: 10px;
   border: 1px solid ${colors.lightGray};
   border-radius: 5px;
-  background-color: ${colors.lightGray}; // 연한 회색 배경
+  background-color: ${colors.lightGray};
 `
 
 export const ProductImage = styled.img`
@@ -46,7 +46,7 @@ export const ProductImage = styled.img`
   height: 80px;
   object-fit: cover;
   margin-right: 15px;
-  border-radius: 5px; // 이미지에 모서리 둥글게
+  border-radius: 5px;
 `
 
 export const ProductInfo = styled.div`
@@ -70,7 +70,7 @@ export const ProductInfo = styled.div`
 `
 
 export const DeleteButton = styled.button`
-  background-color: ${colors.red}; // 삭제 버튼 색상
+  background-color: ${colors.red};
   color: white;
   border: none;
   border-radius: 5px;
@@ -79,7 +79,7 @@ export const DeleteButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: ${colors.darkRed}; // 마우스 오버 시 색상 변화
+    background-color: ${colors.darkRed};
   }
 `
 

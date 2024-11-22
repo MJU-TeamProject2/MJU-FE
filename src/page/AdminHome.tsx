@@ -10,6 +10,7 @@ import {
   GridContainer,
   GridItem,
   PaginationButton,
+  OrderHistoryButton,
   ProductName,
   ProductPrice,
 } from '@/component/styles/home/adminHomeStyle'
@@ -22,7 +23,6 @@ const AdminHome: React.FC = () => {
   const [, setError] = useState<string | null>(null)
 
   const navigate = useNavigate()
-
   const pageSize = 10
 
   useEffect(() => {
@@ -51,10 +51,18 @@ const AdminHome: React.FC = () => {
   const handleItemClick = (id: number) => {
     navigate(`/productsModify/${id}`)
   }
+
+  const handleOrderHistoryClick = () => {
+    navigate('/adminOrderHistory')
+  }
+
   return (
     <AdminHomeContainer>
       <Title> 등록된 의상 목록 </Title>
       <Subtitle> 상품 정보를 수정하려면 해당 상품을 클릭해주세요 </Subtitle>
+      <OrderHistoryButton onClick={handleOrderHistoryClick}>
+        주문 내역 조회
+      </OrderHistoryButton>
       <GridContainer>
         {clothes.map((item) => (
           <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
@@ -65,7 +73,6 @@ const AdminHome: React.FC = () => {
         ))}
       </GridContainer>
       <PaginationContainer>
-        {/*<RegisterButton>회원 정보</RegisterButton>*/}
         <PaginationButton
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 0}
