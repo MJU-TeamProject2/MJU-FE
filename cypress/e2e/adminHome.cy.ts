@@ -25,7 +25,7 @@ describe('AdminHome Component', () => {
     }).as('getClothes')
 
     // 컴포넌트 페이지로 이동
-    cy.visit('/admin')
+    cy.visit('/adminHome')
   })
 
   it('페이지가 올바르게 로드되어야 한다', () => {
