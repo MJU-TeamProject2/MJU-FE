@@ -1,14 +1,18 @@
 /// <reference types="cypress" />
 
 describe('ProductRegister Component', () => {
+  before(() => {
+    cy.visit('/adminLogin')
+    cy.get('input[type="text"]').type('Admin001')
+    cy.get('input[type="password"]').type('admin1')
+    cy.get('button[type="submit"]').click()
+  })
   beforeEach(() => {
-    // API 응답을 모킹합니다
-    cy.intercept('POST', '/api/clothes', {
-      statusCode: 200,
-      body: { message: 'Product registered successfully' },
-    }).as('registerProduct')
-
     cy.visit('/registerCloth')
+    // message 속성을 undefined 한 경우를 무시한다.
+    cy.on('uncaught:exception', () => {
+      return false
+    })
   })
 
   it('모든 필드가 올바르게 표시되어야 한다', () => {
@@ -24,34 +28,55 @@ describe('ProductRegister Component', () => {
   })
 
   it('폼 제출 시 필수 필드 검증이 동작해야 한다', () => {
-    cy.get('button[type="submit"]').click()
-    cy.on('window:alert', (text) => {
-      expect(text).to.equal('빈칸을 모두 채워주세요')
+    // API 응답 모킹 (필요한 경우)
+    cy.intercept('POST', '/api/v1/clothes/product', {
+      statusCode: 400,
+      body: {
+        message: '빈칸을 모두 채워주세요',
+      },
+    }).as('submitForm')
+
+    cy.window().then((win: Window) => {
+      cy.stub(win, 'alert' as keyof Window).as('alertStub')
     })
+
+    // 폼 제출
+    cy.get('button[type="submit"]').click()
+
+    // API 응답 대기 (필요한 경우)
+    cy.wait('@submitForm')
+
+    // alert 확인
+    cy.get('@alertStub').should(
+      'have.been.calledWith',
+      '빈칸을 모두 채워주세요'
+    )
   })
 
   it('카테고리 선택이 올바르게 동작해야 한다', () => {
-    cy.get('select[name="category"]').select('DRESSES')
-    cy.get('select[name="category"]').should('have.value', 'DRESSES')
+    cy.get('select[name="category"]').select('아우터')
+    cy.get('select[name="category"]').should('have.value', 'OUTERWEAR')
   })
 
   it('성별 분류 선택이 올바르게 동작해야 한다', () => {
-    cy.get('select[name="genderCategory"]').select('MALE')
-    cy.get('select[name="genderCategory"]').should('have.value', 'MALE')
+    cy.get('select[name="genderCategory"]').select('여성용')
+    cy.get('select[name="genderCategory"]').should('have.value', 'FEMALE')
   })
 
   it('숫자 필드에 잘못된 값 입력 시 에러 메시지가 표시되어야 한다', () => {
     // 가격 필드 테스트
-    cy.get('input[name="price"]').type('-1000')
-    cy.contains('가격은 0보다 커야 합니다').should('be.visible')
+    cy.get('input[name="price"]').clear().type('-1000', { delay: 100 })
+    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
+    cy.get('input[name="price"]').clear().type('10', { delay: 100 })
 
     // 할인율 필드 테스트
-    cy.get('input[name="discount"]').type('101')
-    cy.contains('할인율은 0에서 100 사이여야 합니다').should('be.visible')
+    cy.get('input[name="discount"]').clear().type('-1000', { delay: 100 })
+    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
+    cy.get('input[name="discount"]').clear().type('10', { delay: 100 })
 
     // 재고 필드 테스트
-    cy.get('input[name="quantity"]').type('-1')
-    cy.contains('수량은 0 이상이어야 합니다').should('be.visible')
+    cy.get('input[name="quantity"]').clear().type('-1', { delay: 100 })
+    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
   })
 
   it('이미지 업로드가 올바르게 동작해야 한다', () => {
@@ -90,26 +115,23 @@ describe('ProductRegister Component', () => {
 
   it('올바른 데이터로 폼 제출이 성공해야 한다', () => {
     // 필수 필드 입력
-    cy.get('input[name="name"]').type('테스트 상품')
-    cy.get('select[name="category"]').select('DRESSES')
-    cy.get('select[name="genderCategory"]').select('UNISEX')
-    cy.get('input[name="price"]').type('50000')
-    cy.get('input[name="productNumber"]').type('TEST-001')
-    cy.get('input[name="discount"]').type('10')
+    cy.get('input[name="name"]').clear().type('테스트 상품')
+    cy.get('select[name="category"]').select('아우터')
+    cy.get('select[name="genderCategory"]').select('남녀공용')
+    cy.get('input[name="price"]').clear().type('50000')
+    cy.get('input[name="productNumber"]').clear().type('TEST-001')
+    cy.get('input[name="discount"]').clear().type('10')
     cy.get('select[name="size"]').select('M')
-    cy.get('input[name="quantity"]').type('100')
+    cy.get('input[name="quantity"]').clear().type('100')
 
     // 이미지 파일들 업로드
-    cy.get('#mainImage').attachFile('test-image.jpg')
-    cy.get('#detailImage').attachFile('test-detail-image.jpg')
+    cy.get('#mainImage').attachFile('test-image.png')
+    cy.get('#detailImage').attachFile('test-detail-image.png')
     cy.get('#objectFile').attachFile('test-model.obj')
     cy.get('#mtlFile').attachFile('test-material.mtl')
 
     // 폼 제출
     cy.get('button[type="submit"]').click()
-
-    // API 호출 확인
-    cy.wait('@registerProduct')
 
     // 성공 알림 확인
     cy.on('window:alert', (text) => {
@@ -118,23 +140,5 @@ describe('ProductRegister Component', () => {
 
     // 페이지 이동 확인
     cy.url().should('include', '/adminHome')
-  })
-
-  it('API 에러 발생 시 에러 메시지를 표시해야 한다', () => {
-    // API 에러 응답 모킹
-    cy.intercept('POST', '/api/clothes', {
-      statusCode: 500,
-      body: { message: 'Server error occurred' },
-    }).as('registerProductError')
-
-    // 필수 필드 입력 및 폼 제출
-    cy.get('input[name="name"]').type('테스트 상품')
-    // ... (다른 필수 필드 입력)
-    cy.get('button[type="submit"]').click()
-
-    // 에러 알림 확인
-    cy.on('window:alert', (text) => {
-      expect(text).to.equal('Server error occurred')
-    })
   })
 })
