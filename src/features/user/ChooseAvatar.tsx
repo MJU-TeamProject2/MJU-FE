@@ -11,7 +11,7 @@ import {
   AvatarName,
 } from '@/features/user/styles/chooseAvatarStyles'
 import { registerUser } from '@/services/userApi'
-import { BODY_TYPE_AVATARS } from '@/constants'
+import { BODY_TYPE_AVATARS, colors } from '@/constants'
 
 const ChooseAvatar: React.FC = () => {
   const navigate = useNavigate()
@@ -21,7 +21,6 @@ const ChooseAvatar: React.FC = () => {
   useEffect(() => {
     const savedFormData = sessionStorage.getItem('registerFormData')
     if (!savedFormData) {
-      // 이전 단계 데이터가 없으면 회원가입 페이지로 리다이렉트
       navigate('/register')
       return
     }
@@ -59,7 +58,6 @@ const ChooseAvatar: React.FC = () => {
       const formData = JSON.parse(savedFormData)
       const selectedBodyType = BODY_TYPE_AVATARS[selectedAvatar - 1]
 
-      // 회원가입 데이터에 체형 정보 추가
       const finalFormData = {
         ...formData,
         bodyType: selectedBodyType.type,
@@ -101,11 +99,15 @@ const ChooseAvatar: React.FC = () => {
         ))}
       </AvatarGrid>
       <ButtonGroup>
-        <Button color="#D9D9D9" onClick={handleBack} disabled={isSubmitting}>
+        <Button
+          color={colors.ghostWhite}
+          onClick={handleBack}
+          disabled={isSubmitting}
+        >
           이전
         </Button>
         <Button
-          color="#22B2E4"
+          color={colors.skyBlue}
           onClick={handleSubmit}
           disabled={isSubmitting || !selectedAvatar}
         >

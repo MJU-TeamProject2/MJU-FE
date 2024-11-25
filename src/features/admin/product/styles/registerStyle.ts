@@ -5,8 +5,7 @@ export const ProductRegisterContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
-  background: ${colors.adminBackground};
-  font-family: 'Pretendard', sans-serif;
+  background: ${colors.slate};
 `
 
 export const ProductContainer = styled.div`
@@ -60,16 +59,16 @@ export const BlankImage = styled.div`
 `
 
 export const BlankText = styled.p`
-  color: ${colors.grey};
+  color: ${colors.silverGrey};
   font-size: 1rem;
   font-weight: 500;
 `
 
 export const ProductInformationContainer = styled.div`
-  background: #8f8f8f;
+  background: ${colors.darkGrey};
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px ${colors.charcoalGrey};
 `
 
 export const ProductInputContainer = styled.div`
@@ -89,15 +88,14 @@ const baseInputStyles = `
   width: 100%;
   padding: 0.75rem 1rem;
   text-align: center;
-  border: 1px solid ${colors.grey}20;
+  border: 1px solid ${colors.silverGrey}20;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  font-family: 'Pretendard', sans-serif;
   &:focus {
     outline: none;
-    border-color: ${colors.grey}50;
-    box-shadow: 0 0 0 2px ${colors.grey}20;
+    border-color: ${colors.silverGrey}50;
+    box-shadow: 0 0 0 2px ${colors.silverGrey}20;
   }
 `
 
@@ -138,7 +136,7 @@ export const Title = styled.h1`
 
 export const Tag = styled.label`
   min-width: 120px;
-  color: ${colors.grey};
+  color: ${colors.silverGrey};
   font-size: 1rem;
   font-weight: 500;
 `
@@ -147,8 +145,8 @@ export const Button = styled.button`
   width: 100%;
   padding: 1rem;
   margin-top: 2rem;
-  background: black;
-  color: white;
+  background: ${colors.black};
+  color: ${colors.white};
   border: none;
   border-radius: 8px;
   font-size: 1.125rem;
@@ -158,7 +156,7 @@ export const Button = styled.button`
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px ${colors.darkGrey};
   }
 
   &:active {
@@ -171,7 +169,7 @@ export const HiddenContainer = styled.div`
 `
 
 export const ErrorMessage = styled.div`
-  color: #ff4d4d;
+  color: ${colors.red};
   font-size: 0.875rem;
   margin-top: 0.5rem;
   margin-left: calc(120px + 1.5rem);

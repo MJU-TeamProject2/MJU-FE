@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { colors } from '@/constants'
 
 export const AdminHomeContainer = styled.div`
-  background-color: ${colors.adminBackground};
+  background-color: ${colors.slate};
   color: ${colors.white};
   min-height: 100vh;
   padding: 20px;
@@ -71,7 +71,7 @@ export const PaginationButton = styled.button`
   }
 
   &:disabled {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
     cursor: not-allowed;
   }
 `

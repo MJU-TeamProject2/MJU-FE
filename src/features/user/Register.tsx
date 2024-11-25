@@ -10,9 +10,9 @@ import {
   RegisterContainer,
   FormSection,
 } from '@/features/user/styles/registerStyles'
-import { LoginContainer } from '@/features/user/styles/LoginContainer'
 import { useNavigate } from 'react-router-dom'
 import { useRegisterForm } from '@/features/user/hooks/useRegisterForm'
+import { LoginContainer } from '@/features/user/styles/loginStyles'
 
 const Register = () => {
   const navigate = useNavigate()

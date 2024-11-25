@@ -48,7 +48,7 @@ export const FooterButtonGroup = styled.div`
 export const ProfileImage = styled.div`
   width: 300px;
   height: 400px;
-  background-color: ${colors.grey};
+  background-color: ${colors.silverGrey};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,7 +71,7 @@ export const ActionButton = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 
   &:disabled {
@@ -117,14 +117,14 @@ export const Input = styled.input<InputProps>`
   transition: border-color 0.3s ease;
 
   &::placeholder {
-    color: ${colors.grey};
+    color: ${colors.silverGrey};
   }
 `
 
 export const SaveButton = styled.button`
   width: 100px;
   padding: 10px;
-  background-color: ${colors.buttonHover};
+  background-color: ${colors.darkGrey};
   color: ${colors.white};
   border: none;
   border-radius: 5px;
@@ -132,20 +132,20 @@ export const SaveButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: ${colors.skyBlue};
   }
 `
 
 export const FooterButton = styled.button`
   width: 100px;
   padding: 10px;
-  background-color: ${colors.grey};
+  background-color: ${colors.silverGrey};
   color: ${colors.white};
   border: none;
   border-radius: 5px;
   cursor: pointer;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 `

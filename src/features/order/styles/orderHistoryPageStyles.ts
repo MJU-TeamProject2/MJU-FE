@@ -1,14 +1,5 @@
 import styled from 'styled-components'
-
-const colors = {
-  white: '#ffffff',
-  black: '#000000',
-  blue: '#187cff',
-  lightGray: '#f0f0f0',
-  darkGray: '#333333',
-  red: '#ff4d4f',
-  darkRed: '#b22222',
-}
+import { colors } from '@/constants'
 
 export const OrderHistoryContainer = styled.div`
   padding: 20px;
@@ -36,9 +27,9 @@ export const ProductContainer = styled.div`
   align-items: center;
   margin-bottom: 15px;
   padding: 10px;
-  border: 1px solid ${colors.lightGray};
+  border: 1px solid ${colors.lightGrey};
   border-radius: 5px;
-  background-color: ${colors.lightGray};
+  background-color: ${colors.lightGrey};
 `
 
 export const ProductImage = styled.img`
@@ -64,14 +55,14 @@ export const ProductInfo = styled.div`
     &:nth-child(3) {
       font-size: 16px;
       font-weight: bold;
-      color: ${colors.darkGray};
+      color: ${colors.darkGrey};
     }
   }
 `
 
 export const DeleteButton = styled.button`
-  background-color: ${colors.red};
-  color: white;
+  background-color: ${colors.lightRed};
+  color: ${colors.white};
   border: none;
   border-radius: 5px;
   padding: 8px 12px;
@@ -85,6 +76,6 @@ export const DeleteButton = styled.button`
 
 export const Divider = styled.hr`
   border: none;
-  border-top: 1px solid ${colors.lightGray};
+  border-top: 1px solid ${colors.lightGrey};
   margin: 15px 0;
 `

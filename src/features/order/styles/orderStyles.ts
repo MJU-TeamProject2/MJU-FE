@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { colors } from '@/constants'
 
 export const OrderContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #f8f8f8;
+  background-color: ${colors.ghostWhite};
   border-radius: 8px;
   width: 100%;
   max-width: 1200px;
@@ -20,7 +21,7 @@ export const ProductContainer = styled.div`
   align-items: center;
   width: 100%;
   padding: 15px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid ${colors.borderGrey};
   margin-bottom: 10px;
 `
 
@@ -55,19 +56,19 @@ export const AddressOption = styled.div`
   width: 100%;
   margin: 10px 0;
   padding: 15px;
-  background-color: #ffffff;
-  border: 1px solid #ddd;
+  background-color: ${colors.white};
+  border: 1px solid ${colors.borderGrey};
   border-radius: 5px;
   transition: 0.3s;
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${colors.ghostWhite};
   }
 `
 
 export const RadioInput = styled.input`
   margin-right: 10px;
-  accent-color: #22b2e4;
+  accent-color: ${colors.skyBlue};
 `
 
 export const AddressDetails = styled.div`
@@ -77,8 +78,8 @@ export const AddressDetails = styled.div`
 `
 
 export const DeleteButton = styled.button`
-  background-color: #ff6b6b;
-  color: white;
+  background-color: ${colors.lightRed};
+  color: ${colors.white};
   border: none;
   border-radius: 5px;
   padding: 8px 12px;
@@ -86,7 +87,7 @@ export const DeleteButton = styled.button`
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: #ff4d4d;
+    background-color: ${colors.red};
   }
 `
 
@@ -101,19 +102,19 @@ export const NewEntryContainer = styled.div`
 export const Label = styled.label`
   font-weight: bold;
   margin-bottom: 8px;
-  color: #666;
+  color: ${colors.darkGrey};
 `
 
 export const InputField = styled.input`
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.borderGrey};
   border-radius: 5px;
   margin-bottom: 20px;
   transition: border-color 0.3s;
 
   &:focus {
-    border-color: #22b2e4;
+    border-color: ${colors.skyBlue};
     outline: none;
   }
 `
@@ -121,8 +122,8 @@ export const InputField = styled.input`
 export const PaymentContainer = styled(NewEntryContainer)``
 
 export const PurchaseButton = styled.button`
-  background-color: #22b2e4;
-  color: white;
+  background-color: ${colors.skyBlue};
+  color: ${colors.white};
   border: none;
   border-radius: 5px;
   padding: 14px 30px;
@@ -137,13 +138,13 @@ export const PurchaseButton = styled.button`
   }
 
   &:hover:not(:disabled) {
-    background-color: #1a93c5;
+    background-color: ${colors.blue};
   }
 `
 
 export const AddButton = styled.button`
-  background-color: #4caf50;
-  color: white;
+  background-color: ${colors.green};
+  color: ${colors.white};
   border: none;
   border-radius: 5px;
   padding: 10px 20px;
@@ -153,6 +154,6 @@ export const AddButton = styled.button`
   margin-top: 10px;
 
   &:hover {
-    background-color: #45a049;
+    background-color: ${colors.deepGreen};
   }
 `

@@ -52,9 +52,11 @@ export const Avatar = styled.img<{ isSelected: boolean }>`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   border: ${({ isSelected }) =>
-    isSelected ? `2px solid ${colors.blue}` : `1px solid ${colors.grey}`};
+    isSelected
+      ? `2px solid ${colors.skyBlue}`
+      : `1px solid ${colors.silverGrey}`};
   box-shadow: ${({ isSelected }) =>
-    isSelected ? `0 0 5px ${colors.blue}` : 'none'};
+    isSelected ? `0 0 5px ${colors.skyBlue}` : 'none'};
 
   &:hover {
     transform: translateY(-5px);

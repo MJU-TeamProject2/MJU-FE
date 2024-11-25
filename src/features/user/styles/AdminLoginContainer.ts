@@ -9,11 +9,11 @@ export const AdminLoginContainer = styled.div`
   padding: 0 12px;
   align-items: center;
   height: 100vh;
-  background-color: ${colors.adminBackground};
+  background-color: ${colors.slate};
 `
 
 export const Card = styled.div`
-  background: ${colors.adminBackground};
+  background: ${colors.slate};
   padding: 39px;
   border-radius: 10px;
   width: 390px;
@@ -56,41 +56,11 @@ export const Button = styled.button`
   font-size: 16px;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
-`
-
-export const GenderContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 26px;
-`
-
-export const GenderButton = styled(Button)`
-  flex: 1;
-  margin: 0 6.5px;
-  padding: 10px;
-
-  &:first-child {
-    margin-left: 0;
-  }
-
-  &:last-child {
-    margin-right: 0;
-  }
-`
-
-export const ErrorMessage = styled.div`
-  color: #ff6b6b;
-  font-size: 16px;
-  margin-top: -20px;
-  margin-bottom: 13px;
-`
-export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
-  display: none;
 `

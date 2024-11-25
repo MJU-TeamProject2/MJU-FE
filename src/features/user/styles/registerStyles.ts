@@ -11,7 +11,7 @@ export const RegisterContainer = styled.div`
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${colors.background};
+  background-color: ${colors.charcoalGrey};
   min-height: 100vh;
 `
 
@@ -54,7 +54,7 @@ export const Select = styled.select`
   outline: none;
   font-size: 16px;
   option {
-    background-color: ${colors.background};
+    background-color: ${colors.charcoalGrey};
     color: ${colors.white};
   }
 `
@@ -80,7 +80,7 @@ export const GenderButton = styled.button`
   }
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 `
 
@@ -106,7 +106,7 @@ export const Button = styled.button`
   font-size: 16px;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 
   &:disabled {

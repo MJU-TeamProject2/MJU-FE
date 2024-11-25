@@ -7,7 +7,7 @@ export const ProductModifyContainer = styled.div`
   align-items: center;
   width: 100%;
   height: 95vh;
-  background-color: ${colors.adminBackground};
+  background-color: ${colors.slate};
 `
 
 export const ProductImageContainer = styled.div`
@@ -34,7 +34,7 @@ export const ProductInfoContainer = styled.div`
   height: 100%;
   margin: 10px;
   border-block: 2px solid;
-  border-color: #9baec8;
+  border-color: ${colors.deepSlate};
 `
 
 export const ProductFixContainer = styled.div`
@@ -44,7 +44,7 @@ export const ProductFixContainer = styled.div`
   height: 100%;
   margin: 10px;
   border-block: 2px solid;
-  border-color: #9baec8;
+  border-color: ${colors.deepSlate};
   text-align: center;
 `
 
@@ -75,9 +75,9 @@ export const ProductTag = styled.p`
 export const ProductInfo = styled.p`
   font-size: 20px;
   flex: 6;
-  color: lightblue;
+  color: ${colors.lightBlue};
   padding: 1%;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid ${colors.lightGrey};
 `
 
 export const Title = styled.h1`
@@ -102,22 +102,22 @@ export const Input = styled.input`
   font-size: 20px;
   background: transparent;
   border: none;
-  border-bottom: 1px solid lightgray;
-  color: lightgray;
+  border-bottom: 1px solid ${colors.lightGrey};
+  color: ${colors.lightGrey};
   outline: none;
   text-align: center;
 `
 
 export const FileInput = styled.p`
-  background-color: white;
-  border: solid 1px darkgray;
+  background-color: ${colors.white};
+  border: solid 1px ${colors.darkGrey};
   border-radius: 3px;
   text-align: center;
   padding: 7px;
   flex: 5;
   &:hover {
     cursor: pointer;
-    background-color: lightgray;
+    background-color: ${colors.lightGrey};
   }
 `
 
@@ -136,7 +136,7 @@ export const Button = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: blue;
+  background-color: ${colors.blue};
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -154,7 +154,7 @@ export const CancelButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: gray;
+  background-color: ${colors.grey};
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -172,7 +172,7 @@ export const DeleteButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: darkred;
+  background-color: ${colors.darkRed};
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -190,7 +190,7 @@ export const ModifyButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: green;
+  background-color: ${colors.paleGrey};
   color: ${colors.white};
   border: 1px solid ${colors.primary};
   border-radius: 4px;
@@ -218,15 +218,15 @@ export const SizeButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   flex: 6;
-  border-left: 1px solid lightgray;
+  border-left: 1px solid ${colors.lightGrey};
 `
 export const SizeButton = styled.button`
-  border: solid 1px lightblue;
+  border: solid 1px ${colors.lightBlue};
   padding-inline: 30px;
   padding-block: 10px;
   margin-left: 10px;
-  background-color: ${colors.adminBackground};
-  color: lightblue;
+  background-color: ${colors.slate};
+  color: ${colors.lightBlue};
   font-weight: bold;
 
   &:hover {
@@ -245,40 +245,40 @@ export const ModifyRank = styled.p`
   flex: 2;
   font-size: 22px;
   border-bottom: solid 2px;
-  border-color: #d9e1e8;
-  color: lightgray;
+  border-color: ${colors.paleGrey}
+  color: ${colors.lightGrey};
   opacity: 15%;
   padding-bottom: 5px;
-  background-color: ${colors.adminBackground};
+  background-color: ${colors.slate};
 `
 
 export const ModifySelectedRank = styled.p`
   flex: 2;
   font-size: 24px;
   border-bottom: solid 2px;
-  border-color: #d9e1e8;
-  color: #d9e1e8;
+  border-color: ${colors.paleGrey};
+  color: ${colors.paleGrey};
   font-weight: bold;
   padding-bottom: 5px;
-  background-color: ${colors.adminBackground};
+  background-color: ${colors.slate};
 `
 export const ModifyTitle = styled.p`
   font-size: 30px;
-  color: white;
+  color: ${colors.white};
   width: 100%;
   text-align: center;
 `
 export const Table = styled.table`
   width: 100%;
-  border: solid 1px lightgray;
+  border: solid 1px ${colors.lightGrey};
   border-collapse: collapse;
   margin-bottom: 20px;
 `
 export const TableHead = styled.thead`
   font-weight: bold;
   font-size: 22px;
-  border-bottom: solid 1px lightgray;
-  color: white;
+  border-bottom: solid 1px ${colors.lightGrey};
+  color: ${colors.white};
 `
 export const TableColumn = styled.td`
   flex: 1;
@@ -288,11 +288,11 @@ export const TableColumn = styled.td`
 `
 export const TableRow = styled.tbody`
   font-size: 22px;
-  color: lightgray;
+  color: ${colors.lightGrey};
 `
 
 export const DivideLine = styled.hr`
   width: 100%;
-  border: 1px dotted lightgray;
+  border: 1px dotted ${colors.lightGrey};
   opacity: 30%;
 `
