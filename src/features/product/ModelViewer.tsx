@@ -9,7 +9,7 @@ import {
   ErrorCard,
   ErrorOverlay,
   PreviewContainer,
-} from '@/features/product/styles/moderViewerStyle'
+} from '@/features/product/styles/moderViewer.styled'
 import { GenderType, HeightType, SizeType } from '@/constants/scales'
 
 interface ThreeJsModelViewerProps {

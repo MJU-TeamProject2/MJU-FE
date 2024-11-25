@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { colors } from '@/constants'
 
 export const Container = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const Container = styled.div`
 export const PreviewContainer = styled.div`
   width: 50%;
   height: 100%;
-  background-color: #454545;
+  background-color: ${colors.darkGrey};
   position: relative;
 `
 
@@ -24,9 +25,9 @@ export const ErrorOverlay = styled.div`
 
 export const ErrorCard = styled.div`
   padding: 1rem;
-  background-color: white;
+  background-color: ${colors.white};
   border-radius: 0.5rem;
-  color: #ef4444;
+  color: ${colors.red};
 `
 
 interface FillEffectProps {
@@ -46,7 +47,7 @@ export const LoadingOverlay = styled.div`
 export const LoadingCard = styled.div`
   width: 16rem;
   padding: 1.5rem;
-  background-color: white;
+  background-color: ${colors.white};
   border-radius: 0.75rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 `
@@ -55,7 +56,7 @@ export const LoadingContainer = styled.div`
   position: relative;
   height: 7rem;
   margin-bottom: 1rem;
-  background-color: #f3f4f6;
+  background-color: ${colors.ghostWhite};
   border-radius: 0.5rem;
   overflow: hidden;
 `
@@ -65,7 +66,7 @@ export const FillEffect = styled.div<FillEffectProps>`
   bottom: 0;
   width: 100%;
   height: ${({ progress }) => progress}%;
-  background-color: #3b82f6;
+  background-color: ${colors.skyBlue};
   transition: height 1s ease-out;
 
   &::before {

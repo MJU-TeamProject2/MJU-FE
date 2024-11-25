@@ -29,7 +29,7 @@ export const getCartItems = async (): Promise<CartItem[]> => {
 }
 
 export const postCartItems = async (
-  clothesId: string,
+  clothesId: number,
   size: string,
   quantity: number = 1
 ): Promise<void> => {

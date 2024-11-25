@@ -11,7 +11,7 @@ export const RegisterContainer = styled.div`
   max-width: 400px;
   margin-left: auto;
   margin-right: auto;
-  background-color: ${colors.background};
+  background-color: ${colors.charcoalGrey};
   min-height: 100vh;
 `
 
@@ -43,22 +43,6 @@ export const Input = styled.input`
   }
 `
 
-export const Select = styled.select`
-  width: 100%;
-  padding: 13px;
-  margin-bottom: 10px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1.3px solid ${colors.primary};
-  color: ${colors.white};
-  outline: none;
-  font-size: 16px;
-  option {
-    background-color: ${colors.background};
-    color: ${colors.white};
-  }
-`
-
 export const GenderContainer = styled.div`
   display: flex;
   gap: 10px;
@@ -80,7 +64,7 @@ export const GenderButton = styled.button`
   }
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 `
 
@@ -89,7 +73,7 @@ export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
 `
 
 export const ErrorMessage = styled.div`
-  color: #ff6b6b;
+  color: ${colors.lightRed};
   font-size: 14px;
 `
 
@@ -106,7 +90,7 @@ export const Button = styled.button`
   font-size: 16px;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 
   &:disabled {

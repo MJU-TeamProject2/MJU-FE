@@ -19,7 +19,7 @@ import {
   DeleteButton,
   QuantityDisplay,
   DeleteProductButton,
-} from '@/features/user/styles/cartStyles'
+} from '@/features/user/styles/cart.styled'
 import {
   getCartItems,
   deleteCartItem,

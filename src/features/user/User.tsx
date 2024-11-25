@@ -13,7 +13,7 @@ import {
   FooterButton,
   SaveButton,
   Input,
-} from '@/features/user/styles/userModifyStyle'
+} from '@/features/user/styles/userModify.styled'
 import { logout } from '@/services/userApi'
 import useUserForm from '@/features/user/hooks/useUserForm'
 import { BODY_TYPE_AVATARS, FORM_FIELDS } from '@/constants'

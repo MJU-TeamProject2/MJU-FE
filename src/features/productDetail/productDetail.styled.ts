@@ -5,7 +5,7 @@ export const ProductDetailContainer = styled.div`
   display: flex;
   width: 100%;
   height: 100vh;
-  background: ${colors.background};
+  background: ${colors.charcoalGrey};
   justify-content: center;
   align-items: center;
 `
@@ -17,7 +17,7 @@ export const ProductInfoSection = styled.div`
   max-width: 1200px;
   height: auto;
   padding: 20px;
-  background: ${colors.background};
+  background: ${colors.charcoalGrey};
   border-radius: 8px;
 `
 
@@ -101,7 +101,7 @@ export const SoldOut = styled.p`
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 20px;
-  color: red;
+  color: ${colors.red};
   text-align: center;
 `
 
@@ -109,9 +109,9 @@ export const Select = styled.select`
   width: 100%;
   padding: 10px;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid ${colors.borderGrey};
   border-radius: 4px;
-  background-color: #333;
+  background-color: ${colors.graphite};
   color: ${colors.white};
 `
 
@@ -123,7 +123,6 @@ export const ButtonGroup = styled.div`
 `
 
 export const Button = styled.button`
-  font-family: 'Pretendard', sans-serif;
   width: 100%;
   padding: 10px;
   background-color: transparent;
@@ -136,7 +135,7 @@ export const Button = styled.button`
   transition: all 0.3s ease;
 
   &:hover {
-    background-color: ${colors.buttonHover};
+    background-color: ${colors.darkGrey};
   }
 
   &:disabled {
@@ -146,12 +145,12 @@ export const Button = styled.button`
 `
 
 export const BuyButton = styled(Button)`
-  background-color: #5a5f7d;
+  background-color: ${colors.slate};
   color: ${colors.white};
-  border: 1px solid #3d3f5f;
+  border: 1px solid ${colors.purpleGrey};
 
   &:hover {
-    background-color: #347fc4;
+    background-color: ${colors.skyBlue};
   }
 `
 

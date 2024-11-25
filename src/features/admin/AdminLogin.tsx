@@ -5,10 +5,10 @@ import {
   Title,
   Input,
   Button,
-  AdminLoginContainer,
-} from '@/features/user/styles/AdminLoginContainer'
+  AdminLoginStyled,
+} from '@/features/admin/AdminLogin.styled'
 import { loginAdmin } from '@/services/userApi'
-import { ErrorMessage } from '@/features/user/styles/loginStyles'
+import { ErrorMessage } from '@/features/user/styles/login.styled'
 
 const AdminLogin = () => {
   const [code, setCode] = useState('')
@@ -32,7 +32,7 @@ const AdminLogin = () => {
   }
 
   return (
-    <AdminLoginContainer>
+    <AdminLoginStyled>
       <Card>
         <Title> 어드민 로그인 </Title>
         <form onSubmit={handleAdminLogin}>
@@ -51,16 +51,12 @@ const AdminLogin = () => {
             required
           />
           {error && <ErrorMessage>{error}</ErrorMessage>}
-          <Button
-            type="submit"
-            disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
-          >
+          <Button type="submit" disabled={!isFormValid()}>
             로그인
           </Button>
         </form>
       </Card>
-    </AdminLoginContainer>
+    </AdminLoginStyled>
   )
 }
 

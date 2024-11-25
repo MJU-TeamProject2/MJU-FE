@@ -3,7 +3,7 @@ import { colors } from '@/constants'
 
 export const HomeContainer = styled.div`
   background-color: ${colors.white};
-  color: ${colors.darkGray};
+  color: ${colors.darkGrey};
   min-height: 100vh;
   padding: 20px 5%;
 `
@@ -11,15 +11,15 @@ export const HomeContainer = styled.div`
 export const TabContainer = styled.div`
   display: flex;
   justify-content: flex-start;
-  background-color: ${colors.lightGray};
+  background-color: ${colors.lightGrey};
   padding-top: 10px;
   padding-left: 30px;
 `
 
 export const Tab = styled.div<{ active: boolean }>`
   background-color: ${(props) =>
-    props.active ? colors.white : colors.lightGray};
-  color: ${colors.darkGray};
+    props.active ? colors.white : colors.lightGrey};
+  color: ${colors.darkGrey};
   padding: 8px 16px;
   border-radius: 5px 5px 0 0;
   cursor: pointer;
@@ -57,13 +57,13 @@ export const GridContainer = styled.div`
 `
 
 export const GridItem = styled.div`
-  background-color: ${colors.white};
-  border: 1px solid ${colors.lightGray};
+  background-color: ${colors.ghostWhite}80;
+  border: 1px solid ${colors.lightGrey}90;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
   transition: transform 0.2s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 
   &:hover {
     transform: scale(1.05);
@@ -82,13 +82,13 @@ export const ProductInfo = styled.div`
 `
 
 export const ProductName = styled.h3`
-  color: ${colors.darkGray};
+  color: ${colors.darkGrey};
   margin: 10px 0;
   font-size: 14px;
 `
 
 export const ProductPrice = styled.p`
-  color: ${colors.darkGray};
+  color: ${colors.darkGrey};
   font-weight: bold;
   font-size: 16px;
 `
@@ -102,8 +102,8 @@ export const PaginationContainer = styled.div`
 `
 
 export const PaginationButton = styled.button`
-  background-color: ${colors.lightGray};
-  color: ${colors.darkGray};
+  background-color: ${colors.lightGrey};
+  color: ${colors.darkGrey};
   border: none;
   border-radius: 4px;
   padding: 8px 16px;
@@ -115,7 +115,7 @@ export const PaginationButton = styled.button`
   }
 
   &:disabled {
-    background-color: ${colors.lightGray};
+    background-color: ${colors.silverGrey};
     color: ${colors.grey};
     cursor: not-allowed;
   }

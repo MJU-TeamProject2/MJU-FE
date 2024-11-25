@@ -1,95 +1,22 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { retrieveClothesDetail } from '@/services/clothesApi'
+import { useParams } from 'react-router-dom'
+import { useProduct } from '@/features/productDetail/useProduct'
+import { ProductImage } from '@/features/productDetail/components/ProductImage'
+import { ProductActions } from '@/features/productDetail/components/ProductActions'
+import { SizeSelector } from '@/features/productDetail/components/SizeSelector'
 import {
   ProductDetailContainer,
   ProductInfoSection,
   ProductContentWrapper,
-  ImageContainer,
   ProductInfo,
   ProductName,
   Price,
-  Select,
-  ButtonGroup,
-  BuyButton,
-  CartButton,
-  SoldOut,
   Divider,
-  ProductImage,
-} from '@/features/admin/product/styles/detailStyles'
-import { postCartItems } from '@/services/cartApi'
+} from '@/features/productDetail/productDetail.styled'
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()
-  const [product, setProduct] = useState<any>(null)
-  const [selectedSize, setSelectedSize] = useState('')
-  const navigate = useNavigate()
-
-  const availableSizes =
-    product?.clothesSizeList?.filter(
-      (sizeInfo: SizeInfo) => sizeInfo.quantity > 0
-    ) || []
-
-  const isSoldOut = availableSizes.length === 0
-
-  const getStockDisplay = (quantity: number) => {
-    if (quantity <= 10) {
-      return ` (재고: ${quantity})`
-    }
-    return ''
-  }
-
-  const loadProductDetails = async () => {
-    if (id) {
-      const details = await retrieveClothesDetail(id)
-      setProduct(details)
-      const filteredSizes =
-        details?.clothesSizeList?.filter(
-          (sizeInfo: SizeInfo) => sizeInfo.quantity > 0
-        ) || []
-      if (filteredSizes.length > 0) {
-        setSelectedSize(filteredSizes[0].size)
-      }
-    }
-  }
-
-  const handleFittingClick = () => {
-    navigate('/fitting')
-  }
-  const handleBuyButton = async () => {
-    const token = localStorage.getItem('accessToken')
-    try {
-      if (!token) {
-        throw new Error('로그인이 필요합니다.')
-      } else if (id) {
-        await postCartItems(id, selectedSize)
-        navigate('/cart')
-      }
-    } catch (error) {
-      console.error(error)
-      alert('로그인이 필요합니다.')
-      navigate('/login')
-    }
-  }
-  const handlePostCartItems = async () => {
-    const token = localStorage.getItem('accessToken')
-    try {
-      if (!token) {
-        throw new Error('로그인이 필요합니다.')
-      } else if (id) {
-        await postCartItems(id, selectedSize)
-        alert('장바구니 추가 완료')
-      }
-    } catch (error) {
-      console.error(error)
-      alert('로그인이 필요합니다.')
-      navigate('/login')
-    }
-  }
-
-  useEffect(() => {
-    loadProductDetails()
-  }, [id])
+  const { product, selectedSize, setSelectedSize, availableSizes, isSoldOut } =
+    useProduct(id)
 
   if (!product) return <div>Loading...</div>
 
@@ -97,47 +24,27 @@ const ProductDetail = () => {
     <ProductDetailContainer>
       <ProductInfoSection>
         <ProductContentWrapper>
-          <ImageContainer>
-            <ProductImage src={product.imageUrl} alt={product.name} />
-          </ImageContainer>
+          <ProductImage imageUrl={product.imageUrl} name={product.name} />
           <Divider />
           <ProductInfo>
             <ProductName>{product.name}</ProductName>
             <Price>{product.price.toLocaleString()} 원</Price>
-            {isSoldOut ? (
-              <SoldOut>Sold Out</SoldOut>
-            ) : (
-              <Select
-                value={selectedSize}
-                onChange={(e) => setSelectedSize(e.target.value)}
-              >
-                {availableSizes.map((sizeInfo: SizeInfo) => (
-                  <option key={sizeInfo.size} value={sizeInfo.size}>
-                    {sizeInfo.size}
-                    {getStockDisplay(sizeInfo.quantity)}
-                  </option>
-                ))}
-              </Select>
-            )}
-            <ButtonGroup>
-              <BuyButton onClick={handleBuyButton} disabled={isSoldOut}>
-                구매하기
-              </BuyButton>
-              <CartButton onClick={handlePostCartItems} disabled={isSoldOut}>
-                장바구니
-              </CartButton>
-            </ButtonGroup>
-            <BuyButton onClick={handleFittingClick}>피팅하기</BuyButton>
+            <SizeSelector
+              selectedSize={selectedSize}
+              setSelectedSize={setSelectedSize}
+              availableSizes={availableSizes}
+              isSoldOut={isSoldOut}
+            />
+            <ProductActions
+              productId={product.id}
+              selectedSize={selectedSize}
+              isSoldOut={isSoldOut}
+            />
           </ProductInfo>
         </ProductContentWrapper>
       </ProductInfoSection>
     </ProductDetailContainer>
   )
-}
-
-interface SizeInfo {
-  size: string
-  quantity: number
 }
 
 export default ProductDetail

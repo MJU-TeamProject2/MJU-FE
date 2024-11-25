@@ -7,7 +7,7 @@ import {
   Td,
   ActionButtonsContainer,
   CompleteButton,
-} from '@/features/admin/styles/adminOrderHistoryPageStyles'
+} from '@/features/admin/order/styles/adminOrderHistory.styled'
 
 import { getAdminOrders, updateAdminOrder } from '@/services/orderApi'
 
@@ -21,7 +21,7 @@ interface Order {
   createdAt: string
 }
 
-const AdminOrderHistoryPage: React.FC = () => {
+const AdminOrderHistory: React.FC = () => {
   const [adminOrders, setAdminOrders] = useState<Order[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
@@ -118,4 +118,4 @@ const AdminOrderHistoryPage: React.FC = () => {
   )
 }
 
-export default AdminOrderHistoryPage
+export default AdminOrderHistory

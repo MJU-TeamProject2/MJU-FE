@@ -14,7 +14,7 @@ import {
   Section,
   SectionTitle,
   Title,
-} from '@/features/product/styles/controlPanelStyles'
+} from '@/features/product/styles/controlPanel.styled'
 
 export const ControlPanel: React.FC<ControlPanelProps> = ({
   gender,

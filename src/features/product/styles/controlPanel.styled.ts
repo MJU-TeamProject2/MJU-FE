@@ -1,8 +1,9 @@
 import styled from 'styled-components'
+import { colors } from '@/constants'
 
 export const ControlSection = styled.div`
   width: 50%;
-  background-color: #4a4a4a;
+  background-color: ${colors.darkGrey};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,7 +12,7 @@ export const ControlSection = styled.div`
 
 export const Container = styled.div`
   padding: 40px;
-  background-color: #fff;
+  background-color: ${colors.white};
   width: 100%;
   max-width: 600px;
   border-radius: 30px;

@@ -6,9 +6,10 @@ import {
   Input,
   Button,
   ErrorMessage,
-} from '@/features/user/styles/loginStyles'
-import { LoginContainer } from '@/features/user/styles/LoginContainer'
+  LoginContainer,
+} from '@/features/user/styles/login.styled'
 import { loginUser } from '@/services/userApi'
+import { colors } from '@/constants'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -76,11 +77,15 @@ const Login = () => {
               required
             />
           </div>
-          {loginError && <div style={{ color: 'red' }}>{loginError}</div>}
+          {loginError && <div style={{ color: colors.red }}>{loginError}</div>}
           <Button
             type="submit"
             disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
+            style={{
+              backgroundColor: isFormValid()
+                ? colors.skyBlue
+                : colors.ghostWhite,
+            }}
           >
             로그인
           </Button>
