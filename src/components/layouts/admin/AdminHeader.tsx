@@ -5,7 +5,7 @@ import {
   NavLink,
   RightSection,
 } from '@/components/layouts/styles/Header.styles'
-import { Home, ArrowLeft, Package, User } from 'lucide-react'
+import { Home, ArrowLeft, Package, PencilLine } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const AdminHeader = () => {
@@ -33,8 +33,10 @@ const AdminHeader = () => {
         </IconWrapper>
       </LeftSection>
       <RightSection>
-        <User size={24} />
         <NavLink to="/registerCloth">
+          <PencilLine size={24} />
+        </NavLink>
+        <NavLink to="/adminOrderHistory">
           <Package size={24} />
         </NavLink>
       </RightSection>
