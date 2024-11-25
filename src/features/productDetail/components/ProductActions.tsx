@@ -4,10 +4,10 @@ import {
   ButtonGroup,
   BuyButton,
   CartButton,
-} from '@/features/productDetail/detailStyles'
+} from '@/features/productDetail/productDetail.styled'
 
 interface ProductActionsProps {
-  productId: string
+  productId: number
   selectedSize: string
   isSoldOut: boolean
 }

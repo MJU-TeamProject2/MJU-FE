@@ -1,5 +1,5 @@
-import { Select, SoldOut } from '@/features/productDetail/detailStyles'
-import type { SizeInfo } from '@/features/productDetail/types'
+import { Select, SoldOut } from '@/features/productDetail/productDetail.styled'
+import type { SizeInfo } from '@/features/productDetail/productDetail.types'
 
 interface SizeSelectorProps {
   selectedSize: string

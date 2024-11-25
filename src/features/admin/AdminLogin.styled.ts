@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { colors } from '@/constants'
 
-export const AdminLoginContainer = styled.div`
+export const AdminLoginStyled = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;

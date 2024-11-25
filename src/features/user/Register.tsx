@@ -9,10 +9,10 @@ import {
   ErrorMessage,
   RegisterContainer,
   FormSection,
-} from '@/features/user/styles/registerStyles'
+} from '@/features/user/styles/register.styled'
 import { useNavigate } from 'react-router-dom'
 import { useRegisterForm } from '@/features/user/hooks/useRegisterForm'
-import { LoginContainer } from '@/features/user/styles/loginStyles'
+import { LoginContainer } from '@/features/user/styles/login.styled'
 
 const Register = () => {
   const navigate = useNavigate()

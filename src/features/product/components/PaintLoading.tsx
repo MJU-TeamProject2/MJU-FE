@@ -5,7 +5,7 @@ import {
   LoadingOverlay,
   LoadingText,
   ProgressText,
-} from '@/features/product/styles/moderViewerStyle'
+} from '@/features/product/styles/moderViewer.styled'
 
 const PaintLoading = ({ loadingProgress = 0 }) => {
   return (

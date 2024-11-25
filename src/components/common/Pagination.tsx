@@ -2,7 +2,7 @@ import React from 'react'
 import {
   PaginationContainer,
   PaginationButton,
-} from '@/components/styles/homeStyle'
+} from '@/components/styles/home.styled'
 
 interface PaginationProps {
   currentPage: number

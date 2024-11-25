@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { retrieveClothesDetail } from '@/services/clothesApi'
-import { Product, SizeInfo } from '@/features/productDetail/types'
+import { Product, SizeInfo } from '@/features/productDetail/productDetail.types'
 
 export const useProduct = (id: string | undefined) => {
   const [product, setProduct] = useState<Product | null>(null)

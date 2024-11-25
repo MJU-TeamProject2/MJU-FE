@@ -1,7 +1,7 @@
 import {
   ImageContainer,
   ProductImage as StyledImage,
-} from '@/features/productDetail/detailStyles'
+} from '@/features/productDetail/productDetail.styled'
 
 interface ProductImageProps {
   imageUrl: string

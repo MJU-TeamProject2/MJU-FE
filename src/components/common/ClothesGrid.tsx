@@ -6,7 +6,8 @@ import {
   ProductName,
   ProductPrice,
   ProductInfo,
-} from '@/components/styles/homeStyle'
+} from '@/components/styles/home.styled'
+import React from 'react'
 
 interface ClothesGridProps {
   clothes: ClothesItem[]

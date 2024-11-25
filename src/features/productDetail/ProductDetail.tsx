@@ -11,7 +11,7 @@ import {
   ProductName,
   Price,
   Divider,
-} from '@/features/productDetail/detailStyles'
+} from '@/features/productDetail/productDetail.styled'
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()

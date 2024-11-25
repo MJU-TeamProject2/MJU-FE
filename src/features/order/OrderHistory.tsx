@@ -8,7 +8,7 @@ import {
   Divider,
   DeleteButton,
   Header,
-} from '@/features/order/styles/orderHistoryPageStyles'
+} from '@/features/order/styles/orderHistory.styled'
 
 interface Order {
   orderId: number
@@ -22,7 +22,7 @@ interface Order {
   createdAt: string
 }
 
-const OrderHistoryPage: React.FC = () => {
+const OrderHistory: React.FC = () => {
   const [orderHistory, setOrderHistory] = useState<Order[]>([])
 
   const fetchOrderHistory = async () => {
@@ -79,4 +79,4 @@ const OrderHistoryPage: React.FC = () => {
   )
 }
 
-export default OrderHistoryPage
+export default OrderHistory

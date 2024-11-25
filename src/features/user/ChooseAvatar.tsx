@@ -9,7 +9,7 @@ import {
   Button,
   AvatarItem,
   AvatarName,
-} from '@/features/user/styles/chooseAvatarStyles'
+} from '@/features/user/styles/chooseAvatar.styled'
 import { registerUser } from '@/services/userApi'
 import { BODY_TYPE_AVATARS, colors } from '@/constants'
 

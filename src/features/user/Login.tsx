@@ -7,7 +7,7 @@ import {
   Button,
   ErrorMessage,
   LoginContainer,
-} from '@/features/user/styles/loginStyles'
+} from '@/features/user/styles/login.styled'
 import { loginUser } from '@/services/userApi'
 import { colors } from '@/constants'
 

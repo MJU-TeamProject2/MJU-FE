@@ -3,7 +3,7 @@ import {
   AdminHomeContainer,
   Title,
   Subtitle,
-} from '@/components/styles/adminHomeStyle'
+} from '@/components/styles/adminHome.styled'
 import { useClothes } from '@/components/hooks/useClothes'
 import { ClothesGrid } from '@/components/common/ClothesGrid'
 import { Pagination } from '@/components/common/Pagination'

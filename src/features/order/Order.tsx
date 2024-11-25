@@ -15,7 +15,7 @@ import {
   PaymentContainer,
   PurchaseButton,
   AddButton,
-} from '@/features/order/styles/orderStyles'
+} from '@/features/order/styles/order.styled'
 import { useLocation, useNavigate } from 'react-router-dom'
 import {
   deleteAddress,

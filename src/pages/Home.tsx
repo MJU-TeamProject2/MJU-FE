@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { HomeContainer } from '@/components/styles/homeStyle'
+import { HomeContainer } from '@/components/styles/home.styled'
 import { useClothes } from '@/components/hooks/useClothes'
 import { ClothesGrid } from '@/components/common/ClothesGrid'
 import { Pagination } from '@/components/common/Pagination'

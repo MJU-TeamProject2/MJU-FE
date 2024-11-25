@@ -9,14 +9,14 @@ import ProductDetail from '@/features/productDetail/ProductDetail'
 import ModelFitting from '@/features/product/ModelFitting'
 import Cart from '@/features/order/Cart'
 import Order from '@/features/order/Order'
-import OrderHistoryPage from '@/features/order/OrderHistoryPage'
+import OrderHistory from '@/features/order/OrderHistory'
 import ChooseAvatar from '@/features/user/ChooseAvatar'
 import NotFound from '@/pages/NotFound'
 import ProductModify from '@/features/admin/product/ProductModify'
 import AdminHome from '@/pages/AdminHome'
 import AdminLogin from '@/features/admin/AdminLogin'
 import ClothesRegister from '@/features/admin/product/ProductRegister'
-import AdminOrderHistoryPage from '@/features/admin/order/AdminOrderHistoryPage'
+import AdminOrderHistory from '@/features/admin/order/AdminOrderHistory'
 
 const Router = () => {
   return (
@@ -31,7 +31,7 @@ const Router = () => {
           <Route path="/fitting" element={<ModelFitting />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order" element={<Order />} />
-          <Route path="/orderHistory" element={<OrderHistoryPage />} />
+          <Route path="/orderHistory" element={<OrderHistory />} />
           <Route path="/choose-avatar" element={<ChooseAvatar />} />
         </Route>
         <Route element={<AdminLayout />}>
@@ -39,10 +39,7 @@ const Router = () => {
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminHome" element={<AdminHome />} />
           <Route path="/productsModify/:id" element={<ProductModify />} />
-          <Route
-            path="/adminOrderHistory"
-            element={<AdminOrderHistoryPage />}
-          />
+          <Route path="/adminOrderHistory" element={<AdminOrderHistory />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { TabContainer, Tab } from '@/components/styles/homeStyle'
+import { TabContainer, Tab } from '@/components/styles/home.styled'
 
 interface CategoryTabsProps {
   tabs: string[]
