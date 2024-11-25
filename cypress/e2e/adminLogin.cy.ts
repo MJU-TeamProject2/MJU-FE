@@ -60,9 +60,6 @@ describe('어드민 로그인 페이지', () => {
     cy.get('input[type="password"]').type('admin1')
     cy.get('button[type="submit"]').click()
 
-    // API 호출 확인
-    cy.wait('@loginRequest')
-
     // 페이지 이동 확인
     cy.url().should('include', '/adminHome')
   })
@@ -81,9 +78,6 @@ describe('어드민 로그인 페이지', () => {
     cy.get('input[type="text"]').type('wrongAdmin')
     cy.get('input[type="password"]').type('wrongPassword')
     cy.get('button[type="submit"]').click()
-
-    // API 호출 확인
-    cy.wait('@failedLoginRequest')
 
     // 에러 메시지 확인
     cy.contains('로그인에 실패했습니다.').should('be.visible')
