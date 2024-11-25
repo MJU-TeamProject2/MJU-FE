@@ -12,7 +12,7 @@ export interface ClothesSizeQuantity {
 }
 
 export interface ClothesItem {
-  id: number
+  id: string
   category: ClothesCategory
   imageUrl: string
   name: string

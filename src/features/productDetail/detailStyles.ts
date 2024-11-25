@@ -145,7 +145,7 @@ export const Button = styled.button`
 `
 
 export const BuyButton = styled(Button)`
-  background-color: ${colors.deepSlate};
+  background-color: ${colors.slate};
   color: ${colors.white};
   border: 1px solid ${colors.purpleGrey};
 

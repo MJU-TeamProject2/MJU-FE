@@ -9,6 +9,7 @@ import {
 } from '@/features/user/styles/AdminLoginContainer'
 import { loginAdmin } from '@/services/userApi'
 import { ErrorMessage } from '@/features/user/styles/loginStyles'
+import { colors } from '@/constants'
 
 const AdminLogin = () => {
   const [code, setCode] = useState('')
@@ -54,7 +55,11 @@ const AdminLogin = () => {
           <Button
             type="submit"
             disabled={!isFormValid()}
-            style={{ backgroundColor: isFormValid() ? '#007bff' : '#ccc' }}
+            style={{
+              backgroundColor: isFormValid()
+                ? colors.lightBlue
+                : colors.silverGrey,
+            }}
           >
             로그인
           </Button>

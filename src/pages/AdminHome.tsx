@@ -5,8 +5,8 @@ import {
   Subtitle,
 } from '@/components/styles/adminHomeStyle'
 import { useClothes } from '@/components/hooks/useClothes'
-import { ClothesGrid } from '@/components/ClothesGrid'
-import { Pagination } from '@/components/Pagination'
+import { ClothesGrid } from '@/components/common/ClothesGrid'
+import { Pagination } from '@/components/common/Pagination'
 
 const AdminHome = () => {
   const navigate = useNavigate()

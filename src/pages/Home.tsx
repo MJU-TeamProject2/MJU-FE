@@ -2,9 +2,9 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { HomeContainer } from '@/components/styles/homeStyle'
 import { useClothes } from '@/components/hooks/useClothes'
-import { ClothesGrid } from '@/components/ClothesGrid'
-import { Pagination } from '@/components/Pagination'
-import { CategoryTabs } from '@/components/CategoryTabs'
+import { ClothesGrid } from '@/components/common/ClothesGrid'
+import { Pagination } from '@/components/common/Pagination'
+import { CategoryTabs } from '@/components/common/CategoryTabs'
 
 const Home = () => {
   const navigate = useNavigate()
