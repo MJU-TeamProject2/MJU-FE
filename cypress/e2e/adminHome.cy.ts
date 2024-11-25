@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-describe('AdminHome Component', () => {
+describe('어드민 메인 페이지 테스트', () => {
   beforeEach(() => {
     cy.intercept('GET', '/api/clothes*', {
       statusCode: 200,
