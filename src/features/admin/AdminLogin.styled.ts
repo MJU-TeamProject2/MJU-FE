@@ -45,7 +45,7 @@ export const Input = styled.input`
 export const Button = styled.button`
   width: 100%;
   padding: 13px;
-  background-color: transparent;
+  background-color: ${colors.deepSlate};
   color: ${colors.white};
   border: 1.3px solid ${colors.primary};
   border-radius: 5px;
@@ -54,13 +54,12 @@ export const Button = styled.button`
   margin-top: 13px;
   transition: all 0.3s ease;
   font-size: 16px;
-
-  &:hover {
-    background-color: ${colors.darkGrey};
+  &:hover:enabled {
+    background-color: ${colors.slate};
   }
-
   &:disabled {
     opacity: 0.5;
+    background-color: ${colors.darkGrey};
     cursor: not-allowed;
   }
 `
