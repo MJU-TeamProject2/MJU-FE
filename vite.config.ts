@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, 'src'), // @를 src 폴더로 매핑
+      '@': path.resolve(__dirname, 'src'),
+      '@public': path.resolve(__dirname, './public'),
     },
   },
   server: {

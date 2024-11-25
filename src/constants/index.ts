@@ -1,6 +1,6 @@
-import RECTANGLE from '@public/avatars/RECTANGLE.png'
-import SMALL_INVERTED_TRIANGLE from '@public/avatars/SMALL_INVERTED_TRIANGLE.png'
-import LARGE_TRIANGLE from '@public/avatars/LARGE_TRIANGLE.png'
+import RECTANGLE from '@/components/assets/avatars/RECTANGLE.png'
+import SMALL_INVERTED_TRIANGLE from '@/components/assets/avatars/SMALL_INVERTED_TRIANGLE.png'
+import LARGE_TRIANGLE from '@/components/assets/avatars/LARGE_TRIANGLE.png'
 
 export const BODY_TYPE_AVATARS = [
   {

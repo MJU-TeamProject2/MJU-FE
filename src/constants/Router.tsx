@@ -16,6 +16,7 @@ import ProductModify from '@/features/admin/product/ProductModify'
 import AdminHome from '@/pages/AdminHome'
 import AdminLogin from '@/features/admin/AdminLogin'
 import ClothesRegister from '@/features/admin/product/ProductRegister'
+import AdminOrderHistoryPage from '@/features/admin/order/AdminOrderHistoryPage'
 
 const Router = () => {
   return (
@@ -38,6 +39,10 @@ const Router = () => {
           <Route path="/adminLogin" element={<AdminLogin />} />
           <Route path="/adminHome" element={<AdminHome />} />
           <Route path="/productsModify/:id" element={<ProductModify />} />
+          <Route
+            path="/adminOrderHistory"
+            element={<AdminOrderHistoryPage />}
+          />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>
