@@ -9,11 +9,11 @@ export const AdminLoginContainer = styled.div`
   padding: 0 12px;
   align-items: center;
   height: 100vh;
-  background-color: ${colors.slate};
+  background-color: ${colors.deepSlate};
 `
 
 export const Card = styled.div`
-  background: ${colors.slate};
+  background: ${colors.midnightBlue};
   padding: 39px;
   border-radius: 10px;
   width: 390px;

@@ -43,22 +43,6 @@ export const Input = styled.input`
   }
 `
 
-export const Select = styled.select`
-  width: 100%;
-  padding: 13px;
-  margin-bottom: 10px;
-  background-color: transparent;
-  border: none;
-  border-bottom: 1.3px solid ${colors.primary};
-  color: ${colors.white};
-  outline: none;
-  font-size: 16px;
-  option {
-    background-color: ${colors.charcoalGrey};
-    color: ${colors.white};
-  }
-`
-
 export const GenderContainer = styled.div`
   display: flex;
   gap: 10px;
@@ -89,7 +73,7 @@ export const HiddenRadio = styled.input.attrs({ type: 'radio' })`
 `
 
 export const ErrorMessage = styled.div`
-  color: #ff6b6b;
+  color: ${colors.lightRed};
   font-size: 14px;
 `
 

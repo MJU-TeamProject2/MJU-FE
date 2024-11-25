@@ -6,8 +6,8 @@ export const ProductModifyContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 95vh;
-  background-color: ${colors.slate};
+  height: 100%;
+  background-color: ${colors.darkGrey};
 `
 
 export const ProductImageContainer = styled.div`
@@ -59,7 +59,8 @@ export const ProductWrapper = styled.div`
 
 export const ProductMainImage = styled.img`
   max-height: 70vh;
-  width: 80%;
+  min-width: 30vh;
+  width: 100%;
   object-fit: contain;
   object-position: center;
   border-radius: 8px;
@@ -89,7 +90,7 @@ export const Title = styled.h1`
 `
 
 export const ProductSection = styled.div`
-  width: 80%;
+  width: 95%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -138,14 +139,14 @@ export const Button = styled.button`
   padding-inline: 30px;
   background-color: ${colors.blue};
   color: ${colors.white};
-  border: 1px solid ${colors.primary};
+  border: 1px solid ${colors.ghostWhite};
   border-radius: 4px;
   cursor: pointer;
   margin: 20px;
   transition: all 0.3s ease;
 
   &:hover {
-    opacity: 60%;
+    background-color: ${colors.lightBlue};
   }
 `
 
@@ -172,16 +173,16 @@ export const DeleteButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: ${colors.darkRed};
-  color: ${colors.white};
-  border: 1px solid ${colors.primary};
+  background-color: ${colors.lightRed}90;
+  color: ${colors.silverGrey};
+  border: 1px solid ${colors.primary}90;
   border-radius: 4px;
   cursor: pointer;
   margin: 20px;
   transition: all 0.3s ease;
 
   &:hover {
-    opacity: 60%;
+    background-color: ${colors.darkRed};
   }
 `
 
@@ -190,16 +191,16 @@ export const ModifyButton = styled.button`
   padding-top: 10px;
   padding-bottom: 10px;
   padding-inline: 30px;
-  background-color: ${colors.paleGrey};
+  background-color: ${colors.grey};
   color: ${colors.white};
-  border: 1px solid ${colors.primary};
+  border: 1px solid ${colors.primary}90;
   border-radius: 4px;
   cursor: pointer;
   margin: 20px;
   transition: all 0.3s ease;
 
   &:hover {
-    opacity: 60%;
+    background-color: ${colors.midnightBlue};
   }
 `
 
@@ -221,11 +222,11 @@ export const SizeButtonContainer = styled.div`
   border-left: 1px solid ${colors.lightGrey};
 `
 export const SizeButton = styled.button`
-  border: solid 1px ${colors.lightBlue};
+  border: solid 1px ${colors.grey};
   padding-inline: 30px;
   padding-block: 10px;
   margin-left: 10px;
-  background-color: ${colors.slate};
+  background-color: ${colors.deepSlate};
   color: ${colors.lightBlue};
   font-weight: bold;
 

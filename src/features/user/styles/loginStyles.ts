@@ -67,7 +67,7 @@ export const Button = styled.button`
 `
 
 export const ErrorMessage = styled.div`
-  color: #ff6b6b;
+  color: ${colors.lightRed};
   font-size: 16px;
   margin-top: -20px;
   margin-bottom: 13px;

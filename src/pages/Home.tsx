@@ -1,112 +1,42 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  GridContainer,
-  GridItem,
-  HomeContainer,
-  OutfitImage,
-  PaginationContainer,
-  PaginationButton,
-  ProductName,
-  ProductPrice,
-  TabContainer,
-  Tab,
-  ProductInfo,
-} from '@/components/styles/homeStyle'
-import {
-  retrieveAllClothes,
-  ClothesItem,
-  retrieveClothesByCategory,
-} from '@/services/clothesApi'
+import { HomeContainer } from '@/components/styles/homeStyle'
+import { useClothes } from '@/components/hooks/useClothes'
+import { ClothesGrid } from '@/components/ClothesGrid'
+import { Pagination } from '@/components/Pagination'
+import { CategoryTabs } from '@/components/CategoryTabs'
 
 const Home = () => {
   const navigate = useNavigate()
   const [activeTab, setActiveTab] = useState('ALL')
-  const [clothes, setClothes] = useState<ClothesItem[]>([])
-  const [currentPage, setCurrentPage] = useState(0)
-  const [totalPages, setTotalPages] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const pageSize = 10
-
-  useEffect(() => {
-    fetchClothes()
-  }, [currentPage, activeTab])
-
-  const fetchClothes = async () => {
-    setIsLoading(true)
-    setError(null)
-    try {
-      const response =
-        activeTab == 'ALL'
-          ? await retrieveAllClothes(currentPage, pageSize)
-          : await retrieveClothesByCategory(currentPage, pageSize, activeTab)
-
-      setClothes(response.content)
-      setTotalPages(Math.ceil(response.total / pageSize))
-    } catch (err) {
-      setError('Failed to fetch styles. Please try again.')
-      console.error(err)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleItemClick = (id: number) => {
-    navigate(`/products/${id}`)
-  }
-
-  const handlePageChange = (newPage: number) => {
-    setCurrentPage(newPage)
-  }
+  const {
+    clothes,
+    currentPage,
+    totalPages,
+    isLoading,
+    error,
+    handlePageChange,
+  } = useClothes({ category: activeTab })
 
   if (isLoading) return <HomeContainer>Loading...</HomeContainer>
   if (error) return <HomeContainer>{error}</HomeContainer>
 
   return (
     <div>
-      <TabContainer>
-        {['ALL', 'OUTERWEAR', 'TOPS', 'PANTS', 'DRESSES', 'SHOES'].map(
-          (tab) => (
-            <Tab
-              key={tab}
-              active={activeTab === tab}
-              onClick={() => setActiveTab(tab)}
-            >
-              {tab}
-            </Tab>
-          )
-        )}
-      </TabContainer>
-      <GridContainer>
-        {clothes.map((item) => (
-          <GridItem key={item.id} onClick={() => handleItemClick(item.id)}>
-            <OutfitImage src={item.imageUrl} alt={item.name} />
-            <ProductInfo>
-              <ProductName>{item.name}</ProductName>
-              <ProductPrice>{item.price.toLocaleString()}원</ProductPrice>
-            </ProductInfo>
-          </GridItem>
-        ))}
-      </GridContainer>
-      <PaginationContainer>
-        <PaginationButton
-          onClick={() => handlePageChange(currentPage - 1)}
-          disabled={currentPage === 0}
-        >
-          이전
-        </PaginationButton>
-        <span>
-          {currentPage + 1} / {totalPages}
-        </span>
-        <PaginationButton
-          onClick={() => handlePageChange(currentPage + 1)}
-          disabled={currentPage === totalPages - 1}
-        >
-          다음
-        </PaginationButton>
-      </PaginationContainer>
+      <CategoryTabs
+        tabs={['ALL', 'OUTERWEAR', 'TOPS', 'PANTS', 'DRESSES', 'SHOES']}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+      />
+      <ClothesGrid
+        clothes={clothes}
+        onItemClick={(id) => navigate(`/products/${id}`)}
+      />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   )
 }

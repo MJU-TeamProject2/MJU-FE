@@ -5,7 +5,7 @@ export const ProductRegisterContainer = styled.div`
   width: 100%;
   min-height: 100vh;
   padding: 2rem;
-  background: ${colors.slate};
+  background: ${colors.darkGrey};
 `
 
 export const ProductContainer = styled.div`
@@ -49,23 +49,23 @@ export const BlankImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${colors.white};
+  background: ${colors.ghostWhite};
   transition: background-color 0.3s ease;
 
   &:hover {
-    background: ${colors.primary};
+    background: ${colors.white};
     cursor: pointer;
   }
 `
 
 export const BlankText = styled.p`
-  color: ${colors.silverGrey};
+  color: ${colors.slate};
   font-size: 1rem;
   font-weight: 500;
 `
 
 export const ProductInformationContainer = styled.div`
-  background: ${colors.darkGrey};
+  background: ${colors.primary};
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 4px 6px ${colors.charcoalGrey};
@@ -88,14 +88,19 @@ const baseInputStyles = `
   width: 100%;
   padding: 0.75rem 1rem;
   text-align: center;
+  background: ${colors.ghostWhite};
   border: 1px solid ${colors.silverGrey}20;
   border-radius: 8px;
   font-size: 1rem;
   transition: all 0.3s ease;
+  &:hover {
+    background: ${colors.white};
+  }
   &:focus {
     outline: none;
     border-color: ${colors.silverGrey}50;
     box-shadow: 0 0 0 2px ${colors.silverGrey}20;
+    background: ${colors.white};
   }
 `
 
@@ -119,11 +124,11 @@ export const FileInput = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: ${colors.white};
+  background: ${colors.ghostWhite};
   cursor: pointer;
   ${baseInputStyles}
   &:hover {
-    background: ${colors.primary};
+    background: ${colors.white};
   }
 `
 export const Title = styled.h1`

@@ -57,13 +57,13 @@ export const GridContainer = styled.div`
 `
 
 export const GridItem = styled.div`
-  background-color: ${colors.white};
-  border: 1px solid ${colors.lightGrey};
+  background-color: ${colors.ghostWhite}80;
+  border: 1px solid ${colors.lightGrey}90;
   border-radius: 8px;
   padding: 10px;
   text-align: center;
   transition: transform 0.2s;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 
   &:hover {
     transform: scale(1.05);
