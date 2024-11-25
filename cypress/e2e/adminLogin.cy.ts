@@ -1,6 +1,3 @@
-/// <reference types="cypress" />
-/// <reference types="mocha" />
-
 describe('어드민 로그인 페이지 테스트', () => {
   beforeEach(() => {
     // 매 테스트 전에 어드민 로그인 페이지 방문
