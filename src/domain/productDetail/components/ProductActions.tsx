@@ -29,7 +29,7 @@ export const ProductActions = ({
       navigate('/cart')
     } catch (error) {
       console.error(error)
-      alert('로그인이 필요합니다.')
+      alert('서버 에러 사항입니다.')
       navigate('/login')
     }
   }
@@ -44,7 +44,7 @@ export const ProductActions = ({
       alert('장바구니 추가 완료')
     } catch (error) {
       console.error(error)
-      alert('로그인이 필요합니다.')
+      alert('서버 에러 사항입니다.')
       navigate('/login')
     }
   }

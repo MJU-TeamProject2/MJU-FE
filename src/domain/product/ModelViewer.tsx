@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { ClothesItem, retrieveClothesDetail } from '@/services/clothesApi'
+import { retrieveClothesDetail } from '@/services/clothesApi'
 import { useThreeScene } from '@/domain/product/hooks/useThreeScene'
 import { ControlPanel } from '@/domain/product/components/ControlPanel'
 import PaintLoading from '@/domain/product/components/PaintLoading'
@@ -11,6 +11,7 @@ import {
   PreviewContainer,
 } from '@/domain/product/styles/moderViewer.styled'
 import { GenderType, HeightType, SizeType } from '@/constants/scales'
+import { Product } from '@/components/types/domain.types'
 
 interface ThreeJsModelViewerProps {
   objId: string
@@ -23,8 +24,8 @@ interface ThreeJsModelViewerProps {
 }
 
 const ModelViewer: React.FC<ThreeJsModelViewerProps> = ({ objId, mtlId }) => {
-  const [objClothesItem, setObjClothesItem] = useState<ClothesItem | null>(null)
-  const [mtlClothesItem, setMtlClothesItem] = useState<ClothesItem | null>(null)
+  const [objClothesItem, setObjClothesItem] = useState<Product | null>(null)
+  const [mtlClothesItem, setMtlClothesItem] = useState<Product | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const modelRef = useRef<THREE.Object3D | null>(null)
 

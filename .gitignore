@@ -41,3 +41,5 @@ cypress/downloads
 
 .env
 resources
+cypress/screenshots
+cypress/downloads

@@ -1,31 +1,7 @@
 import axiosInstance, { ApiResponse } from './axiosInstance'
 // @ts-ignore
 import { List } from '@effect-ts/core'
-
-export type ClothesCategory = 'SHOES' | 'TOP' | 'BOTTOM' | 'OUTER' | 'ACCESSORY'
-export type GenderCategory = 'MALE' | 'FEMALE' | 'UNISEX'
-export type ClothesSize = 'XS' | 'S' | 'M' | 'L' | 'XL'
-
-export interface ClothesSizeQuantity {
-  size: ClothesSize
-  quantity: number
-}
-
-export interface ClothesItem {
-  id: number
-  category: ClothesCategory
-  imageUrl: string
-  name: string
-  price: number
-  genderCategory: GenderCategory
-  productNumber: string
-  discount: number
-  detailUrl: string
-  clothesSizeList: ClothesSizeQuantity[]
-  objectUrl: string
-  objectFemaleUrl: string
-  mtlUrl: string
-}
+import { Product } from '@/components/types/domain.types'
 
 export type PaginatedResponse<T> = {
   page: number
@@ -48,7 +24,7 @@ export type RegisterCloth = {
   size: string
 }
 
-export type ClothesListResponse = PaginatedResponse<ClothesItem>
+export type ClothesListResponse = PaginatedResponse<Product>
 
 export const retrieveAllClothes = async (
   page: number,
@@ -76,10 +52,8 @@ export const retrieveClothesByCategory = async (
   return response.data
 }
 
-export const retrieveClothesDetail = async (
-  id: string
-): Promise<ClothesItem> => {
-  const response: ApiResponse<ClothesItem> = await axiosInstance.get(
+export const retrieveClothesDetail = async (id: string): Promise<Product> => {
+  const response: ApiResponse<Product> = await axiosInstance.get(
     `/api/v1/clothes/${id}`
   )
   return response.data

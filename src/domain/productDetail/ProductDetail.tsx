@@ -17,7 +17,8 @@ const ProductDetail = () => {
   const { id } = useParams<{ id: string }>()
   const { product, selectedSize, setSelectedSize, availableSizes, isSoldOut } =
     useProduct(id)
-
+  console.log(111)
+  console.log(product)
   if (!product) return <div>Loading...</div>
 
   return (

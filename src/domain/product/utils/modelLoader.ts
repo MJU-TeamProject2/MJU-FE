@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js'
 import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js'
-import { ClothesItem } from '@/services/clothesApi'
 import { SceneManager } from '@/domain/product/utils/SceneManager'
 import { createMaterials } from '@/domain/product/utils/materials'
 import React from 'react'
@@ -11,11 +10,12 @@ import {
   sizeScales,
   SizeType,
 } from '@/constants/scales'
+import { Product } from '@/components/types/domain.types'
 
 interface ModelLoaderConfig {
   sceneManager: SceneManager
-  mtlClothesItem: ClothesItem
-  objClothesItem: ClothesItem
+  mtlClothesItem: Product
+  objClothesItem: Product
   gender: string
   size: SizeType
   height: HeightType
