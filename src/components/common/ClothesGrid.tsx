@@ -1,4 +1,3 @@
-import { ClothesItem } from '@/services/clothesApi'
 import {
   GridContainer,
   GridItem,
@@ -8,9 +7,10 @@ import {
   ProductInfo,
 } from '@/components/styles/home.styled'
 import React from 'react'
+import { Product } from '@/components/types/domain.types'
 
 interface ClothesGridProps {
-  clothes: ClothesItem[]
+  clothes: Product[]
   onItemClick: (id: number) => void
 }
 

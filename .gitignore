@@ -37,3 +37,5 @@ public/images
 
 .env
 resources
+cypress/screenshots
+cypress/downloads
