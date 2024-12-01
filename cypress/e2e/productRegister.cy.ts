@@ -66,16 +66,16 @@ describe('상품 등록 페이지 렌더링 테스트', () => {
   it('숫자 필드에 잘못된 값 입력 시 에러 메시지가 표시되어야 한다', () => {
     // 가격 필드 테스트
     cy.get('input[name="price"]').clear().type('-1000', { delay: 100 })
-    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
+    cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
     cy.get('input[name="price"]').clear().type('10', { delay: 100 })
 
     // 할인율 필드 테스트
     cy.get('input[name="discount"]').clear().type('-1000', { delay: 100 })
-    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
+    cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
     cy.get('input[name="discount"]').clear().type('10', { delay: 100 })
 
     // 재고 필드 테스트
     cy.get('input[name="quantity"]').clear().type('-1', { delay: 100 })
-    cy.get('[class*="sc-eemrSN hWNwAB"]').should('be.visible').and('exist')
+    cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
   })
 })

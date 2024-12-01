@@ -2,28 +2,6 @@
 
 describe('어드민 메인 페이지 테스트', () => {
   beforeEach(() => {
-    cy.intercept('GET', '/api/clothes*', {
-      statusCode: 200,
-      body: {
-        content: [
-          {
-            id: 1,
-            name: '테스트 의류 1',
-            price: 29000,
-            imageUrl: 'test-image-1.jpg',
-          },
-          {
-            id: 2,
-            name: '테스트 의류 2',
-            price: 39000,
-            imageUrl: 'test-image-2.jpg',
-          },
-        ],
-        total: 15,
-      },
-    }).as('getClothes')
-
-    // 컴포넌트 페이지로 이동
     cy.visit('/adminHome')
   })
 
@@ -34,19 +12,18 @@ describe('어드민 메인 페이지 테스트', () => {
     )
   })
 
-  // ERROR
   it('should display correct content for each item', () => {
     // 첫 번째 아이템 확인
-    cy.get('[class*="sc-iuUfFv hgqNAY"]')
+    cy.get('[class*="sc-fLqhfm gmcWn"]')
       .first()
       .within(() => {
         // 상품명 확인
-        cy.get('[class*="sc-fwzISk izMidu"]')
+        cy.get('[class*="sc-kNwsoS fHzTJ"]')
           .should('contain', '여성 숏 패딩')
           .and('be.visible')
 
         // 가격 확인
-        cy.get('[class*="sc-hbtGpV dGzowU"]')
+        cy.get('[class*="sc-dTSHqv jgNaSf"]')
           .should('contain', '200,000원')
           .and('be.visible')
       })
@@ -58,16 +35,6 @@ describe('어드민 메인 페이지 테스트', () => {
 
     // 이전 버튼이 첫 페이지에서 비활성화되어 있는지 확인
     cy.contains('이전').should('be.disabled')
-
-    /*
-    // 다음 페이지로 이동
-    cy.contains('다음').click()
-    cy.wait('@getClothes')
-    cy.contains('2 / 2').should('be.visible')
-
-    // 마지막 페이지에서 다음 버튼이 비활성화되어 있는지 확인
-    cy.contains('다음').should('be.disabled')
-    */
   })
 
   it('의류 아이템 클릭 시 수정 페이지로 이동해야 한다', () => {

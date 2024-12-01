@@ -72,7 +72,7 @@ describe('상품 수정 테스트', () => {
       cy.get('select[name="size"]').select('M')
       cy.get('input[name="quantity"]').clear().type('25')
     })
-
+    // ERROR
     it('파일 수정 기능이 작동해야 한다.', () => {
       cy.contains('button', '수정').click()
       cy.contains('button', '다음').click()
@@ -92,13 +92,14 @@ describe('상품 수정 테스트', () => {
   })
 
   describe('폼 입력 유효성 검사', () => {
+    // ERROR
     it('금액 입력에 대한 유효성 검사', () => {
       cy.contains('button', '수정').click()
       cy.get('input[name="price"]').clear().type('-1000')
       cy.contains('button', '다음').click()
       cy.contains('잘못 입력된 값이 존재합니다').should('be.visible')
     })
-
+    //ERROR
     it('할인율 입력에 대한 유효성 검사', () => {
       cy.contains('button', '수정').click()
       cy.get('input[name="discount"]').clear().type('101')

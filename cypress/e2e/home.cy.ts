@@ -62,7 +62,7 @@ describe('Home Component Tests', () => {
 
     cy.visit('/')
     cy.wait('@errorResponse')
-    cy.contains('Failed to fetch products. Please try again.').should(
+    cy.contains('Failed to fetch styles. Please try again.').should(
       'be.visible'
     )
   })
