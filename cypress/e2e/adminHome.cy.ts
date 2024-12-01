@@ -12,7 +12,7 @@ describe('어드민 메인 페이지 테스트', () => {
     )
   })
 
-  it('should display correct content for each item', () => {
+  it('각 아이템에 대한 정확한 정보를 표시해야 한다.', () => {
     // 첫 번째 아이템 확인
     cy.get('[class*="sc-fLqhfm gmcWn"]')
       .first()

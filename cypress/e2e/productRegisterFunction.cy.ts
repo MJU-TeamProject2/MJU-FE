@@ -7,6 +7,13 @@ describe('상품 등록 기능 및 파일 업로드 테스트', () => {
   })
   beforeEach(() => {
     cy.visit('/registerCloth')
+    cy.intercept('POST', '/api/v1/clothes/product', {
+      statusCode: 200,
+      body: {
+        success: '200',
+        data: {},
+      },
+    }).as('registerProduct')
     // message 속성을 undefined 한 경우를 무시한다.
     cy.on('uncaught:exception', () => {
       return false
@@ -15,23 +22,29 @@ describe('상품 등록 기능 및 파일 업로드 테스트', () => {
 
   it('이미지 업로드가 올바르게 동작해야 한다', () => {
     // 메인 이미지 업로드 테스트
-    cy.get('#mainImage').attachFile({
+    cy.get('[class*="sc-bZABGC evQNEQ"]').click()
+
+    cy.get('input[name="mainImage"]').attachFile({
       filePath: 'test-image.png',
-      mimeType: 'image/jpeg',
+      mimeType: 'image/png',
     })
-    cy.get('#mainImagePreview').should('be.visible')
+    cy.get('[class*="sc-eMIsOp dcUSYL"]').should('exist')
 
     // 상세 이미지 업로드 테스트
-    cy.get('#detailImage').attachFile({
+    cy.contains('사진을 선택하세요.').click()
+
+    cy.get('input[name="detailImage"]').attachFile({
       filePath: 'test-detail-image.png',
-      mimeType: 'image/jpeg',
+      mimeType: 'image/png',
     })
-    cy.contains('test-detail-image.jpg').should('be.visible')
+    cy.contains('test-detail-image.png').should('be.visible')
   })
 
   it('3D 파일 업로드 제한이 올바르게 동작해야 한다', () => {
     // 잘못된 확장자 파일 업로드 시도
-    cy.get('#objectFile').attachFile({
+    cy.contains('obj 파일을 선택하세요.').click()
+
+    cy.get('input[name="objectFile"]').attachFile({
       filePath: 'test-file.txt',
       mimeType: 'text/plain',
     })
@@ -45,6 +58,25 @@ describe('상품 등록 기능 및 파일 업로드 테스트', () => {
       mimeType: 'application/object',
     })
     cy.contains('test-model.obj').should('be.visible')
+  })
+
+  it('재질 파일 업로드 제한이 올바르게 동작해야 한다', () => {
+    // 잘못된 확장자 파일 업로드 시도
+    cy.contains('mtl 파일을 선택하세요.').click()
+
+    cy.get('input[name="mtlFile"]').attachFile({
+      filePath: 'test-file.txt',
+      mimeType: 'text/plain',
+    })
+    cy.on('window:alert', (text) => {
+      expect(text).to.equal('재질 파일을 mtl 파일만 업로드 가능합니다.')
+    })
+
+    // 올바른 mtl 파일 어볼드
+    cy.get('#mtlFile').attachFile({
+      filePath: 'test-material.mtl',
+    })
+    cy.contains('test-material.mtl').should('be.visible')
   })
 
   it('올바른 데이터로 폼 제출이 성공해야 한다', () => {
