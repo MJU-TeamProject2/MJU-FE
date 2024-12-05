@@ -1,8 +1,11 @@
 import { defineConfig } from 'cypress'
+import { loadEnv } from 'vite'
+
+const env = loadEnv('', process.cwd(), '')
 
 export default defineConfig({
   e2e: {
-    baseUrl: 'http://ec2-52-79-52-146.ap-northeast-2.compute.amazonaws.com/',
+    baseUrl: env.VITE_API_BASE_URL,
     supportFile: 'cypress/support/e2e.ts',
   },
   component: {
