@@ -6,11 +6,8 @@
 + React+Vite
 + TypeScript+SWC
 + lint on Airbnb
-+ React Query
 + Three.js
-+ Jest
 + Cypress
-+ Qodana
 
 ### 개발환경 추가 설명
 아래는 간략하게 정리한 개발 환경 설명입니다.
@@ -23,17 +20,9 @@
 - 컴파일러
 - TypeScript 및 JavaScript를 빠르게 컴파일, Rust로 작성되어 성능 우수함.
 
-**React Query**
-- 데이터 패칭 라이브러리
-- 서버 상태 관리 및 API 요청 처리 간소화. 데이터 fetching, caching, updating을 손쉽게 관리.
-
 **Three.js**
 - 3D 그래픽 라이브러리
 - WebGL 기반의 3D 그래픽 구현을 쉽게 도와줌. 다양한 메쉬와 조명 지원.
-
-**Jest**
-- 테스트 프레임워크
-- JavaScript 및 TypeScript 애플리케이션의 단위 및 통합 테스트 지원. 모의(mock) 기능 및 스냅샷 테스트 제공.
 
 **Cypress**
 - E2E 테스트 도구
