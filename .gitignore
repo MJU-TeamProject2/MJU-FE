@@ -35,6 +35,10 @@ public/images
 # TypeScript build info files
 *.tsbuildinfo
 
+#Cypress
+cypress/screenshots
+cypress/downloads
+
 .env
 resources
 cypress/screenshots
