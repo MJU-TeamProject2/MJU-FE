@@ -6,12 +6,6 @@ describe('회원가입 페이지 테스트', () => {
     })
   })
 
-  // afterEach(() => {
-  //   cy.window().then((win: Window) => {
-  //     win.sessionStorage.clear()
-  //   })
-  // })
-
   it('회원가입 페이지의 모든 필수 입력 필드가 표시되어야 한다', () => {
     cy.contains('회원가입').should('be.visible')
 
