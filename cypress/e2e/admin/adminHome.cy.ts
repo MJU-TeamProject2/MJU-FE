@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe('어드민 메인 페이지 테스트', () => {
   beforeEach(() => {
     cy.visit('/adminHome')
