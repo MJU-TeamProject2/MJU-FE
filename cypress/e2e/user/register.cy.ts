@@ -1,5 +1,25 @@
 describe('회원가입 페이지 테스트', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/v1/auth/check-email', {
+      statusCode: 200,
+      body: {
+        success: true,
+        data: {
+          available: true,
+        },
+      },
+    }).as('emailCheck')
+
+    cy.intercept('GET', '/api/v1/auth/check-phone', {
+      statusCode: 200,
+      body: {
+        success: true,
+        data: {
+          available: true,
+        },
+      },
+    }).as('phoneCheck')
+
     cy.visit('/register')
     cy.window().then((win: Window) => {
       win.sessionStorage.clear()

@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 describe('상품 등록 페이지 렌더링 테스트', () => {
   before(() => {
     cy.visit('/adminLogin')
@@ -9,7 +7,6 @@ describe('상품 등록 페이지 렌더링 테스트', () => {
   })
   beforeEach(() => {
     cy.visit('/registerCloth')
-    // message 속성을 undefined 한 경우를 무시한다.
     cy.on('uncaught:exception', () => {
       return false
     })
@@ -28,7 +25,6 @@ describe('상품 등록 페이지 렌더링 테스트', () => {
   })
 
   it('폼 제출 시 필수 필드 검증이 동작해야 한다', () => {
-    // API 응답 모킹 (필요한 경우)
     cy.intercept('POST', '/api/v1/clothes/product', {
       statusCode: 400,
       body: {
@@ -40,13 +36,10 @@ describe('상품 등록 페이지 렌더링 테스트', () => {
       cy.stub(win, 'alert' as keyof Window).as('alertStub')
     })
 
-    // 폼 제출
     cy.get('button[type="submit"]').click()
 
-    // API 응답 대기 (필요한 경우)
     cy.wait('@submitForm')
 
-    // alert 확인
     cy.get('@alertStub').should(
       'have.been.calledWith',
       '빈칸을 모두 채워주세요'
@@ -64,17 +57,14 @@ describe('상품 등록 페이지 렌더링 테스트', () => {
   })
 
   it('숫자 필드에 잘못된 값 입력 시 에러 메시지가 표시되어야 한다', () => {
-    // 가격 필드 테스트
     cy.get('input[name="price"]').clear().type('-1000', { delay: 100 })
     cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
     cy.get('input[name="price"]').clear().type('10', { delay: 100 })
 
-    // 할인율 필드 테스트
     cy.get('input[name="discount"]').clear().type('-1000', { delay: 100 })
     cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
     cy.get('input[name="discount"]').clear().type('10', { delay: 100 })
 
-    // 재고 필드 테스트
     cy.get('input[name="quantity"]').clear().type('-1', { delay: 100 })
     cy.get('[class*="sc-klMTPf fWuwRV"]').should('be.visible').and('exist')
   })
