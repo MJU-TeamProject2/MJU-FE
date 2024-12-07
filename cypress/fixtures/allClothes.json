@@ -1,0 +1,91 @@
+{
+  "success": true,
+  "data": {
+    "page": 0,
+    "size": 10,
+    "total": 9,
+    "content": [
+      {
+        "id": 1,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/OUTERWEAR/0fbd71e4-6c46-4115-98c0-a92d8aa3ef5a.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=f6ec21ae756a79d99461b4aebcbfe33d1cb83582d11dbaf55b53c0f986a1ecd7",
+        "name": "여성 숏 패딩",
+        "price": 200000,
+        "genderCategory": "FEMALE",
+        "productNumber": "PVBIEWMVC120",
+        "discount": 0
+      },
+      {
+        "id": 2,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/DRESSES/2b1653a6-6e85-453a-93f3-97a6595f7efc.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=3d346bf446793e94e2b20f02edddb8cda4a55873ae3dd91b0166cff7aa028222",
+        "name": "스카이블루 셔츠",
+        "price": 39000,
+        "genderCategory": "UNISEX",
+        "productNumber": "PVBIEWMVC121",
+        "discount": 0
+      },
+      {
+        "id": 3,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/DRESSES/a07253ac-9ddf-4da9-843c-4e07c14751e0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=ff76bd061be7426ddf36a8005f8a2beee14605f5da7aa14df8e12dfe9964e686",
+        "name": "그린 카디건",
+        "price": 89000,
+        "genderCategory": "UNISEX",
+        "productNumber": "PVBIEWMVC122",
+        "discount": 0
+      },
+      {
+        "id": 4,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/OUTERWEAR/012b3730-dfb2-40ce-b6b5-eb1e17c33bd5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=442e5f38a59682c327bac5ccaf30c46caa4935b6a4785af39a667481afa75ef8",
+        "name": "베이지 가디건",
+        "price": 159000,
+        "genderCategory": "FEMALE",
+        "productNumber": "PVBIEWMVC123",
+        "discount": 0
+      },
+      {
+        "id": 5,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/OUTERWEAR/7472eda1-1821-40a8-a3b1-168e5412d634.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=e8c6fed7f39680aed211f008538c7561d0c961f41782395bf262a3eec8d18de8",
+        "name": "카디건",
+        "price": 229000,
+        "genderCategory": "UNISEX",
+        "productNumber": "PVBIEWMVC124",
+        "discount": 0
+      },
+      {
+        "id": 6,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/images/OUTERWEAR_1_FEMALE.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=c0d8331912405bef9128b7e6ab90d80ef8ccd13b685cca48feae633af50a01fd",
+        "name": "여성 트렌치 코트",
+        "price": 129000,
+        "genderCategory": "FEMALE",
+        "productNumber": "PVBIEWMVC125",
+        "discount": 0
+      },
+      {
+        "id": 7,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/images/PANTS_1_MALE.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7a0170396b8721573d6cbbc4a751aedc2be5f6a21df0b51ef38cba1f2573f0d0",
+        "name": "베이지 더블니 팬츠",
+        "price": 49000,
+        "genderCategory": "FEMALE",
+        "productNumber": "PVBIEWMVC126",
+        "discount": 0
+      },
+      {
+        "id": 8,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/TOPS/39216bc5-6a0c-4ddb-9664-00fdc87b7b4c.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=1ddf5f3a341ffa47cdc6f8e3b462640996745f7a378605dc0aa6c878aba09d66",
+        "name": "캐릭터 티셔츠",
+        "price": 79000,
+        "genderCategory": "UNISEX",
+        "productNumber": "PVBIEWMVC127",
+        "discount": 0
+      },
+      {
+        "id": 9,
+        "imageUrl": "https://teamproject2-metaverse.s3.ap-northeast-2.amazonaws.com/images/PANTS_2_MALE.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20241122T133731Z&X-Amz-SignedHeaders=host&X-Amz-Expires=600&X-Amz-Credential=AKIAW3MED5RPERFRTQ6X%2F20241122%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=a155489b82d9b0c8113dd960d549ef28039603bac6273300c2ec52fc3085b35e",
+        "name": "청바지",
+        "price": 189000,
+        "genderCategory": "UNISEX",
+        "productNumber": "PVBIEWMVC128",
+        "discount": 0
+      }
+    ]
+  }
+}

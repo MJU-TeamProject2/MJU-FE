@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
 import {
-  ClothesItem,
   retrieveAllClothes,
   retrieveClothesByCategory,
 } from '@/services/clothesApi'
+import { Product } from '@/components/types/domain.types'
 
 interface UseClothesProps {
   pageSize?: number
@@ -11,7 +11,7 @@ interface UseClothesProps {
 }
 
 interface UseClothesReturn {
-  clothes: ClothesItem[]
+  clothes: Product[]
   currentPage: number
   totalPages: number
   isLoading: boolean
@@ -23,7 +23,7 @@ export const useClothes = ({
   pageSize = 10,
   category,
 }: UseClothesProps): UseClothesReturn => {
-  const [clothes, setClothes] = useState<ClothesItem[]>([])
+  const [clothes, setClothes] = useState<Product[]>([])
   const [currentPage, setCurrentPage] = useState(0)
   const [totalPages, setTotalPages] = useState(0)
   const [isLoading, setIsLoading] = useState(false)

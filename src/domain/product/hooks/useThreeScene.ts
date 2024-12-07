@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { ClothesItem } from '@/services/clothesApi'
 import { SceneManager } from '@/domain/product/utils/SceneManager'
 import { loadModel } from '@/domain/product/utils/modelLoader'
 import { createLights } from '@/domain/product/utils/lights'
 import { GenderType, HeightType, SizeType } from '@/constants/scales'
+import { Product } from '@/components/types/domain.types'
 
 interface UseThreeSceneReturn {
   loadingProgress: number
@@ -13,8 +13,8 @@ interface UseThreeSceneReturn {
 
 export const useThreeScene = (
   containerRef: React.RefObject<HTMLDivElement>,
-  objClothesItem: ClothesItem | null,
-  mtlClothesItem: ClothesItem | null,
+  objClothesItem: Product | null,
+  mtlClothesItem: Product | null,
   modelRef: React.MutableRefObject<THREE.Object3D | null>,
   size: SizeType,
   height: HeightType,
