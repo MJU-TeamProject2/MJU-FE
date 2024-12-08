@@ -37,15 +37,19 @@ export const purchaseCartItems = async (
   }
 
   try {
+    console.log('구매 요청 시작:', { selectedItems, addressId, paymentId })
+
     await Promise.all(
-      selectedItems.map((product) =>
-        axiosInstance.post('/api/v1/orders', {
+      selectedItems.map(async (product) => {
+        const response = await axiosInstance.post('/api/v1/orders', {
           cartId: product.cartId,
           addressId,
           paymentId,
         })
-      )
+        console.log(`상품 주문 성공: ${product.name}`, response.data)
+      })
     )
+
     console.log('구매 처리가 완료되었습니다.')
   } catch (error: any) {
     console.error('구매 처리 중 오류:', error)
@@ -68,14 +72,14 @@ export const postAddress = async ({
   detailAddress: string
 }): Promise<void> => {
   try {
-    await axiosInstance.post('/api/v1/customer/address', {
+    const response = await axiosInstance.post('/api/v1/customer/address', {
       name,
       recipient,
       zipCode,
       baseAddress,
       detailAddress,
     })
-    console.log('주소 추가가 완료되었습니다.')
+    console.log('주소 추가 완료:', response.data)
   } catch (error: any) {
     console.error('주소 추가 중 오류:', error)
     handleApiError(error)
@@ -92,12 +96,10 @@ export const getAddresses = async (): Promise<
 > => {
   try {
     const response = await axiosInstance.get('/api/v1/customer/address')
-    console.log('주소 조회 응답 상태:', response.status)
-    console.log('주소 조회 응답 데이터:', response.data)
-
+    console.log('주소 조회 성공:', response.status, response.data)
     return response.data
   } catch (error: any) {
-    console.error('주소 불러오기 중 오류:', error)
+    console.error('주소 조회 중 오류:', error)
     handleApiError(error)
     return []
   }
@@ -113,12 +115,12 @@ export const postPayment = async ({
   expiryDate: string
 }): Promise<void> => {
   try {
-    await axiosInstance.post('/api/v1/customer/payment', {
+    const response = await axiosInstance.post('/api/v1/customer/payment', {
       cardNumber,
       cardProvider,
       expiryDate,
     })
-    console.log('결제수단 추가가 완료되었습니다.')
+    console.log('결제수단 추가 완료:', response.data)
   } catch (error: any) {
     console.error('결제수단 추가 중 오류:', error)
     handleApiError(error)
@@ -134,12 +136,10 @@ export const getPayments = async (): Promise<
 > => {
   try {
     const response = await axiosInstance.get('/api/v1/customer/payment')
-    console.log('결제 수단 조회 응답 상태:', response.status)
-    console.log('결제 수단 조회 응답 데이터:', response.data)
-
+    console.log('결제 수단 조회 성공:', response.status, response.data)
     return response.data
   } catch (error: any) {
-    console.error('결제수단 불러오기 중 오류:', error)
+    console.error('결제수단 조회 중 오류:', error)
     handleApiError(error)
     return []
   }
@@ -147,8 +147,10 @@ export const getPayments = async (): Promise<
 
 export const deleteAddress = async (addressId: number): Promise<void> => {
   try {
-    await axiosInstance.delete(`/api/v1/customer/address/${addressId}`)
-    console.log('주소 삭제가 완료되었습니다.')
+    const response = await axiosInstance.delete(
+      `/api/v1/customer/address/${addressId}`
+    )
+    console.log('주소 삭제 완료:', response.data)
   } catch (error: any) {
     console.error('주소 삭제 중 오류:', error)
     handleApiError(error)
@@ -157,8 +159,10 @@ export const deleteAddress = async (addressId: number): Promise<void> => {
 
 export const deletePayment = async (paymentId: number): Promise<void> => {
   try {
-    await axiosInstance.delete(`/api/v1/customer/payment/${paymentId}`)
-    console.log('결제수단 삭제가 완료되었습니다.')
+    const response = await axiosInstance.delete(
+      `/api/v1/customer/payment/${paymentId}`
+    )
+    console.log('결제수단 삭제 완료:', response.data)
   } catch (error: any) {
     console.error('결제수단 삭제 중 오류:', error)
     handleApiError(error)
@@ -173,31 +177,22 @@ export const getAdminOrders = async (
   try {
     const params = { memberId, page, size }
     const response = await axiosInstance.get('/api/v1/admin/orders', { params })
-
-    console.log('관리자 주문 목록 조회 응답 상태:', response.status)
-    console.log('관리자 주문 목록 조회 응답 데이터:', response.data)
-
-    const data = response.data
-    if (data && Array.isArray(data)) {
-      return data.map((order: any) => ({
-        orderId: order.orderId,
-        clothesId: order.clothesId,
-        imageUrl: order.imageUrl,
-        detailUrl: order.detailUrl,
-        name: order.name,
-        quantity: order.quantity,
-        price: order.price,
-        discount: order.discount,
-        size: order.size,
-        orderStatus: order.orderStatus,
-        createdAt: order.createdAt,
-      }))
-    } else {
-      console.error('API Error: 데이터 형식 불일치', data)
-      return []
-    }
+    console.log('관리자 주문 목록 조회 성공:', response.data)
+    return response.data.map((order: any) => ({
+      orderId: order.orderId,
+      clothesId: order.clothesId,
+      imageUrl: order.imageUrl,
+      detailUrl: order.detailUrl,
+      name: order.name,
+      quantity: order.quantity,
+      price: order.price,
+      discount: order.discount,
+      size: order.size,
+      orderStatus: order.orderStatus,
+      createdAt: order.createdAt,
+    }))
   } catch (error: any) {
-    console.error('API 호출 중 오류:', error)
+    console.error('관리자 주문 조회 중 오류:', error)
     handleApiError(error)
     return []
   }
@@ -212,10 +207,9 @@ export const updateAdminOrder = async (
       orderId,
       ...updatedData,
     })
-    console.log('관리자용 주문 상태 수정 응답 상태:', response.status)
-    console.log('관리자용 주문 상태 수정 응답 데이터:', response.data)
+    console.log('주문 상태 업데이트 성공:', response.data)
   } catch (error: any) {
-    console.error('관리자용 주문 상태 수정 중 오류가 발생했습니다.', error)
+    console.error('주문 상태 업데이트 중 오류:', error)
     handleApiError(error)
   }
 }
@@ -225,25 +219,19 @@ export const deleteAdminOrder = async (orderId: number): Promise<void> => {
     const response = await axiosInstance.delete(
       `/api/v1/admin/orders/${orderId}`
     )
-    console.log('관리자용 주문 삭제 응답 상태:', response.status)
-    console.log('관리자용 주문 삭제 응답 데이터:', response.data)
+    console.log('관리자 주문 삭제 성공:', response.data)
   } catch (error: any) {
-    console.error('관리자용 주문 삭제 중 오류가 발생했습니다.', error)
+    console.error('관리자 주문 삭제 중 오류:', error)
     handleApiError(error)
   }
 }
 
 const handleApiError = (error: any) => {
   if (error.response) {
-    console.error(
-      '서버 응답 오류:',
-      `Status: ${error.response.status}`,
-      `Data: ${JSON.stringify(error.response.data)}`,
-      `Headers: ${JSON.stringify(error.response.headers)}`
-    )
+    console.error('서버 응답 오류:', error.response)
   } else if (error.request) {
-    console.error('요청이 전송되었지만 응답을 받지 못했습니다:', error.request)
+    console.error('요청 오류:', error.request)
   } else {
-    console.error('요청 설정 중 오류:', error.message)
+    console.error('알 수 없는 오류:', error.message)
   }
 }

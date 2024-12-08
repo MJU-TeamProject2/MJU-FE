@@ -29,10 +29,11 @@ export const getCartItems = async (): Promise<CartItem[]> => {
 }
 
 export const postCartItems = async (
-  clothesId: string,
+  clothesId: number,
   size: string,
   quantity: number = 1
 ): Promise<void> => {
+  console.log({ clothesId, size, quantity })
   const response: ApiResponse<void | { code: string; message: string }> =
     await axiosInstance.post('/api/v1/carts', { clothesId, size, quantity })
   if (!response.success) {
