@@ -122,10 +122,10 @@ const Order: React.FC = () => {
     }
     try {
       await postAddress(addressForm)
-      setAddresses((prev) => [
-        ...prev,
-        { ...addressForm, addressId: Date.now() },
-      ])
+
+      const response = await getAddresses()
+      setAddresses(response)
+
       setAddressForm({
         name: '',
         recipient: '',
@@ -159,16 +159,16 @@ const Order: React.FC = () => {
         return
       }
 
+      const newPaymentId = Date.now()
       await postPayment({
         cardNumber: paymentForm.cardNumber,
         cardProvider: paymentForm.cardProvider,
         expiryDate: paymentForm.expiryDate,
       })
+      const response = await getPayments()
+      setPayments(response)
 
-      setPayments((prev) => [
-        ...prev,
-        { ...paymentForm, paymentId: Date.now() },
-      ])
+      setSelectedPayment(newPaymentId) // 새로 추가된 결제수단 선택
       setPaymentForm({ cardNumber: '', cardProvider: '', expiryDate: '' })
     } catch (error) {
       console.error('결제수단 추가 오류:', error)

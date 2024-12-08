@@ -31,7 +31,7 @@ const MainHeader = () => {
         <IconWrapper onClick={handleBackClick}>
           <ArrowLeft size={24} />
         </IconWrapper>
-        <NavLink to="/public">
+        <NavLink to="/">
           <Home size={24} />
         </NavLink>
       </LeftSection>
