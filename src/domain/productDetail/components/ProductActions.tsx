@@ -7,7 +7,7 @@ import {
 } from '@/domain/productDetail/productDetail.styled'
 
 interface ProductActionsProps {
-  productId: number
+  productId: string | undefined
   selectedSize: string
   isSoldOut: boolean
 }
